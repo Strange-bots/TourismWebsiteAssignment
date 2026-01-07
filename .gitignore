@@ -361,7 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-TourismWebsiteAssignment.slnx
 
 # Ignore everything in bin and obj folders
 bin/
@@ -370,4 +369,4 @@ obj/
 # Include Roslyn compiler folder
 !bin/roslyn/
 !bin/roslyn/**
-
+

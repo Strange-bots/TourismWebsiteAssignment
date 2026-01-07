@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using TourismWebsiteAssignment.Models;
-
+using System.Data.Entity.ModelConfiguration.Conventions;
 namespace TourismWebsiteAssignment.Data
 {
     public class TourismWebsiteAssignmentContext : DbContext

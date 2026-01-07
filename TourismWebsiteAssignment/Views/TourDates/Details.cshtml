@@ -1,0 +1,74 @@
+﻿@model TourismWebsiteAssignment.Models.TourDate
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TourDate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TravelPackage.PackageTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TravelPackage.PackageTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableSlots)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableSlots)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSlots)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSlots)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceAdjustment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceAdjustment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TourDateId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

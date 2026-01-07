@@ -1,0 +1,114 @@
+﻿@model TourismWebsiteAssignment.Models.TravelPackage
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TravelPackage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TravelAgency.AgencyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TravelAgency.AgencyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PricePerPerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PricePerPerson)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupMaxSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupMaxSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inclusions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inclusions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exclusions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exclusions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItineraryDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItineraryDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TermsAndConditions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TermsAndConditions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedAt)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PackageId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

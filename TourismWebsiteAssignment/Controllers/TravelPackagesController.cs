@@ -15,6 +15,7 @@ namespace TourismWebsiteAssignment.Controllers
     public class TravelPackagesController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
+        private object travelpackages;
 
         // GET: TravelPackages
         public async Task<ActionResult> Index()
@@ -129,6 +130,13 @@ namespace TourismWebsiteAssignment.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult DashboardList()
+        {
+            var traverlpackages = db.TravelPackages.Include(t => t.TravelAgency).ToList();
+
+            return PartialView("DashboardBookings", travelpackages);
         }
     }
 }

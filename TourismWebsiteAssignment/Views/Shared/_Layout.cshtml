@@ -8,22 +8,67 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+    <!-- <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+         <div class="container">
+             Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { class = "navbar-brand" })
+             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                     aria-expanded="false" aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                 <ul class="navbar-nav flex-grow-1">
+                     <li>Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { class = "nav-link" })</li>
+                     <li>Html.ActionLink("About", "About", "Home", new { area = "" }, new { class = "nav-link" })</li>
+                     <li>Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { class = "nav-link" })</li>
+                     <li>Html.ActionLink("Browse", "Package", "TravelPackagfe", new { area = "" }, new { class = "nav-link" })</li>
+                     <li>Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { class = "nav-link" })</li>
+                 </ul>
+             </div>
+         </div>
+     </nav>-->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container d-flex align-items-center">
+
+            <!-- Hamburger (ALWAYS visible) -->
+            <button class="navbar-toggler me-2" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#hamburgerMenu"
+                    aria-controls="hamburgerMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+
+            <!-- Logo -->
+            <div class="navbar-brand m-0">
+                YourLogo
             </div>
+
+            <!-- Spacer -->
+            <div class="flex-grow-1"></div>
+
+            <!-- Search bar (ALWAYS visible, outside hamburger) -->
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+
+        </div>
+
+        <!-- Collapsible Hamburger Menu -->
+        <div class="collapse bg-dark" id="hamburgerMenu">
+            <ul class="navbar-nav px-3 py-2">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/Home/About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/Home/Contact">Contact</a>
+                </li>
+            </ul>
         </div>
     </nav>
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />

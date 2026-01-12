@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,12 @@ namespace TourismWebsiteAssignment.Models
 
         [Required]
         public int BookingStatusId { get; set; }
+
+        [Required]
+        public int PackageId { get; set; }
+
+        [ForeignKey("PackageId")]
+        public virtual ICollection<TravelPackage> Package { get; set; }
 
         [ForeignKey("TouristProfileId")]
         public virtual TouristProfile Tourist { get; set; }

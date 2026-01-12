@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<!-- ========== WELCOME / HEADER ========== -->
+<div class="Welcome-container">
+    <h3>
+        Welcome, #UserName <!-- bind logged-in user name -->
+    </h3>
+    <h4>
+        #UserEmailOrRole <!-- optional: email / role -->
+    </h4>
+    <p>Here is your overview</p>
+</div>
+
+<!-- ========== SUMMARY / KPI ========== -->
+<div class="Summary-container">
+    <h3>Overview</h3>
+    <ul>
+        <li>Total Bookings</li>
+        <li>Upcoming Trips</li>
+        <li>Pending Payments</li>
+        <li>Feedback Submitted</li>
+    </ul>
+</div>
+
+<!-- ========== QUICK ACTIONS ========== -->
+<div class="Quick-actions">
+    <ul>
+        <li>
+            <button>
+                <a href="#" onclick="loadUserSection('MyBookings'); return false;">My Bookings</a>
+            </button>
+        </li>
+        <li>
+            <button>
+                <a href="#" onclick="loadUserSection('Payments'); return false;">Payments</a>
+            </button>
+        </li>
+        <li>
+            <button>
+                <a href="#" onclick="loadUserSection('MyProfile'); return false;">Profile</a>
+            </button>
+        </li>
+        <li>
+            <button>
+                <a href="#" onclick="loadUserSection('Feedback'); return false;">Feedback</a>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<!-- ========== RECENT SECTION (2-COLUMN) ========== -->
+<div class="Recent-Container">
+
+    <!-- Left: Recent Bookings -->
+    <div class="Recent-Bookings">
+        <h3>Recent Bookings</h3>
+        <ul>
+            <li>Package / TourDate / Status</li>
+            <!-- loop items here later -->
+        </ul>
+    </div>
+
+    <!-- Right: Upcoming Trips -->
+    <div class="Recent-Packages">
+        <h3>Upcoming Trips</h3>
+        <ul>
+            <li>PackageName / StartDate / Countdown</li>
+            <!-- loop items here later -->
+        </ul>
+    </div>
+
+</div>
+
+<!-- ========== FEEDBACK SECTION ========== -->
+<div class="Feedback-Container">
+    <h3>Your Recent Feedback</h3>
+    <ul>
+        <li>
+            <div class="Feedback-card">
+                <h3>PackageName</h3>
+                <h4>Rating (x/5)</h4>
+                <p>Comment</p>
+            </div>
+        </li>
+        <!-- loop feedback cards here later -->
+    </ul>
+</div>

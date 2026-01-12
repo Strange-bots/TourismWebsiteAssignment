@@ -137,5 +137,16 @@ namespace TourismWebsiteAssignment.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult DashboardList()
+        {
+            var bookings = db.Bookings
+                .Include(b => b.TourDate)
+                .Include(b => b.Tourist)
+                .ToList();
+
+            return PartialView("DashboardBookings", bookings);
+        }
+
     }
 }

@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Settings";
+}
+
+
+<div class="dashboard-section">
+
+    <h2>Settings</h2>
+    <p class="section-subtitle">Manage your account, preferences, and security settings</p>
+
+    <div class="settings-card">
+
+        <div class="settings-group">
+            <h4>Account Settings</h4>
+
+            <div class="settings-row">
+                <label>Full Name</label>
+                <input type="text" value="Sachin Thapa" disabled />
+            </div>
+
+            <div class="settings-row">
+                <label>Email</label>
+                <input type="email" value="sachin@agency.com" disabled />
+            </div>
+
+            <div class="settings-row">
+                <label>Username</label>
+                <input type="text" value="agentSachin" disabled />
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4>Security</h4>
+
+            <div class="settings-row">
+                <label>Password</label>
+                <input type="password" value="********" disabled />
+            </div>
+
+            <div class="settings-actions">
+                <button class="btn btn-password">Change Password</button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4>Preferences</h4>
+
+            <div class="settings-row">
+                <label>Notifications</label>
+                <select>
+                    <option>Enabled</option>
+                    <option>Disabled</option>
+                </select>
+            </div>
+
+            <div class="settings-row">
+                <label>Language</label>
+                <select>
+                    <option>English</option>
+                    <option>Spanish</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-actions">
+            <button class="btn btn-save">Save Changes</button>
+        </div>
+
+    </div>
+
+</div>
+
+

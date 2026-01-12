@@ -1,0 +1,75 @@
+﻿@{ 
+    ViewBag.Title = "TourDatews";
+}
+
+<div class="dashboard-section">
+
+    <div class="section-header">
+        <h2>Tour Dates</h2>
+        <button class="btn btn-add">+ Add Tour Date</button>
+    </div>
+
+    <p class="section-subtitle">Manage package availability, pricing adjustments, and capacity</p>
+
+    <div class="table-container">
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Tour ID</th>
+                    <th>Package</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Slots (Available/Total)</th>
+                    <th>Price Adjustment</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>#T101</td>
+                    <td>Bali Getaway</td>
+                    <td>12 Jan 2026</td>
+                    <td>15 Jan 2026</td>
+                    <td>4 / 20</td>
+                    <td>$0</td>
+                    <td><span class="status open">Open</span></td>
+                    <td>
+                        <button class="btn btn-edit">Edit</button>
+                        <button class="btn btn-close">Close</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>#T102</td>
+                    <td>Nepal Trek Adventure</td>
+                    <td>18 Jan 2026</td>
+                    <td>25 Jan 2026</td>
+                    <td>0 / 15</td>
+                    <td>+$150</td>
+                    <td><span class="status closed">Closed</span></td>
+                    <td>
+                        <button class="btn btn-edit">Edit</button>
+                        <button class="btn btn-open">Reopen</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>#T103</td>
+                    <td>Japan Explorer</td>
+                    <td>01 Feb 2026</td>
+                    <td>07 Feb 2026</td>
+                    <td>10 / 25</td>
+                    <td>-$50</td>
+                    <td><span class="status open">Open</span></td>
+                    <td>
+                        <button class="btn btn-edit">Edit</button>
+                        <button class="btn btn-close">Close</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

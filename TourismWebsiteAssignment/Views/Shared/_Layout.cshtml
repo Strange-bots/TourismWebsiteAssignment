@@ -6,231 +6,9 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-    :root {
-        --nav-bg: #111827;
-        --nav-fg: #f9fafb;
-        --nav-muted: #cbd5e1;
-        --panel-bg: #0b1220;
-        --border: rgba(255,255,255,0.10);
-        --shadow: 0 10px 30px rgba(0,0,0,0.35);
-        --radius: 12px;
-        --h: 64px;
-    }
-
-    /* Base navbar layout */
-    .nav {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        height: var(--h);
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        align-items: center;
-        gap: 12px;
-        padding: 0 16px;
-        background: var(--nav-bg);
-        color: var(--nav-fg);
-        border-bottom: 1px solid var(--border);
-    }
-
-    .nav-left, .nav-center, .nav-right {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav-center {
-        justify-content: center;
-    }
-
-    .nav-right {
-        justify-content: flex-end;
-    }
-
-    /* Hamburger toggle (checkbox hidden) */
-    .nav-toggle {
-        position: absolute;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-        .hamburger {
-            width: 50px;
-            height: 44px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            cursor: pointer;
-            user-select: none;
-            background: transparent;
-        }
-
-            /* The lines */
-            .hamburger span {
-                display: block;
-                width: 30px;
-                height: 2px;
-                background-color: var(--nav-fg);
-                border-radius: 2px;
-                transition: all 0.25s ease-in-out;
-                transform-origin: center;
-            }
-
-
-    .hamburger span + span {
-        margin-top: 4px;
-    }
-    /* Dropdown menu */
-    .nav-dropdown {
-        position: absolute;
-        top: calc(var(--h) - 6px);
-        left: 16px;
-        width: 240px;
-        background: var(--panel-bg);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 10px;
-        display: none;
-    }
-
-        .nav-dropdown ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-            /* Style the actual links */
-            .nav-dropdown ul li a {
-                color: aliceblue;
-                text-decoration: none;
-                display: block; /* makes the whole row clickable */
-                padding: 10px 10px;
-                border-radius: 10px;
-            }
-
-                .nav-dropdown ul li a:hover {
-                    background: rgba(255,255,255,0.08);
-                }
-
-        .nav-item {
-            display: block;
-            padding: 10px 10px;
-            border-radius: 10px;
-            color: var(--nav-fg);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-    .nav-item:hover {
-        background: rgba(255,255,255,0.08);
-    }
-
-        /* When checked → animate to X */
-        .nav-toggle:checked + .hamburger span:nth-child(1) {
-            transform: translateY(10.5px) rotate(45deg);
-        }
-
-        .nav-toggle:checked + .hamburger span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .nav-toggle:checked + .hamburger span:nth-child(3) {
-            transform: translateY(-10.5px) rotate(-45deg);
-        }
-
-
-    /* Show dropdown when checked */
-    .nav-toggle:checked ~ .nav-dropdown {
-        display: block;
-    }
-
-    /* Search bar centered */
-    .nav-search {
-        width: min(320px, 100%);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        background: rgba(255,255,255,0.06);
-    }
-
-    .nav-search input {
-        flex: 1;
-        min-width: 120px;
-        border: none;
-        outline: none;
-        background: transparent;
-        color: var(--nav-fg);
-        padding: 10px 12px;
-        font-size: 14px;
-    }
-
-    .nav-search input::placeholder {
-        color: var(--nav-muted);
-    }
-
-    .nav-search button {
-        border: 1px solid var(--border);
-        background: rgba(255,255,255,0.10);
-        color: var(--nav-fg);
-        padding: 10px 14px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 14px;
-        align-self:flex-end;
-    }
-
-    .nav-search button:hover {
-        background: rgba(255,255,255,0.16);
-    }
-
-    /* Logo on right */
-    .brand {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        overflow: hidden;
-        text-decoration: none;
-    }
-
-    .brand-logo {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-    </style>
+    <link rel="stylesheet" href="~/Content/root.css" />
 </head>
 <body>
-    <!-- <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-         <div class="container">
-             Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { class = "navbar-brand" })
-             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                     aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
-             </button>
-             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                 <ul class="navbar-nav flex-grow-1">
-                     <li>Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { class = "nav-link" })</li>
-                     <li>Html.ActionLink("About", "About", "Home", new { area = "" }, new { class = "nav-link" })</li>
-                     <li>Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { class = "nav-link" })</li>
-                     <li>Html.ActionLink("Browse", "Package", "TravelPackagfe", new { area = "" }, new { class = "nav-link" })</li>
-                     <li>Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { class = "nav-link" })</li>
-                 </ul>
-             </div>
-         </div>
-     </nav>-->
     <nav class="nav">
         <!-- Left: Hamburger (always visible) -->
         <div class="nav-left">
@@ -248,7 +26,7 @@
                 <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Browse", "Package", "TravelPackagfe", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Login", "Index", "LoginRegistration", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
             </div>
         </div>
@@ -263,9 +41,7 @@
 
         <!-- Right: Company logo -->
         <div class="nav-right">
-            <a href="#" class="brand">
-                <img src="/Content/images/logo.png" alt="Company Logo" class="brand-logo" />
-            </a>
+          @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
         </div>
     </nav>
 

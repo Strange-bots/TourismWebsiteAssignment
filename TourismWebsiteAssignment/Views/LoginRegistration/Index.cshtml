@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="~/Content/login.css" />
+<div class="Page-Container">
+    <div class="login-container">
+        <span id="login-text">Login</span>
+        <input type="text" placeholder="Username" />
+        <input type="password" placeholder="Password" />
+        <button class="nav-link" onclick="">Login</button>
+        <button class="nav-link" onclick="location.href='@Url.Action("Create", "Users")'">
+            Sign Up
+        </button>
+
+    </div>
+</div>
+

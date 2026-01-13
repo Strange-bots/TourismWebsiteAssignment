@@ -130,6 +130,7 @@
     <Compile Include="Controllers\BookingStatusController.cs" />
     <Compile Include="Controllers\FeedbacksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginRegistrationController.cs" />
     <Compile Include="Controllers\PackageImagesController.cs" />
     <Compile Include="Controllers\PaymentTransactionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -182,6 +183,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\root.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -289,6 +292,8 @@
     <Content Include="Views\Tourist\Feedback.cshtml" />
     <Content Include="Views\Tourist\Payments.cshtml" />
     <Content Include="Views\Tourist\Profile.cshtml" />
+    <Content Include="Views\LoginRegistration\Index.cshtml" />
+    <Content Include="Views\LoginRegistration\Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

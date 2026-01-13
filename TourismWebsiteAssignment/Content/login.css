@@ -1,0 +1,88 @@
+﻿/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full page background */
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e") no-repeat center center / cover;
+}
+
+/* Page container to control alignment */
+.Page-Container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center; /* Push content to right */
+    align-items: center; /* Vertically center */
+    padding-right: 80px; /* Space from right edge */
+}
+
+/* Login box */
+.login-container {
+    width: 350px;
+    padding: 30px 25px;
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content:center;
+}
+
+/* Title */
+#login-text {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+/* Inputs */
+.login-container input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width:100%;
+}
+/* Buttons */
+.login-container button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+    .login-container button:hover {
+        background-color: #2980b9;
+    }
+
+    /* Second button (Sign Up) style */
+    .login-container button:last-child {
+        background-color: #2ecc71;
+    }
+
+        .login-container button:last-child:hover {
+            background-color: #27ae60;
+        }
+@media (max-width: 768px) {
+    .Page-Container {
+        justify-content: center;
+        padding-right: 0;
+    }
+
+    .login-container {
+        width: 90%;
+    }
+}

@@ -1,41 +1,6 @@
 ﻿@{
-    ViewBag.Title = "Agent Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AgentDashboardLayout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/dashboard.css" />
-<div class="dashboard-wrapper">
+<h2>Users</h2>
 
-    <div class="sidebar">
-        <ul class="nav-list">
-            <li><a href="#" onclick="loadSection('Home'); return false;">Home</a></li>
-            <li><a href="#" onclick="loadSection('Packages'); return false;">Packages</a></li>
-            <li><a href="#" onclick="loadSection('TourDates'); return false;">Tour Dates</a></li>
-            <li><a href="#" onclick="loadSection('Bookings'); return false;">Bookings</a></li>
-            <li><a href="#" onclick="loadSection('Profile'); return false;">Profile</a></li>
-            <li><a href="#" onclick="loadSection('Settings'); return false;">Settings</a></li>
-        </ul>
-    </div>
-
-    <div class="main-content" id="mainContent">
-        @Html.Partial("Home")
-    </div>
-
-</div>
-
-@section Scripts {
-    <script>
-        function loadSection(section) {
-            $.ajax({
-                url: '/Agent/LoadSection',
-                type: 'GET',
-                data: { section: section },
-                success: function (result) {
-                    $('#mainContent').html(result);
-                },
-                error: function () {
-                    alert('Error loading section.');
-                }
-            });
-        }
-    </script>
-}
+<p>This is the users list page.</p>

@@ -50,7 +50,7 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "AgencyId,UserId,AgencyName,LicenseNumber,ContactNumber,AgencyAddress,ContactPerson,PhoneNumber,AgencyDescription,CreatedAt,UpdatedAt,LogoUrl")] TravelAgency travelAgency)
+        public async Task<ActionResult> Create([Bind(Include = "AgencyId,UserId,AgencyName,LicenseNumber,ContactNumber,AgencyAddress,ContactPerson,PhoneNumber,AgencyDescription,LogoUrl")] TravelAgency travelAgency)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "AgencyId,UserId,AgencyName,LicenseNumber,ContactNumber,AgencyAddress,ContactPerson,PhoneNumber,AgencyDescription,CreatedAt,UpdatedAt,LogoUrl")] TravelAgency travelAgency)
+        public async Task<ActionResult> Edit([Bind(Include = "AgencyId,UserId,AgencyName,LicenseNumber,ContactNumber,AgencyAddress,ContactPerson,PhoneNumber,AgencyDescription,LogoUrl")] TravelAgency travelAgency)
         {
             if (ModelState.IsValid)
             {

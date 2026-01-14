@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
@@ -33,7 +31,9 @@ namespace TourismWebsiteAssignment.Controllers
             }
 
             string input = usernameOrEmail.Trim();
-            string hashedPassword = HashSha256(password);
+
+            // ❌ HASHING DISABLED
+            // string hashedPassword = HashSha256(password);
 
             // 2) Find user by username OR email
             var user = await db.Users
@@ -43,26 +43,29 @@ namespace TourismWebsiteAssignment.Controllers
                     u.Email.Equals(input, StringComparison.OrdinalIgnoreCase)
                 );
 
-            // 3) Validate credentials
-            if (user == null || !string.Equals(user.Password, hashedPassword, StringComparison.OrdinalIgnoreCase))
+            // 3) Validate credentials (PLAIN TEXT COMPARISON)
+            if (user == null || user.Password != password)
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
                 return View();
             }
 
-            // 4) Create a simple session (basic approach)
+            // 4) Create session
             Session["UserId"] = user.UserId;
             Session["FullName"] = user.FullName;
             Session["RoleName"] = user.Role != null ? user.Role.RoleName : null;
 
-            // Redirect based on role (adjust to your routes/controllers)
+            // 5) Redirect based on role
             string role = (user.Role != null ? user.Role.RoleName : "").Trim();
 
             if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
-                return RedirectToAction("Index", "AdminDashboard");
+                return RedirectToAction("AdminHome", "Admin");
 
-            if (role.Equals("Agency", StringComparison.OrdinalIgnoreCase))
-                return RedirectToAction("Index", "AgentDashboard");
+            if (role.Equals("Agent", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Index", "Agent");
+
+            if (role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Index", "Tourist");
 
             // default Tourist
             return RedirectToAction("Index", "Home");
@@ -76,7 +79,14 @@ namespace TourismWebsiteAssignment.Controllers
             return RedirectToAction("Index");
         }
 
-        // SHA256 hashing helper (hex string)
+        /*
+        ============================
+        HASHING DISABLED FOR NOW
+        ============================
+
+        This method is intentionally commented.
+        You can re-enable it later for production security.
+
         private static string HashSha256(string value)
         {
             using (var sha = SHA256.Create())
@@ -86,11 +96,12 @@ namespace TourismWebsiteAssignment.Controllers
 
                 var sb = new StringBuilder(hash.Length * 2);
                 foreach (byte b in hash)
-                    sb.Append(b.ToString("x2")); // hex lowercase
+                    sb.Append(b.ToString("x2"));
 
                 return sb.ToString();
             }
         }
+        */
 
         protected override void Dispose(bool disposing)
         {

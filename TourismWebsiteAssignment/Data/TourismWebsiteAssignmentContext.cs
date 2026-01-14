@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using TourismWebsiteAssignment.Models;
-using System.Data.Entity.ModelConfiguration.Conventions;
 namespace TourismWebsiteAssignment.Data
 {
     public class TourismWebsiteAssignmentContext : DbContext
@@ -68,7 +69,45 @@ namespace TourismWebsiteAssignment.Data
                 .HasForeignKey(f => f.BookingId)
                 .WillCascadeOnDelete(false);
         }
+        //Auto Uptdate the timestamp
+        public override int SaveChanges()
+        {
+            ApplyAuditTimestamps();
+            return base.SaveChanges();
+        }
 
-    }
+        public override Task<int> SaveChangesAsync()
+        {
+            ApplyAuditTimestamps();
+            return base.SaveChangesAsync();
+        }
+
+        private void ApplyAuditTimestamps()
+        {
+            var now = DateTime.Now; // Or DateTime.UtcNow (recommended if you can)
+
+            // Only entities that *have* UpdatedAt/CreatedAt properties will be touched
+            foreach (var entry in ChangeTracker.Entries()
+                         .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                var updatedAtProp = entry.Entity.GetType().GetProperty("UpdatedAt");
+                if (updatedAtProp != null && updatedAtProp.PropertyType == typeof(DateTime))
+                {
+                    updatedAtProp.SetValue(entry.Entity, now);
+                }
+
+                if (entry.State == EntityState.Added)
+                {
+                    var createdAtProp = entry.Entity.GetType().GetProperty("CreatedAt");
+                    if (createdAtProp != null && createdAtProp.PropertyType == typeof(DateTime))
+                    {
+                        // If you want to always force CreatedAt on insert:
+                        createdAtProp.SetValue(entry.Entity, now);
+                    }
+                }
+            }
+        }
+
+        }
 }
     

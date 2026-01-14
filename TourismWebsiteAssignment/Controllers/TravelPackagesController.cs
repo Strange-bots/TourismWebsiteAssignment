@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -15,23 +14,22 @@ namespace TourismWebsiteAssignment.Controllers
     public class TravelPackagesController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
-        private object travelpackages;
 
         // GET: TravelPackages
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             var travelPackages = db.TravelPackages.Include(t => t.TravelAgency);
-            return View(await travelPackages.ToListAsync());
+            return View(travelPackages.ToList());
         }
 
         // GET: TravelPackages/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TravelPackage travelPackage = await db.TravelPackages.FindAsync(id);
+            TravelPackage travelPackage = db.TravelPackages.Find(id);
             if (travelPackage == null)
             {
                 return HttpNotFound();
@@ -51,12 +49,12 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PackageId,AgencyId,PackageTitle,PackageDescription,Destination,PricePerPerson,GroupMaxSize,Inclusions,Exclusions,ItineraryDetails,TermsAndConditions,CreatedAt,UpdatedAt")] TravelPackage travelPackage)
+        public ActionResult Create([Bind(Include = "PackageId,AgencyId,PackageTitle,PackageDescription,Destination,PricePerPerson,GroupMaxSize,Inclusions,Exclusions,ItineraryDetails,TermsAndConditions")] TravelPackage travelPackage)
         {
             if (ModelState.IsValid)
             {
                 db.TravelPackages.Add(travelPackage);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -65,13 +63,13 @@ namespace TourismWebsiteAssignment.Controllers
         }
 
         // GET: TravelPackages/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TravelPackage travelPackage = await db.TravelPackages.FindAsync(id);
+            TravelPackage travelPackage = db.TravelPackages.Find(id);
             if (travelPackage == null)
             {
                 return HttpNotFound();
@@ -85,12 +83,12 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "PackageId,AgencyId,PackageTitle,PackageDescription,Destination,PricePerPerson,GroupMaxSize,Inclusions,Exclusions,ItineraryDetails,TermsAndConditions,CreatedAt,UpdatedAt")] TravelPackage travelPackage)
+        public ActionResult Edit([Bind(Include = "PackageId,AgencyId,PackageTitle,PackageDescription,Destination,PricePerPerson,GroupMaxSize,Inclusions,Exclusions,ItineraryDetails,TermsAndConditions")] TravelPackage travelPackage)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(travelPackage).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.AgencyId = new SelectList(db.TravelAgencies, "AgencyId", "AgencyName", travelPackage.AgencyId);
@@ -98,13 +96,13 @@ namespace TourismWebsiteAssignment.Controllers
         }
 
         // GET: TravelPackages/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TravelPackage travelPackage = await db.TravelPackages.FindAsync(id);
+            TravelPackage travelPackage = db.TravelPackages.Find(id);
             if (travelPackage == null)
             {
                 return HttpNotFound();
@@ -115,11 +113,11 @@ namespace TourismWebsiteAssignment.Controllers
         // POST: TravelPackages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            TravelPackage travelPackage = await db.TravelPackages.FindAsync(id);
+            TravelPackage travelPackage = db.TravelPackages.Find(id);
             db.TravelPackages.Remove(travelPackage);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -130,13 +128,6 @@ namespace TourismWebsiteAssignment.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public ActionResult DashboardList()
-        {
-            var traverlpackages = db.TravelPackages.Include(t => t.TravelAgency).ToList();
-
-            return PartialView("DashboardBookings", travelpackages);
         }
     }
 }

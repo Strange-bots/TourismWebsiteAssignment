@@ -4,34 +4,31 @@ namespace TourismWebsiteAssignment.Controllers
 {
     public class TouristController : Controller
     {
+        // GET: Tourist
         public ActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
-        public ActionResult LoadSection(string section)
+
+        public ActionResult Bookings()
         {
-            switch ((section ?? "").Trim())
-            {
-                case "Home":
-                    return PartialView("Home");
+            return View();
+        }
 
-                case "MyBookings":
-                    return PartialView("MyBookings");
+        public ActionResult Payments()
+        {
+            return View();
+        }
 
-                case "MyProfile":
-                    return PartialView("Profile");
+        public ActionResult Feedback()
+        {
+            return View();
+        }
 
-                case "Payments":
-                    return PartialView("Payments");
-
-                case "Feedback":
-                    return PartialView("Feedback");
-
-                default:
-                    return PartialView("Home");
-            }
+        public ActionResult Settings()
+        {
+            return View();
         }
     }
 }

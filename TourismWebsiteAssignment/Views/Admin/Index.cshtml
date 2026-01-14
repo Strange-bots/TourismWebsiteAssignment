@@ -1,42 +1,6 @@
 ﻿@{
-    ViewBag.Title = "Admin Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/dashboard.css" />
-<div class="dashboard-wrapper">
+<h2>Users</h2>
 
-    <div class="sidebar">
-        <ul class="nav-list">
-            <li><a href="#" onclick="loadSection('Home'); return false;">Home</a></li>
-            <li><a href="#" onclick="loadSection('Users'); return false;">Users</a></li>
-            <li><a href="#" onclick="loadSection('TravelAgencies'); return false;">Agencies</a></li>
-            <li><a href="#" onclick="loadSection('Bookings'); return false;">Bookings</a></li>
-            <li><a href="#" onclick="loadSection('Payment'); return false;">Payment</a></li>
-            <li><a href="#" onclick="loadSection('Feedback'); return false;">Feedback</a></li>
-            <li><a href="#" onclick="loadSection('Settings'); return false;">Settings</a></li>
-        </ul>
-    </div>
-
-    <div class="main-content" id="mainContent">
-        @Html.Partial("Home")
-    </div>
-
-</div>
-
-@section Scripts {
-    <script>
-        function loadSection(section) {
-            $.ajax({
-                url: '/Admin/LoadSection',
-                type: 'GET',
-                data: { section: section },
-                success: function (result) {
-                    $('#mainContent').html(result);
-                },
-                error: function () {
-                    alert('Error loading section.');
-                }
-            });
-        }
-    </script>
-}
+<p>This is the users list page.</p>

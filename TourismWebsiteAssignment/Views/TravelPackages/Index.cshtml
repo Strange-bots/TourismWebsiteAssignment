@@ -2,8 +2,9 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
-<!--
+
 <h2>Index</h2>
 
 <p>
@@ -41,12 +42,6 @@
         <th>
             @Html.DisplayNameFor(model => model.TermsAndConditions)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </th>
         <th></th>
     </tr>
 
@@ -83,12 +78,6 @@
             @Html.DisplayFor(modelItem => item.TermsAndConditions)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedAt)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PackageId }) |
             @Html.ActionLink("Details", "Details", new { id=item.PackageId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.PackageId })
@@ -97,4 +86,3 @@
 }
 
 </table>
--->

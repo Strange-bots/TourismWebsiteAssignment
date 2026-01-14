@@ -1,0 +1,13 @@
+﻿@{ 
+    ViewBag.Title= "_TouristNav";
+}
+
+<ul class="nav-list">
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("Packages", "Index", "TravelPackages")</li>
+    <li>@Html.ActionLink("Bookings", "Index", "Bookings")</li>
+    <li>@Html.ActionLink("Profile", "Index", "TouristProfiles")</li>
+    <li>@Html.ActionLink("Payments", "Index", "PaymentTransactions")</li>
+    <li>@Html.ActionLink("Feedback", "Index", "Feedbacks")</li>
+    <li>@Html.ActionLink("Logout", "Logout", "Users")</li>
+</ul>

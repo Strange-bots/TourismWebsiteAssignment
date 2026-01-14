@@ -1,44 +1,6 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    Layout = "~/Views/Shared/_AgentDashboardLayout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/dashboard.css" />
-<div class="dashboard-wrapper">
+<h2>Users</h2>
 
-    <!-- ========== SIDEBAR ========== -->
-    <div class="sidebar">
-        <ul class="nav-list">
-            <li><a href="#" onclick="loadUserSection('Home'); return false;">Home</a></li>
-            <li><a href="#" onclick="loadUserSection('MyBookings'); return false;">My Bookings</a></li>
-            <li><a href="#" onclick="loadUserSection('Packages For you'); return false;">My Bookings</a></li>
-            <li><a href="#" onclick="loadUserSection('MyProfile'); return false;">My Profile</a></li>
-            <li><a href="#" onclick="loadUserSection('Payments'); return false;">Payments</a></li>
-            <li><a href="#" onclick="loadUserSection('Feedback'); return false;">Feedback</a></li>
-            <li><a href="@Url.Action("Logout", "Users")">Logout</a></li>
-        </ul>
-    </div>
-
-    <!-- ========== MAIN CONTENT ========== -->
-    <div class="main-content" id="userMainContent">
-        @Html.Partial("Home")
-    </div>
-
-</div>
-
-@section Scripts {
-    <script>
-        function loadUserSection(section) {
-            $.ajax({
-                url: '/Tourist/LoadSection',
-                type: 'GET',
-                data: { section: section },
-                success: function (result) {
-                    $('#userMainContent').html(result);
-                },
-                error: function () {
-                    alert('Error loading section.');
-                }
-            });
-        }
-    </script>
-}
+<p>This is the users list page.</p>

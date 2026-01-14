@@ -152,6 +152,10 @@
     <Compile Include="Migrations\202601100530588_LinkBetweenPackageAndBookingTable.Designer.cs">
       <DependentUpon>202601100530588_LinkBetweenPackageAndBookingTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202601140031008_PackageIdAuto.cs" />
+    <Compile Include="Migrations\202601140031008_PackageIdAuto.Designer.cs">
+      <DependentUpon>202601140031008_PackageIdAuto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
@@ -265,36 +269,29 @@
     <Content Include="Views\TravelAgencies\Details.cshtml" />
     <Content Include="Views\TravelAgencies\Edit.cshtml" />
     <Content Include="Views\TravelAgencies\Index.cshtml" />
-    <Content Include="Views\TravelPackages\Create.cshtml" />
-    <Content Include="Views\TravelPackages\Delete.cshtml" />
-    <Content Include="Views\TravelPackages\Details.cshtml" />
-    <Content Include="Views\TravelPackages\Edit.cshtml" />
-    <Content Include="Views\TravelPackages\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Agent\Home.cshtml" />
-    <Content Include="Views\Agent\Index.cshtml" />
-    <Content Include="Views\Agent\Profile.cshtml" />
-    <Content Include="Views\Agent\Packages.cshtml" />
-    <Content Include="Views\Agent\TourDates.cshtml" />
-    <Content Include="Views\Agent\Bookings.cshtml" />
-    <Content Include="Views\Agent\Settings.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Settings.cshtml" />
-    <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Bookings\DashboardBookings.cshtml" />
-    <Content Include="Views\TravelPackages\DashboardPackages.cshtml" />
-    <Content Include="Views\Tourist\Index.cshtml" />
-    <Content Include="Views\Tourist\Home.cshtml" />
-    <Content Include="Views\Tourist\MyBookings.cshtml" />
-    <Content Include="Views\Tourist\Feedback.cshtml" />
-    <Content Include="Views\Tourist\Payments.cshtml" />
-    <Content Include="Views\Tourist\Profile.cshtml" />
     <Content Include="Views\LoginRegistration\Index.cshtml" />
     <Content Include="Views\LoginRegistration\Registration.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminDashboardLayout.cshtml" />
+    <Content Include="Views\Shared\AgentDashboardLayout.cshtml" />
+    <Content Include="Views\Shared\_TouristDashboardLayout.cshtml" />
+    <Content Include="Views\Shared\_AgentNav.cshtml" />
+    <Content Include="Views\TravelPackages\Create.cshtml" />
+    <Content Include="Views\TravelPackages\Delete.cshtml" />
+    <Content Include="Views\TravelPackages\Details.cshtml" />
+    <Content Include="Views\TravelPackages\Edit.cshtml" />
+    <Content Include="Views\TravelPackages\Index.cshtml" />
+    <Content Include="Views\Shared\_TouristNav.cshtml" />
+    <Content Include="Views\Tourist\Index.cshtml" />
+    <Content Include="Views\Agent\Index.cshtml" />
+    <Content Include="Views\Shared\_AgentDashboardLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -332,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202601100530588_LinkBetweenPackageAndBookingTable.resx">
       <DependentUpon>202601100530588_LinkBetweenPackageAndBookingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601140031008_PackageIdAuto.resx">
+      <DependentUpon>202601140031008_PackageIdAuto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,7 +1,7 @@
 ﻿@model TourismWebsiteAssignment.Models.User
 
 @{
-    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
 
 <h2>Edit</h2>
@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>User</h4>
         <hr />

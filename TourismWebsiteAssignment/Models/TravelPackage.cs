@@ -8,6 +8,8 @@ namespace TourismWebsiteAssignment.Models
     public class TravelPackage
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int PackageId { get; set; }
 
         [Required]

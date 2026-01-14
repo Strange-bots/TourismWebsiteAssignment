@@ -1,0 +1,22 @@
+INSERT INTO Roles (Name) VALUES ('Admin'), ('Tourist'), ('Agency');
+INSERT INTO Users (Username, Email, PasswordHash, RoleId, CreatedAt, UpdatedAt)
+VALUES 
+('john_doe', 'john@example.com', 'HASHED_PASSWORD', 2, GETDATE(), GETDATE()),
+('agency_one', 'agency@example.com', 'HASHED_PASSWORD', 3, GETDATE(), GETDATE());
+INSERT INTO TravelAgencies (Name, Address, Phone, UserId, CreatedAt, UpdatedAt)
+VALUES ('Everest Travels', 'Kathmandu, Nepal', '9800000000', 2, GETDATE(), GETDATE());
+INSERT INTO TravelPackages (Title, Description, Price, TravelAgencyId, CreatedAt, UpdatedAt)
+VALUES ('Everest Base Camp Trek', '14 days trekking package', 1200.00, 1, GETDATE(), GETDATE());
+INSERT INTO PackageImages (ImageUrl, TravelPackageId, CreatedAt, UpdatedAt)
+VALUES ('/images/ebc1.jpg', 1, GETDATE(), GETDATE());
+INSERT INTO TourDates (TravelPackageId, StartDate, EndDate, AvailableSeats, CreatedAt, UpdatedAt)
+VALUES (1, '2026-03-01', '2026-03-14', 10, GETDATE(), GETDATE());
+INSERT INTO BookingStatus (StatusName) VALUES ('Pending'), ('Confirmed'), ('Cancelled');
+INSERT INTO TouristProfiles (UserId, FullName, Phone, CreatedAt, UpdatedAt)
+VALUES (1, 'John Doe', '9811111111', GETDATE(), GETDATE());
+INSERT INTO Bookings (TouristId, TourDateId, BookingStatusId, TotalAmount, CreatedAt, UpdatedAt)
+VALUES (1, 1, 1, 1200.00, GETDATE(), GETDATE());
+INSERT INTO PaymentTransactions (BookingId, Amount, PaymentMethod, TransactionDate, CreatedAt, UpdatedAt)
+VALUES (1, 1200.00, 'Card', GETDATE(), GETDATE(), GETDATE());
+INSERT INTO Feedbacks (TouristId, BookingId, Comment, Rating, CreatedAt, UpdatedAt)
+VALUES (1, 1, 'Amazing experience!', 5, GETDATE(), GETDATE());

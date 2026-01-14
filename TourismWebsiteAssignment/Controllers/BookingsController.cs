@@ -147,6 +147,9 @@ namespace TourismWebsiteAssignment.Controllers
 
             return PartialView("DashboardBookings", bookings);
         }
-
+        public ActionResult TouristBookingView()
+        {
+            return View();
+        }
     }
 }

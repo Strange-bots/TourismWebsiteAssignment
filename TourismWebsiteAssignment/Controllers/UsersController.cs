@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
 
@@ -41,8 +42,12 @@ namespace TourismWebsiteAssignment.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName");
-            return View();
+            ViewBag.RoleId = new SelectList(
+           db.Roles.Where(r => r.RoleName != "Admin"),
+           "RoleId",
+           "RoleName"
+       );
+                return View();
         }
 
         // POST: Users/Create

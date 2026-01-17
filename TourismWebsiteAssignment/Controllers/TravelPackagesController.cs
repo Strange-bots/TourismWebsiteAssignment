@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
@@ -128,6 +129,63 @@ namespace TourismWebsiteAssignment.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public async Task<ActionResult> OnlyView()
+        {
+            var travelPackages = await db.TravelPackages
+                .Include(t => t.TravelAgency)
+                .ToListAsync();
+
+            return View(travelPackages);
+        }
+
+
+        //AGENT - MY PACKAGES
+        public async Task<ActionResult> AgentMyPackages()
+        {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            var role = (Session["RoleName"] as string ?? "").Trim();
+            if (!role.Equals("Agent", StringComparison.OrdinalIgnoreCase))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            int userId = (int)Session["UserId"];
+
+            // Check if agent has an agency profile first
+            var agency = await db.TravelAgencies.FirstOrDefaultAsync(a => a.UserId == userId);
+            if (agency == null)
+            {
+                // Agent must create their agency profile before packages
+                return RedirectToAction("Create", "TravelAgencies");
+            }
+
+            var packages = await db.TravelPackages
+                .Where(p => p.AgencyId == agency.AgencyId)
+                .OrderByDescending(p => p.CreatedAt)
+                .ToListAsync();
+
+            // If none, either show empty view or redirect to create
+            if (!packages.Any())
+            {
+                return RedirectToAction("Create", "TravelPackages");
+            }
+            return View(packages);
+        }
+
+        //Tourist - Browse Packages
+                public async Task<ActionResult> TouristViewPackages()
+        {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+            var role = (Session["RoleName"] as string ?? "").Trim();
+            if (!role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            var packages = await db.TravelPackages
+                .Include(p => p.TravelAgency)
+                .OrderByDescending(p => p.CreatedAt)
+                .ToListAsync();
+            return View(packages);
         }
     }
 }

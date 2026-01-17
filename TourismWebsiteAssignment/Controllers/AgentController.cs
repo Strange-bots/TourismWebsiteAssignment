@@ -1,32 +1,22 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using TourismWebsiteAssignment.Data;
 
 namespace TourismWebsiteAssignment.Controllers
 {
     public class AgentController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+        private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
 
-        public ActionResult Packages()
+        public ActionResult Index() => View();
+        protected override void Dispose(bool disposing)
         {
-            return View();
-        }
-
-        public ActionResult TourDates()
-        {
-            return View();
-        }
-
-        public ActionResult Bookings()
-        {
-            return View();
-        }
-
-        public ActionResult Settings()
-        {
-            return View();
+            if (disposing) db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

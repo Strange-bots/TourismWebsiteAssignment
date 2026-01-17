@@ -1,0 +1,88 @@
+﻿@model IEnumerable<TourismWebsiteAssignment.Models.TravelPackage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TravelAgency.AgencyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PackageTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PackageDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PricePerPerson)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupMaxSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inclusions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Exclusions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItineraryDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TermsAndConditions)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TravelAgency.AgencyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PackageTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PackageDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PricePerPerson)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GroupMaxSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inclusions)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Exclusions)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItineraryDetails)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TermsAndConditions)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PackageId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PackageId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PackageId })
+        </td>
+    </tr>
+}
+
+</table>

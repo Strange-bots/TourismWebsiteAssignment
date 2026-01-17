@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
@@ -147,6 +148,41 @@ namespace TourismWebsiteAssignment.Controllers
 
             return PartialView("DashboardBookings", bookings);
         }
+        public ActionResult OnlyEdit()
+        {
+            var bookings = db.Bookings
+                .Include(b => b.BookingStatus)
+                .Include(b => b.TourDate)
+                .Include(b => b.Tourist);
 
+            return View(bookings.ToList());
+        }
+
+        public async Task<ActionResult> AgentMyBookingsOnlyView()
+        {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            var role = (Session["RoleName"] as string ?? "").Trim();
+            if (!role.Equals("Agent", StringComparison.OrdinalIgnoreCase))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            int userId = (int)Session["UserId"];
+
+            var agency = await db.TravelAgencies.FirstOrDefaultAsync(a => a.UserId == userId);
+            if (agency == null)
+                return RedirectToAction("Create", "TravelAgencies");
+
+            var bookings = await db.Bookings
+                .Include(b => b.TourDate)
+                .Include(b => b.TourDate.TravelPackage)
+                .Include(b => b.Tourist)         // TouristProfile
+                .Include(b => b.BookingStatus)
+                .Where(b => b.TourDate.TravelPackage.AgencyId == agency.AgencyId)
+                .OrderByDescending(b => b.BookingDate)
+                .ToListAsync();
+
+            return View(bookings);
+        }
     }
 }

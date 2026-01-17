@@ -1,3 +1,24 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var role = (Session["RoleName"] as string ?? "").Trim();
+
+    if (string.IsNullOrEmpty(role))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+    }
+    else if (role.Equals("Agent", StringComparison.OrdinalIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_AgentDashboardLayout.cshtml";
+    }
+    else if (role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
+    {
+        Layout = "~/Views/Shared/_TouristDashboardLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }

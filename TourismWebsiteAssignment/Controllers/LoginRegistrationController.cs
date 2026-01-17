@@ -59,7 +59,7 @@ namespace TourismWebsiteAssignment.Controllers
             string role = (user.Role != null ? user.Role.RoleName : "").Trim();
 
             if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
-                return RedirectToAction("AdminHome", "Admin");
+                return RedirectToAction("Index", "Admin");
 
             if (role.Equals("Agent", StringComparison.OrdinalIgnoreCase))
                 return RedirectToAction("Index", "Agent");
@@ -76,7 +76,7 @@ namespace TourismWebsiteAssignment.Controllers
         {
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
 
         /*

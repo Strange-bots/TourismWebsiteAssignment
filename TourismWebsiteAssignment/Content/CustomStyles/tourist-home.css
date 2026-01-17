@@ -1,0 +1,227 @@
+﻿
+/* Page wrapper */
+.tourist-dashboard {
+    padding: 24px;
+    max-width: 1100px;
+}
+
+/* Hero */
+.tourist-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+    margin-bottom: 18px;
+}
+
+.tourist-hero__title {
+    margin: 0 0 6px 0;
+    font-size: 24px;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+}
+
+.tourist-hero__subtitle {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+    font-size: 14px;
+    max-width: 540px;
+}
+
+.tourist-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Pills */
+.tourist-pill {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid #dbeafe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+.tourist-pill--muted {
+    border-color: #e5e7eb;
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 600;
+}
+
+/* Panels */
+.tourist-panel {
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.05);
+    margin-bottom: 18px;
+}
+
+.tourist-panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.tourist-panel__title {
+    margin: 0;
+    font-size: 16px;
+    color: #0f172a;
+}
+
+.tourist-panel__hint {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Grids */
+.tourist-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.tourist-grid--stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.tourist-grid--actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Stat cards */
+.tourist-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    padding: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.tourist-card--stat:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+    border-color: #dbeafe;
+}
+
+.tourist-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tourist-card__label {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.tourist-card__value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    margin-bottom: 4px;
+}
+
+.tourist-card__note {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Actions (button-like links) */
+.tourist-action {
+    display: block;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+    .tourist-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+        border-color: #c7d2fe;
+        background: #f8fafc;
+    }
+
+    .tourist-action:active {
+        transform: translateY(0px);
+    }
+
+.tourist-action__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.tourist-action__desc {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Notes box */
+.tourist-noteBox {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.tourist-noteBox__list {
+    margin: 0;
+    padding-left: 18px;
+    color: #334155;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .tourist-grid--stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tourist-grid--actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .tourist-dashboard {
+        padding: 16px;
+    }
+
+    .tourist-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tourist-hero__meta {
+        justify-content: flex-start;
+    }
+
+    .tourist-grid--stats,
+    .tourist-grid--actions {
+        grid-template-columns: 1fr;
+    }
+}

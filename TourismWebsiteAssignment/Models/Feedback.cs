@@ -18,7 +18,7 @@ namespace TourismWebsiteAssignment.Models
         public int BookingId { get; set; }
 
         [ForeignKey("TouristId")]
-        public virtual ICollection<TouristProfile> Tourist { get; set; }
+        public virtual TouristProfile Tourist { get; set; }
 
         [ForeignKey("BookingId")]
         public virtual Booking Booking { get; set; }

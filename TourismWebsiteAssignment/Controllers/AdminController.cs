@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-
 public class AdminController : Controller
 {
     public ActionResult Users() => View();
@@ -10,4 +9,5 @@ public class AdminController : Controller
     public ActionResult Payment() => View();
     public ActionResult Feedback() => View();
     public ActionResult Settings() => View();
+
 }

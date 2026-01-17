@@ -130,5 +130,10 @@ namespace TourismWebsiteAssignment.Controllers
             }
             base.Dispose(disposing);
         }
+        public async Task<ActionResult> OnlyView ()
+        {
+            var paymentTransactions = db.PaymentTransactions.Include(p => p.Booking);
+            return View(await paymentTransactions.ToListAsync());
+        }
     }
 }

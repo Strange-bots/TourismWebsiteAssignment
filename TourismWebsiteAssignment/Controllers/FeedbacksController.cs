@@ -133,5 +133,12 @@ namespace TourismWebsiteAssignment.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult OnlyEdit()
+        {
+            var feedbacks = db.Feedbacks.Include(f => f.Booking).Include(f => f.Tourist);
+            return View(feedbacks.ToList());
+        }
+
     }
 }

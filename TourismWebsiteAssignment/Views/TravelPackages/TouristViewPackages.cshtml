@@ -1,0 +1,170 @@
+﻿@model IEnumerable<TourismWebsiteAssignment.Models.TravelPackage>
+   <style> 
+       /*
+           Package container
+       */
+       .package-container {
+           display: flex;
+           flex-wrap: wrap;
+           gap: 0.1rem;
+           justify-content: flex-start;
+           align-items:center;
+       }
+       
+       /* Package Card */
+.package-card {
+    max-width: 300px;
+    min-width:300px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px;
+    margin: 2px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.package-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Image Placeholder */
+       #package-img {
+           flex: 0 0 300px;
+           height: 180px;
+           background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+           border-radius: 10px;
+           margin-bottom: 14px;
+       }
+
+/* Title */
+.package-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1f2933;
+}
+
+/* Description */
+.package-description {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+/* Info rows */
+.package-price,
+.package-destination,
+.package-max-size {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+/* Toggle button */
+.package-container > button {
+    margin-top: 12px;
+    background: transparent;
+    border: none;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.package-container > button:hover {
+    text-decoration: underline;
+}
+
+/* Hidden details */
+.package-details {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.package-details p {
+    margin-bottom: 6px;
+}
+
+/* Action buttons */
+.js-btn {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.js-btn button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Add to cart */
+#js-btn.add {
+    background-color: #e5e7eb;
+    color: #111827;
+}
+
+#js-btn.add:hover {
+    background-color: #d1d5db;
+}
+
+/* Book */
+#js-btn.book {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+#js-btn.book:hover {
+    background-color: #1e40af;
+}
+
+  </style>
+<div class="package-container">
+@foreach (var item in Model)
+{
+    <div class="package-card">
+        <div id="package-img"></div>
+        <h2 class="package-title"> @Html.DisplayFor(modelItem => item.PackageTitle)</h2>
+        <p class="package-description">@Html.DisplayFor(modelItem => item.PackageDescription)</p>
+        <p class="package-price">Price per Person: $@Html.DisplayFor(modelItem => item.PricePerPerson)</p>
+        <p class="package-destination">@Html.DisplayFor(modelItem => item.Destination)</p>
+        <p class="package-max-size">Maximum number in a group:@Html.DisplayFor(modelItem => item.GroupMaxSize)</p>
+        <button onclick="toggleDetails(this)">More Details</button>
+        <!--These are the hidden details i am using js to render this changing the display none to block-->
+        <div class="package-details" style="display:none; margin-top:10px;">
+            <p><strong>Inclusions:</strong> @item.Inclusions</p>
+            <p><strong>Exclusions:</strong> @item.Exclusions</p>
+            <p><strong>Itinerary:</strong> @item.ItineraryDetails</p>
+        </div>
+        <div class="js-btn">
+            <button id="js-btn add">Add to cart</button>
+            <button id="js-btn book">Book</button>
+        </div>
+    </div>
+}
+    </div>
+
+<script>
+    function toggleDetails(button) {
+        // find the details div inside the same package container
+        var details = button.nextElementSibling;
+
+        if (details.style.display === "none") {
+            details.style.display = "block";
+            button.innerText = "Hide Details";
+        } else {
+            details.style.display = "none";
+            button.innerText = "More Details";
+        }
+    }
+</script>

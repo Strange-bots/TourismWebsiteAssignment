@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.User>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@Html.ActionLink("Create New","Create",null,new { @class = "Create-btn" })
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+} 
+<h2>List of Users</h2>
 
-
-)
+<!--<p>
+    Html.ActionLink("Create New", "Create")
+</p>-->
 <table class="table">
     <tr>
         <th>
@@ -43,6 +44,11 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
             </td>
         </tr>
     }

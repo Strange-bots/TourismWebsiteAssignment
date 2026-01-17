@@ -1,6 +1,109 @@
-﻿@{
-    Layout = "~/Views/Shared/_AgentDashboardLayout.cshtml";
-}
-<h2>Users</h2>
+﻿
+<link rel="stylesheet" href="~/Content/CustomStyles/agent-home.css" />
 
-<p>This is the users list page.</p>
+<div class="agent-dashboard">
+    <!-- Header / Hero -->
+    <header class="agent-hero">
+        <div class="agent-hero__text">
+            <h2 class="agent-hero__title">Agent Dashboard</h2>
+            <p class="agent-hero__subtitle">
+                Manage your travel packages, bookings, and customer interactions.
+            </p>
+        </div>
+        <div class="agent-hero__meta">
+            <div class="agent-pill">Status: Active</div>
+            <div class="agent-pill agent-pill--muted">Role: Agent</div>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="agent-panel">
+        <div class="agent-panel__header">
+            <h3 class="agent-panel__title">Overview</h3>
+            <p class="agent-panel__hint">Your business at a glance.</p>
+        </div>
+        <div class="agent-grid agent-grid--stats">
+            <article class="agent-card agent-card--stat">
+                <div class="agent-card__top">
+                    <span class="agent-card__label">My Packages</span>
+                </div>
+                <div class="agent-card__value">—</div>
+                <div class="agent-card__note">Total listed packages</div>
+            </article>
+
+            <article class="agent-card agent-card--stat">
+                <div class="agent-card__top">
+                    <span class="agent-card__label">Active Tours</span>
+                </div>
+                <div class="agent-card__value">—</div>
+                <div class="agent-card__note">Currently running</div>
+            </article>
+
+            <article class="agent-card agent-card--stat">
+                <div class="agent-card__top">
+                    <span class="agent-card__label">Bookings</span>
+                </div>
+                <div class="agent-card__value">—</div>
+                <div class="agent-card__note">Total reservations</div>
+            </article>
+
+            <article class="agent-card agent-card--stat">
+                <div class="agent-card__top">
+                    <span class="agent-card__label">Pending Requests</span>
+                </div>
+                <div class="agent-card__value">—</div>
+                <div class="agent-card__note">Need confirmation</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="agent-panel">
+        <div class="agent-panel__header">
+            <h3 class="agent-panel__title">Quick Actions</h3>
+            <p class="agent-panel__hint">Common agent tasks.</p>
+        </div>
+        <div class="agent-grid agent-grid--actions">
+            <a class="agent-action" href="#">
+                <div class="agent-action__title">Manage Packages</div>
+                <div class="agent-action__desc">Create and update travel packages</div>
+            </a>
+
+            <a class="agent-action" href="#">
+                <div class="agent-action__title">Tour Dates</div>
+                <div class="agent-action__desc">Schedule and manage tour dates</div>
+            </a>
+
+            <a class="agent-action" href="#">
+                <div class="agent-action__title">View Bookings</div>
+                <div class="agent-action__desc">Confirm or cancel bookings</div>
+            </a>
+
+            <a class="agent-action" href="#">
+                <div class="agent-action__title">Payments</div>
+                <div class="agent-action__desc">Track received payments</div>
+            </a>
+
+            <a class="agent-action" href="#">
+                <div class="agent-action__title">Customer Feedback</div>
+                <div class="agent-action__desc">Read reviews and respond</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="agent-panel agent-panel--notes">
+        <div class="agent-panel__header">
+            <h3 class="agent-panel__title">Agent Notes</h3>
+            <p class="agent-panel__hint">Helpful reminders.</p>
+        </div>
+        <div class="agent-noteBox">
+            <ul class="agent-noteBox__list">
+                <li>Keep package details and pricing up to date.</li>
+                <li>Confirm bookings promptly to improve customer trust.</li>
+                <li>Review feedback regularly to improve service quality.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+

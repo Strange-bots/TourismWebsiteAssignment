@@ -1,79 +1,203 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main>
+<link rel="stylesheet" href="~/Content/CustomStyles/global-pages.css" />
+<link rel="stylesheet" href="~/Content/CustomStyles/home-page.css" />
+
+<main class="page">
+
+    <!-- HERO -->
     <section class="hero-section">
-        <div class="compass-btn">Discover Your Next Adventure</div>
+        <div class="hero-content">
+            <div class="compass-btn">Discover Your Next Adventure</div>
 
-        <div class="title-font">
-            Explore the World's
-            <span class="title-red">Most Beautiful</span>
-            Destinations
+            <h1 class="title-font">
+                Explore the World's <span class="title-red">Most Beautiful</span> Destinations
+            </h1>
 
-            <p class="subheading">Curated travel experiences that take you beyond the ordinary. From tropical paradises to mountain peaks, your journey starts here.</p>
-        </div>
+            <p class="subheading">
+                Curated travel experiences that take you beyond the ordinary. From tropical paradises to mountain peaks, your journey starts here.
+            </p>
 
-        <div class="tour-btn">
-            <button></button><button></button>
+            <div class="tour-btn">
+                <button type="button">Explore Tours</button>
+                <button type="button">Contact Us</button>
+            </div>
         </div>
     </section>
 
+    <!-- STATS / DATA -->
     <section class="data-section">
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+        <ul class="data-grid">
+            <li class="data-tile">
+                <p class="data-number">120+</p>
+                <p class="data-label">Tours</p>
+            </li>
+            <li class="data-tile">
+                <p class="data-number">40+</p>
+                <p class="data-label">Destinations</p>
+            </li>
+            <li class="data-tile">
+                <p class="data-number">4.8★</p>
+                <p class="data-label">Avg Rating</p>
+            </li>
+            <li class="data-tile">
+                <p class="data-number">Secure</p>
+                <p class="data-label">Payments</p>
+            </li>
         </ul>
     </section>
 
+    <!-- FEATURED TOURS -->
     <section class="Featured-Tours">
-        <p class="title-font">Featured Tours</p>
-        <p class="subheading">Hand-picked destinations and experiences that our travelers love the most</p>
+        <header class="section-header">
+            <h2 class="title-font">Featured Tours</h2>
+            <p class="subheading">Hand-picked destinations and experiences that our travelers love the most</p>
+        </header>
+
         <div class="card-container">
-            <div class="card">
-                <img />
-                <h1></h1>
-                <p class="subheading"></p>
-                <div class="card-details"></div>
-                <div>
-                    <p></p><button></button>
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80"
+                     alt="Mountain tour destination" />
+                <h3>Mountain Escape</h3>
+                <p class="subheading">5 days • Hiking • Lakes • Local guides</p>
+
+                <div class="card-details">
+                    Explore alpine trails, scenic lakes, and cozy stays with expert local guides.
                 </div>
-            </div>
+
+                <div class="card-actions">
+                    <p class="card-price">$799</p>
+                    <button type="button">View Details</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+                     alt="Snowy mountain adventure" />
+                <h3>Alpine Adventure</h3>
+                <p class="subheading">3 days • Snow • Photography</p>
+
+                <div class="card-details">
+                    A short, unforgettable alpine trip designed for breathtaking views and photos.
+                </div>
+
+                <div class="card-actions">
+                    <p class="card-price">$499</p>
+                    <button type="button">View Details</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80"
+                     alt="Forest and mountains" />
+                <h3>Nature Retreat</h3>
+                <p class="subheading">7 days • Relax • Nature</p>
+
+                <div class="card-details">
+                    A calm, nature-first experience with comfortable stays and curated day trips.
+                </div>
+
+                <div class="card-actions">
+                    <p class="card-price">$999</p>
+                    <button type="button">View Details</button>
+                </div>
+            </article>
         </div>
-        <button>View All Tours</button>
+
+        <div class="section-footer">
+            <button type="button">View All Tours</button>
+        </div>
     </section>
 
-    <section class="Project-Team">
-        <p class="subheading">
-            Meet the students behind this tourism website prototype
-        </p>
-        <table class-="Student-on-project">
-           
-            <thead>StudentID</thead>
-            <thead>Name</thead>
-            
-            <tr>
-                <td>20028232</td>
-                <td>Sachin Thapa</td>
-            </tr>
-        </table>
+    <!-- PROJECT TEAM -->
+    <section class="project-team">
+        <header class="section-header">
+            <h2 class="title-font">Project Team</h2>
+            <p class="subheading">
+                Meet the students behind this tourism website prototype
+            </p>
+        </header>
+
+        <div class="team-grid">
+
+            <article class="team-card">
+                <img src="~/Content/Images/team/sachin.jpg" alt="Sachin Thapa">
+                <h3>Sachin Thapa</h3>
+                <p class="student-id">ID: 20028232</p>
+                <p class="role">Web Design & Development</p>
+            </article>
+
+            <article class="team-card">
+                <img src="~/Content/Images/team/manihang.jpg" alt="Manihang Limbu">
+                <h3>Manihang Limbu</h3>
+                <p class="student-id">ID: ########</p>
+                <p class="role">Web Design & Development</p>
+            </article>
+
+            <article class="team-card">
+                <img src="~/Content/Images/team/samir.jpg" alt="Samir Adhikari">
+                <h3>Samir Adhikari</h3>
+                <p class="student-id">ID: 00000000</p>
+                <p class="role">Web Design & Development</p>
+            </article>
+
+            <article class="team-card">
+                <img src="~/Content/Images/team/salin.jpg" alt="Salin Maharjan">
+                <h3>Salin Maharjan</h3>
+                <p class="student-id">ID: 00000000</p>
+                <p class="role">Web Design & Development</p>
+            </article>
+
+            <article class="team-card">
+                <img src="~/Content/Images/team/rohan.jpg" alt="Rohan Maharasi">
+                <h3>Rohan Maharasi</h3>
+                <p class="student-id">ID: 00000000</p>
+                <p class="role">Web Design & Development</p>
+            </article>
+
+        </div>
     </section>
 
+
+    <!-- CTA -->
     <section class="getting-ready">
-        <p class="title-font">Ready to Start Your Adventure?</p>
-        <p class="subheading">Join thousands of travelers who have discovered amazing destinations with us. Your next unforgettable journey is just a click away.</p>
+        <h2 class="title-font">Ready to Start Your Adventure?</h2>
+        <p class="subheading">
+            Join thousands of travelers who have discovered amazing destinations with us. Your next unforgettable journey is just a click away.
+        </p>
+
         <div class="getting-ready-btn">
-            <button></button>
-            <button></button>
+            <button type="button">Create Account</button>
+            <button type="button">Browse Tours</button>
         </div>
     </section>
 
-    <footer>
-        <div class="footer1 WanderLust"></div>
-        <div class="footer2 quicklinks"></div>
-        <div class="footer3 contact-us"></div>
-        <p>2025 WanderLust Tourism. All rights reserved</p>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer1 WanderLust">
+            <h3>WanderLust</h3>
+            <p class="subheading">Curated tours. Real experiences. Safer travel.</p>
+        </div>
+
+        <div class="footer2 quicklinks">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Tours</a></li>
+                <li><a href="#">Agencies</a></li>
+                <li><a href="#">Bookings</a></li>
+            </ul>
+        </div>
+
+        <div class="footer3 contact-us">
+            <h3>Contact</h3>
+            <p class="subheading">Email: support@wanderlust.test</p>
+            <p class="subheading">Sydney, Australia</p>
+        </div>
+
+        <p class="footer-bottom">2025 WanderLust Tourism. All rights reserved.</p>
     </footer>
+
 </main>

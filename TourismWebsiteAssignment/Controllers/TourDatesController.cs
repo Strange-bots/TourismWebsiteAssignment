@@ -130,5 +130,36 @@ namespace TourismWebsiteAssignment.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //My Tour Dates
+        public async Task<ActionResult> AgentMyTours()
+        {
+            // Must be logged in
+            if (Session["UserId"] == null) return RedirectToAction("Index", "LoginRegistration");
+
+            // Must be Agent
+            var role = (Session["RoleName"] as string ?? "").Trim();
+            if (!role.Equals("Agent", StringComparison.OrdinalIgnoreCase))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            int userId = (int)Session["UserId"];
+
+            // Find this agent's agency
+            var agency = await db.TravelAgencies.FirstOrDefaultAsync(a => a.UserId == userId);
+            if (agency == null)
+            {
+                // Agent has no agency profile yet
+                return RedirectToAction("Create", "TravelAgencies");
+            }
+
+            // Tour dates for packages owned by this agency
+            var tourDates = await db.TourDates
+                .Include(td => td.TravelPackage)
+                .Where(td => td.TravelPackage.AgencyId == agency.AgencyId)
+                .OrderBy(td => td.StartDate)
+                .ToListAsync();
+
+            return View(tourDates);
+        }
     }
 }

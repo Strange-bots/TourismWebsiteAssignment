@@ -1,6 +1,112 @@
-﻿@{
-    Layout = "~/Views/Shared/_AgentDashboardLayout.cshtml";
-}
-<h2>Users</h2>
+﻿
+<link rel="stylesheet" href="~/Content/CustomStyles/tourist-home.css" />
 
-<p>This is the users list page.</p>
+<div class="tourist-dashboard">
+    <!-- Header / Hero -->
+    <header class="tourist-hero">
+        <div class="tourist-hero__text">
+            <h2 class="tourist-hero__title">Tourist Dashboard</h2>
+            <p class="tourist-hero__subtitle">
+                Browse packages, manage your bookings, and track your travel plans.
+            </p>
+        </div>
+        <div class="tourist-hero__meta">
+            <div class="tourist-pill">Status: Active</div>
+            <div class="tourist-pill tourist-pill--muted">Role: Tourist</div>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="tourist-panel">
+        <div class="tourist-panel__header">
+            <h3 class="tourist-panel__title">Overview</h3>
+            <p class="tourist-panel__hint">Your activity summary (bind real values later).</p>
+        </div>
+
+        <div class="tourist-grid tourist-grid--stats">
+            <article class="tourist-card tourist-card--stat">
+                <div class="tourist-card__top">
+                    <span class="tourist-card__label">My Bookings</span>
+                </div>
+                <div class="tourist-card__value">—</div>
+                <div class="tourist-card__note">Total reservations</div>
+            </article>
+
+            <article class="tourist-card tourist-card--stat">
+                <div class="tourist-card__top">
+                    <span class="tourist-card__label">Upcoming Trips</span>
+                </div>
+                <div class="tourist-card__value">—</div>
+                <div class="tourist-card__note">Scheduled tours</div>
+            </article>
+
+            <article class="tourist-card tourist-card--stat">
+                <div class="tourist-card__top">
+                    <span class="tourist-card__label">Pending Payments</span>
+                </div>
+                <div class="tourist-card__value">—</div>
+                <div class="tourist-card__note">Needs completion</div>
+            </article>
+
+            <article class="tourist-card tourist-card--stat">
+                <div class="tourist-card__top">
+                    <span class="tourist-card__label">My Reviews</span>
+                </div>
+                <div class="tourist-card__value">—</div>
+                <div class="tourist-card__note">Feedback submitted</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="tourist-panel">
+        <div class="tourist-panel__header">
+            <h3 class="tourist-panel__title">Quick Actions</h3>
+            <p class="tourist-panel__hint">Common tourist tasks.</p>
+        </div>
+
+        <div class="tourist-grid tourist-grid--actions">
+            <a class="tourist-action" href="#">
+                <div class="tourist-action__title">Browse Packages</div>
+                <div class="tourist-action__desc">Find tours that match your interests</div>
+            </a>
+
+            <a class="tourist-action" href="#">
+                <div class="tourist-action__title">My Bookings</div>
+                <div class="tourist-action__desc">View booking status and details</div>
+            </a>
+
+            <a class="tourist-action" href="#">
+                <div class="tourist-action__title">Payments</div>
+                <div class="tourist-action__desc">Complete payments and view history</div>
+            </a>
+
+            <a class="tourist-action" href="#">
+                <div class="tourist-action__title">My Profile</div>
+                <div class="tourist-action__desc">Update contact info and preferences</div>
+            </a>
+
+            <a class="tourist-action" href="#">
+                <div class="tourist-action__title">Feedback</div>
+                <div class="tourist-action__desc">Write reviews and report issues</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="tourist-panel tourist-panel--notes">
+        <div class="tourist-panel__header">
+            <h3 class="tourist-panel__title">Travel Notes</h3>
+            <p class="tourist-panel__hint">Helpful reminders for a smooth trip.</p>
+        </div>
+
+        <div class="tourist-noteBox">
+            <ul class="tourist-noteBox__list">
+                <li>Review tour dates and inclusions before confirming your booking.</li>
+                <li>Complete payments on time to avoid cancellation.</li>
+                <li>Leave feedback after your trip to help other travelers.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+

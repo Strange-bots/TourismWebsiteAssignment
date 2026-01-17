@@ -1,0 +1,230 @@
+﻿/* =========================
+   Modern Admin Dashboard CSS
+   ========================= */
+
+/* Page wrapper */
+.admin-dashboard {
+    padding: 24px;
+    max-width: 1100px;
+}
+
+/* Hero */
+.admin-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+    margin-bottom: 18px;
+}
+
+.admin-hero__title {
+    margin: 0 0 6px 0;
+    font-size: 24px;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+}
+
+.admin-hero__subtitle {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+    font-size: 14px;
+    max-width: 540px;
+}
+
+.admin-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Pills */
+.admin-pill {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid #dbeafe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+.admin-pill--muted {
+    border-color: #e5e7eb;
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 600;
+}
+
+/* Panels */
+.admin-panel {
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.05);
+    margin-bottom: 18px;
+}
+
+.admin-panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.admin-panel__title {
+    margin: 0;
+    font-size: 16px;
+    color: #0f172a;
+}
+
+.admin-panel__hint {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Grids */
+.admin-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.admin-grid--stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.admin-grid--actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Stat cards */
+.admin-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    padding: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-card--stat:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+    border-color: #dbeafe;
+}
+
+.admin-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.admin-card__label {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.admin-card__value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    margin-bottom: 4px;
+}
+
+.admin-card__note {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Actions (button-like links) */
+.admin-action {
+    display: block;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+    .admin-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+        border-color: #c7d2fe;
+        background: #f8fafc;
+    }
+
+    .admin-action:active {
+        transform: translateY(0px);
+    }
+
+.admin-action__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.admin-action__desc {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Notes box */
+.admin-noteBox {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.admin-noteBox__list {
+    margin: 0;
+    padding-left: 18px;
+    color: #334155;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .admin-grid--stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-grid--actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-dashboard {
+        padding: 16px;
+    }
+
+    .admin-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-hero__meta {
+        justify-content: flex-start;
+    }
+
+    .admin-grid--stats,
+    .admin-grid--actions {
+        grid-template-columns: 1fr;
+    }
+}

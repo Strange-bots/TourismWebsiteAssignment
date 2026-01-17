@@ -1,6 +1,118 @@
 ﻿@{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
-<h2>Users</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/admin-home-css.css" />
+<div class="admin-dashboard">
 
-<p>This is the users list page.</p>
+    <!-- Header / Hero -->
+    <header class="admin-hero">
+        <div class="admin-hero__text">
+            <h2 class="admin-hero__title">Admin Dashboard</h2>
+            <p class="admin-hero__subtitle">
+                Monitor key activity and jump directly to management modules.
+                Monitor key activity and jump directly to management modules.
+            </p>
+        </div>
+
+        <div class="admin-hero__meta">
+            <div class="admin-pill">System: Online</div>
+            <div class="admin-pill admin-pill--muted">Role: Admin</div>
+        </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="admin-panel">
+        <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Overview</h3>
+            <p class="admin-panel__hint">High-level metrics (bind real values later).</p>
+        </div>
+
+        <div class="admin-grid admin-grid--stats">
+            <article class="admin-card admin-card--stat">
+                <div class="admin-card__top">
+                    <span class="admin-card__label">Total Users</span>
+                </div>
+                <div class="admin-card__value">—</div>
+                <div class="admin-card__note">Registered accounts</div>
+            </article>
+
+            <article class="admin-card admin-card--stat">
+                <div class="admin-card__top">
+                    <span class="admin-card__label">Travel Agencies</span>
+                </div>
+                <div class="admin-card__value">—</div>
+                <div class="admin-card__note">Approved agencies</div>
+            </article>
+
+            <article class="admin-card admin-card--stat">
+                <div class="admin-card__top">
+                    <span class="admin-card__label">Active Packages</span>
+                </div>
+                <div class="admin-card__value">—</div>
+                <div class="admin-card__note">Currently listed</div>
+            </article>
+
+            <article class="admin-card admin-card--stat">
+                <div class="admin-card__top">
+                    <span class="admin-card__label">Pending Bookings</span>
+                </div>
+                <div class="admin-card__value">—</div>
+                <div class="admin-card__note">Needs review</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="admin-panel">
+        <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Quick Actions</h3>
+            <p class="admin-panel__hint">Common admin tasks.</p>
+        </div>
+
+        <div class="admin-grid admin-grid--actions">
+            <!-- Replace href="#" with your real routes -->
+            <a class="admin-action" href="#">
+                <div class="admin-action__title">Manage Users</div>
+                <div class="admin-action__desc">Create, update, deactivate users</div>
+            </a>
+
+            <a class="admin-action" href="#">
+                <div class="admin-action__title">Manage Agencies</div>
+                <div class="admin-action__desc">Approve agencies and profiles</div>
+            </a>
+
+            <a class="admin-action" href="#">
+                <div class="admin-action__title">View Bookings</div>
+                <div class="admin-action__desc">Track booking statuses and issues</div>
+            </a>
+
+            <a class="admin-action" href="#">
+                <div class="admin-action__title">Review Payments</div>
+                <div class="admin-action__desc">Audit transactions and refunds</div>
+            </a>
+
+            <a class="admin-action" href="#">
+                <div class="admin-action__title">Read Feedback</div>
+                <div class="admin-action__desc">Monitor complaints and reviews</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="admin-panel admin-panel--notes">
+        <div class="admin-panel__header">
+            <h3 class="admin-panel__title">System Notes</h3>
+            <p class="admin-panel__hint">Operational reminders.</p>
+        </div>
+
+        <div class="admin-noteBox">
+            <ul class="admin-noteBox__list">
+                <li>Verify role assignments (Tourist vs Agency) before granting access.</li>
+                <li>Monitor booking failures and payment mismatches daily.</li>
+                <li>Review feedback weekly and resolve repeated complaints.</li>
+            </ul>
+        </div>
+    </section>
+
+</div>

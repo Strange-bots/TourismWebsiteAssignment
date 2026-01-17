@@ -130,5 +130,36 @@ namespace TourismWebsiteAssignment.Controllers
             }
             base.Dispose(disposing);
         }
+        public async Task<ActionResult> OnlyEdit()
+        {
+            var agencies = await db.TravelAgencies
+                .Include(a => a.User)
+                .ToListAsync();
+
+            return View(agencies);
+        }
+
+
+        //Agent Travel Agencies by thier UserId
+        public ActionResult AgentMyAgency()
+        {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            int userId = (int)Session["UserId"];
+
+            var agency = db.TravelAgencies
+                .Include(a => a.User)
+                .Where(a => a.UserId == userId)
+                .ToList();
+
+            if (!agency.Any())
+            {
+                // either show empty page, or redirect to create
+                return RedirectToAction("Create", "TravelAgencies");
+            }
+            return View(agency);
+        }
+
     }
 }

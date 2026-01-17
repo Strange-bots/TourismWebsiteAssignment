@@ -156,6 +156,10 @@
     <Compile Include="Migrations\202601140031008_PackageIdAuto.Designer.cs">
       <DependentUpon>202601140031008_PackageIdAuto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202601170636488_IAMDUMBTable.cs" />
+    <Compile Include="Migrations\202601170636488_IAMDUMBTable.Designer.cs">
+      <DependentUpon>202601170636488_IAMDUMBTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
@@ -171,6 +175,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CustomStyles\agent-home.css" />
+    <Content Include="Content\CustomStyles\admin-home-css.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -187,6 +193,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomStyles\CreateUser.css" />
+    <Content Include="Content\CustomStyles\global-pages.css" />
+    <Content Include="Content\CustomStyles\Home-page.css" />
+    <Content Include="Content\CustomStyles\tourist-home.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\root.css" />
@@ -218,7 +228,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -234,11 +243,6 @@
     <Content Include="Views\Bookings\Details.cshtml" />
     <Content Include="Views\Bookings\Edit.cshtml" />
     <Content Include="Views\Bookings\Index.cshtml" />
-    <Content Include="Views\Feedbacks\Create.cshtml" />
-    <Content Include="Views\Feedbacks\Delete.cshtml" />
-    <Content Include="Views\Feedbacks\Details.cshtml" />
-    <Content Include="Views\Feedbacks\Edit.cshtml" />
-    <Content Include="Views\Feedbacks\Index.cshtml" />
     <Content Include="Views\PackageImages\Create.cshtml" />
     <Content Include="Views\PackageImages\Delete.cshtml" />
     <Content Include="Views\PackageImages\Details.cshtml" />
@@ -274,7 +278,6 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Bookings\DashboardBookings.cshtml" />
     <Content Include="Views\LoginRegistration\Index.cshtml" />
     <Content Include="Views\LoginRegistration\Registration.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -292,9 +295,35 @@
     <Content Include="Views\Agent\Index.cshtml" />
     <Content Include="Views\Shared\_AgentDashboardLayout.cshtml" />
     <Content Include="Views\Shared\_AdminNav.cshtml" />
+    <Content Include="Views\TouristProfiles\OnlyEdit.cshtml" />
+    <Content Include="Views\TourDates\OnlyView.cshtml" />
+    <Content Include="Views\PaymentTransactions\OnlyView.cshtml" />
+    <Content Include="Views\TravelAgencies\OnlyEdit.cshtml" />
+    <Content Include="Views\Bookings\OnlyEdit.cshtml" />
+    <Content Include="Views\Feedbacks\Create.cshtml" />
+    <Content Include="Views\Feedbacks\Delete.cshtml" />
+    <Content Include="Views\Feedbacks\Details.cshtml" />
+    <Content Include="Views\Feedbacks\Edit.cshtml" />
+    <Content Include="Views\Feedbacks\Index.cshtml" />
+    <Content Include="Views\Feedbacks\OnlyEdit.cshtml" />
+    <Content Include="Views\TravelPackages\travelpackages\Create.cshtml" />
+    <Content Include="Views\TravelPackages\travelpackages\Delete.cshtml" />
+    <Content Include="Views\TravelPackages\travelpackages\Details.cshtml" />
+    <Content Include="Views\TravelPackages\travelpackages\Edit.cshtml" />
+    <Content Include="Views\TravelPackages\travelpackages\Index.cshtml" />
+    <Content Include="Views\TravelPackages\OnlyView.cshtml" />
+    <Content Include="Views\TravelAgencies\AgentMyAgency.cshtml" />
+    <Content Include="Views\Agent\MyPaymentOnlyView.cshtml" />
+    <Content Include="Views\TourDates\AgentMyTours.cshtml" />
+    <Content Include="Views\Bookings\AgentMyBookingsOnlyView.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\TravelPackages\AgentMyPackages.cshtml" />
+    <Content Include="Views\TravelPackages\TouristViewPackages.cshtml" />
+    <Content Include="Views\Users\AdminCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Seed\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -332,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202601140031008_PackageIdAuto.resx">
       <DependentUpon>202601140031008_PackageIdAuto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601170636488_IAMDUMBTable.resx">
+      <DependentUpon>202601170636488_IAMDUMBTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

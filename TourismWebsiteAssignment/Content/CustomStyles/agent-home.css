@@ -1,0 +1,227 @@
+﻿
+/* Page wrapper */
+.agent-dashboard {
+    padding: 24px;
+    max-width: 1100px;
+}
+
+/* Hero */
+.agent-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+    margin-bottom: 18px;
+}
+
+.agent-hero__title {
+    margin: 0 0 6px 0;
+    font-size: 24px;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+}
+
+.agent-hero__subtitle {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+    font-size: 14px;
+    max-width: 540px;
+}
+
+.agent-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Pills */
+.agent-pill {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid #dbeafe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+.agent-pill--muted {
+    border-color: #e5e7eb;
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 600;
+}
+
+/* Panels */
+.agent-panel {
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.05);
+    margin-bottom: 18px;
+}
+
+.agent-panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.agent-panel__title {
+    margin: 0;
+    font-size: 16px;
+    color: #0f172a;
+}
+
+.agent-panel__hint {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Grids */
+.agent-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.agent-grid--stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.agent-grid--actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Stat cards */
+.agent-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    padding: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.agent-card--stat:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+    border-color: #dbeafe;
+}
+
+.agent-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.agent-card__label {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.agent-card__value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    margin-bottom: 4px;
+}
+
+.agent-card__note {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Actions (button-like links) */
+.agent-action {
+    display: block;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+    .agent-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+        border-color: #c7d2fe;
+        background: #f8fafc;
+    }
+
+    .agent-action:active {
+        transform: translateY(0px);
+    }
+
+.agent-action__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.agent-action__desc {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Notes box */
+.agent-noteBox {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.agent-noteBox__list {
+    margin: 0;
+    padding-left: 18px;
+    color: #334155;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .agent-grid--stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .agent-grid--actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .agent-dashboard {
+        padding: 16px;
+    }
+
+    .agent-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .agent-hero__meta {
+        justify-content: flex-start;
+    }
+
+    .agent-grid--stats,
+    .agent-grid--actions {
+        grid-template-columns: 1fr;
+    }
+}

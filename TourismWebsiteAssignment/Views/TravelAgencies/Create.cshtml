@@ -1,17 +1,14 @@
 ﻿@model TourismWebsiteAssignment.Models.TravelAgency
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
-}
-
 <h2>Create</h2>
+<p>RoleName in Session: @(Session["RoleName"] ?? "NULL")</p>
+<p>ViewStart Layout: @Layout</p>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>TravelAgency</h4>
         <hr />

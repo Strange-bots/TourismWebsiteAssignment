@@ -1,4 +1,4 @@
-﻿@model TourismWebsiteAssignment.Models.Feedback
+@model TourismWebsiteAssignment.Models.Feedback
 
 @{
     ViewBag.Title = "Create";
@@ -6,52 +6,48 @@
 
 <h2>Create</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Feedback</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- Tourist Dropdown -->
         <div class="form-group">
-            @Html.LabelFor(model => model.TouristId, "TouristId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TouristId, "Tourist", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TouristId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("TouristId", (SelectList)ViewBag.TouristId, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TouristId, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        <!-- Booking Dropdown -->
         <div class="form-group">
-            @Html.LabelFor(model => model.BookingId, "BookingId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BookingId, "Booking", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("BookingId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("BookingId", (SelectList)ViewBag.BookingId, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BookingId, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        <!-- Rating -->
         <div class="form-group">
-            @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Rating, "Rating", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        <!-- Comments -->
         <div class="form-group">
-            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubmittedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubmittedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SubmittedAt, "", new { @class = "text-danger" })
             </div>
         </div>
 

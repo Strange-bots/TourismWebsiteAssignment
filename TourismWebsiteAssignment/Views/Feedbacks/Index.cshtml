@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TourismWebsiteAssignment.Models.Feedback>
+@model IEnumerable<TourismWebsiteAssignment.Models.Feedback>
 
 @{
     ViewBag.Title = "Index";
@@ -29,29 +29,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Booking.SpecialStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tourist.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmittedAt)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FeedbackId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FeedbackId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FeedbackId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Booking.SpecialStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tourist.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmittedAt)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.FeedbackId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FeedbackId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FeedbackId })
+            </td>
+        </tr>
+    }
 
 </table>

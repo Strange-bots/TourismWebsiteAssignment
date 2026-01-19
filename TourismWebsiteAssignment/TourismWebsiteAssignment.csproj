@@ -134,6 +134,7 @@
     <Compile Include="Controllers\PackageImagesController.cs" />
     <Compile Include="Controllers\PaymentTransactionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SeedController.cs" />
     <Compile Include="Controllers\TourDatesController.cs" />
     <Compile Include="Controllers\TouristController.cs" />
     <Compile Include="Controllers\TouristProfilesController.cs" />

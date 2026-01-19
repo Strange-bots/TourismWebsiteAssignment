@@ -21,7 +21,7 @@ namespace TourismWebsiteAssignment.Data
         {
         }
 
-        public System.Data.Entity.DbSet<TourismWebsiteAssignment.Models.BookingStatus> BookingStatus { get; set; }
+        public System.Data.Entity.DbSet<BookingStatus> BookingStatus { get; set; }
 
         public System.Data.Entity.DbSet<TourismWebsiteAssignment.Models.Booking> Bookings { get; set; }
 

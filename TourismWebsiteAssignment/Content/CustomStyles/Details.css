@@ -1,0 +1,136 @@
+﻿/* ======================
+   GLOBAL DETAILS LAYOUT
+   ====================== */
+
+.details-page {
+    padding: 30px;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+/* Header */
+.details-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.details-page__title {
+    margin: 0;
+    font-size: 1.9rem;
+    color: #0f172a;
+}
+
+.details-page__subtitle {
+    margin-top: 6px;
+    color: #64748b;
+}
+
+/* Card */
+.details-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.details-card__body {
+    padding: 22px;
+}
+
+.details-card__footer {
+    padding: 16px 22px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Details list */
+.details-list {
+    margin: 0;
+}
+
+.details-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+    .details-row:last-child {
+        border-bottom: none;
+    }
+
+.details-label {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.details-value {
+    color: #1f2937;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.badge--role {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+/* Utilities */
+.text-muted {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.btn--primary {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+    .btn--primary:hover {
+        background: #1d4ed8;
+    }
+
+.btn--ghost {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+}
+
+    .btn--ghost:hover {
+        background: #f8fafc;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .details-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .details-card__footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

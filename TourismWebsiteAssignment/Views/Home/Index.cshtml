@@ -22,8 +22,16 @@
             </p>
 
             <div class="tour-btn">
-                <button type="button">Explore Tours</button>
-                <button type="button">Contact Us</button>
+                <button type="button"
+                        onclick="location.href='@Url.Action("ExploreTours", "Home")'">
+                    Explore Tours
+                </button>
+
+                <button type="button"
+                        onclick="location.href='@Url.Action("Contact", "Home")'">
+                    Contact Us
+                </button>
+
             </div>
         </div>
     </section>

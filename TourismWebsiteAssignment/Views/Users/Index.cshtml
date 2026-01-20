@@ -1,50 +1,85 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.User>
+
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
-@Html.ActionLink("Create New","Create",null,new { @class = "Create-btn" })
+<link rel="stylesheet" href="~/Content/CustomStyles/Users.css" />
+<section class="admin-page">
 
+    <!-- Page Header -->
+    <header class="admin-page__header">
+        <div>
+            <h2 class="admin-page__title">User Management</h2>
+            <p class="admin-page__subtitle">View and manage system users</p>
+        </div>
 
-)
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th></th>
-    </tr>
+        <div>
+            @Html.ActionLink(
+                "Create New User",
+                "Create",
+                null,
+                new { @class = "btn btn--primary" }
+            )
+        </div>
+    </header>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-        </tr>
-    }
+    <!-- Users Table -->
+    <div class="admin-card">
+        <div class="admin-card__body">
 
-</table>
+            <div class="table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="role-badge">
+                                            @item.Role?.RoleName
+                                        </span>
+                                    </td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Username</td>
+                                    <td class="text-muted">
+                                        @item.Password
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.UserId })|
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
+                                    </td>
+                                </tr>
+                            
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="table-empty">
+                                No users found.
+                            </td>
+                        </tr>
+                    }
+                        </tbody>
+
+                    </table>
+            </div>
+
+        </div>
+    </div>
+
+</section>

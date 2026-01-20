@@ -1,58 +1,76 @@
 ﻿@model TourismWebsiteAssignment.Models.User
 
 @{
+    ViewBag.Title = "User Details";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
+<link rel="stylesheet" href="~/Content/CustomStyles/Details.css" />
+<section class="details-page">
 
-<h2>Details</h2>
+    <!-- Page Header -->
+    <header class="details-page__header">
+        <div>
+            <h2 class="details-page__title">User Details</h2>
+            <p class="details-page__subtitle">View user information and assigned role</p>
+        </div>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
-        </dt>
+        <div class="details-page__actions">
+            <a class="btn btn--ghost" href="@Url.Action("Index")">Back to List</a>
+        </div>
+    </header>
 
-        <dd>
-            @Html.DisplayFor(model => model.Role.RoleName)
-        </dd>
+    <!-- Details Card -->
+    <div class="details-card">
+        <div class="details-card__body">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+            <dl class="details-list">
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">Role</dt>
+                    <dd class="details-value">
+                        <span class="badge badge--role">
+                            @Model.Role?.RoleName
+                        </span>
+                    </dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">Full Name</dt>
+                    <dd class="details-value">@Model.FullName</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">Email</dt>
+                    <dd class="details-value">@Model.Email</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">Username</dt>
+                    <dd class="details-value">@Model.Username</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">Password</dt>
+                    <dd class="details-value text-muted">
+                        @Model.Password
+                    </dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+        </div>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <!-- Card Footer -->
+        <footer class="details-card__footer">
+            <a class="btn btn--primary"
+               href="@Url.Action("Edit", new { id = Model.UserId })">
+                Edit User
+            </a>
+            <a class="btn btn--ghost"
+               href="@Url.Action("Index")">
+                Back
+            </a>
+        </footer>
+    </div>
+
+</section>

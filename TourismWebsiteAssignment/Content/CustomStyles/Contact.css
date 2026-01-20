@@ -1,0 +1,243 @@
+﻿/* ===========================
+   Mountain Tourism Contact Page
+   Full CSS Replacement
+   =========================== */
+
+/* ---------- Base Reset ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Page Background ---------- */
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    color: #e5e7eb;
+    /* Mountain-sky gradient */
+    background: linear-gradient( 180deg, #0b1220 0%, #0f1f3a 18%, #163a7a 40%, #38bdf8 62%, #f8fafc 100% );
+    /* Subtle texture without images */
+    position: relative;
+    overflow-x: hidden;
+}
+
+    /* Soft cloud mist layers */
+    body::before,
+    body::after {
+        content: "";
+        position: fixed;
+        left: -20%;
+        width: 140%;
+        height: 380px;
+        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.22), rgba(255,255,255,0) 60%);
+        filter: blur(10px);
+        opacity: 0.55;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    body::before {
+        top: 90px;
+    }
+
+    body::after {
+        top: 280px;
+        opacity: 0.35;
+    }
+
+/* ---------- Main Layout ---------- */
+main {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 24px 60px;
+}
+
+    /* ---------- Headings ---------- */
+    main h2 {
+        font-size: 2.8rem;
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        margin-bottom: 16px;
+        text-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    main h3 {
+        margin-top: 48px;
+        margin-bottom: 14px;
+        font-size: 1.6rem;
+        color: #ffffff;
+        letter-spacing: -0.01em;
+    }
+
+    /* ---------- Paragraphs ---------- */
+    main p {
+        max-width: 880px;
+        font-size: 1.08rem;
+        line-height: 1.85;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 18px;
+    }
+
+/* ---------- Glass Section Blocks ---------- */
+address {
+    font-style: normal;
+    margin: 22px 0;
+    padding: 22px 22px;
+    border-radius: 16px;
+    /* Glass effect */
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.20);
+}
+
+    /* Labels */
+    address strong {
+        display: block;
+        color: #ffffff;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+/* Address text */
+address {
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.7;
+}
+
+    /* Links */
+    address a {
+        color: #e0f2fe;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(224, 242, 254, 0.5);
+        padding-bottom: 2px;
+    }
+
+        address a:hover {
+            border-bottom-color: rgba(224, 242, 254, 0.9);
+        }
+
+/* ---------- Section Divider (subtle ridge line) ---------- */
+.ridge-divider {
+    height: 1px;
+    width: 100%;
+    margin: 28px 0;
+    background: linear-gradient( 90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 40%, rgba(255,255,255,0.35) 60%, rgba(255,255,255,0) 100% );
+}
+
+/* ---------- Team Grid (Modern Cards in Rows) ---------- */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 26px;
+    list-style: none;
+    padding: 0;
+    margin: 26px 0 10px 0;
+}
+
+    .team-grid li {
+        position: relative;
+        padding: 26px 24px 24px;
+        border-radius: 18px;
+        /* Card gradient like mountain snow + sky */
+        background: linear-gradient( 160deg, rgba(224, 242, 254, 0.92) 0%, rgba(248, 250, 252, 0.92) 45%, rgba(255, 255, 255, 0.92) 100% );
+        color: #0f172a;
+        box-shadow: 0 22px 45px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        overflow: hidden;
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+        /* Top ridge accent */
+        .team-grid li::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, #0ea5e9, #38bdf8, #7dd3fc);
+        }
+
+        /* Soft mountain “glow” corner */
+        .team-grid li::after {
+            content: "";
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.35), rgba(56, 189, 248, 0));
+            filter: blur(8px);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Hover lift */
+        .team-grid li:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 32px 60px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        }
+
+        /* Name */
+        .team-grid li strong {
+            display: block;
+            font-size: 1.22rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+    /* Body text within card */
+    .team-grid li {
+        font-size: 1.03rem;
+        line-height: 1.6;
+        color: #1f2937;
+    }
+
+/* ---------- Optional: Highlight phrase or key text ---------- */
+.highlight {
+    color: #e0f2fe;
+    font-weight: 700;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    main {
+        padding: 80px 18px 50px;
+    }
+
+        main h2 {
+            font-size: 2.2rem;
+        }
+
+        main p {
+            font-size: 1.02rem;
+        }
+}
+
+@media (max-width: 520px) {
+    main h2 {
+        font-size: 1.9rem;
+    }
+
+    address {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .team-grid {
+        gap: 18px;
+    }
+
+        .team-grid li {
+            padding: 22px 20px 20px;
+            border-radius: 16px;
+        }
+}

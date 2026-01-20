@@ -195,9 +195,12 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\CustomStyles\CreateUser.css" />
+    <Content Include="Content\CustomStyles\Details.css" />
+    <Content Include="Content\CustomStyles\Edit.css" />
     <Content Include="Content\CustomStyles\global-pages.css" />
     <Content Include="Content\CustomStyles\Home-page.css" />
     <Content Include="Content\CustomStyles\tourist-home.css" />
+    <Content Include="Content\CustomStyles\Users.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\root.css" />

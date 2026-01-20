@@ -1,73 +1,77 @@
 ﻿@model TourismWebsiteAssignment.Models.User
 
 @{
+    ViewBag.Title = "Edit User";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/Edit.css" />
 
+<section class="admin-page">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>User</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.UserId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-            </div>
+    <header class="admin-page__header">
+        <div>
+            <h2 class="admin-page__title">Edit User</h2>
+            <p class="admin-page__subtitle">Update user information and role assignment.</p>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
+        <div class="admin-page__actions">
+            <a class="btn btn--ghost" href="@Url.Action("Index")">Back to List</a>
+        </div>
+    </header>
+
+    <div class="admin-card">
+        <div class="admin-card__header">
+            <h3 class="admin-card__title">User Details</h3>
+            <p class="admin-card__hint">Make sure email and username are unique.</p>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="admin-card__body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.UserId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @Html.ValidationSummary(true, "", new { @class = "form-error-summary" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RoleId, "RoleId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("RoleId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-grid">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+                    <div class="form-field">
+                        @Html.LabelFor(model => model.FullName, new { @class = "form-label" })
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-input", placeholder = "Full name" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "form-error" })
+                    </div>
+
+                    <div class="form-field">
+                        @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-input", placeholder = "Email address" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "form-error" })
+                    </div>
+
+                    <div class="form-field">
+                        @Html.LabelFor(model => model.Username, new { @class = "form-label" })
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-input", placeholder = "Username" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "form-error" })
+                    </div>
+
+
+                    <div class="form-field">
+                        @Html.LabelFor(model => model.RoleId, "Role", new { @class = "form-label" })
+                        @Html.DropDownList("RoleId", null, new { @class = "form-select" })
+                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "form-error" })
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn--primary">Save Changes</button>
+                    <a class="btn btn--danger-outline" href="@Url.Action("Index")">Cancel</a>
+                </div>
+            }
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

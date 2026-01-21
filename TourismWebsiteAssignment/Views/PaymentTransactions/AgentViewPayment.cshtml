@@ -1,0 +1,88 @@
+﻿@model IEnumerable<TourismWebsiteAssignment.Models.PaymentTransactions>
+
+@{
+    ViewBag.Title = "My Package Payments";
+}
+
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
+
+<section class="page">
+
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">My Package Payments</h2>
+            <p class="page-subtitle">Track payments received for your packages and bookings.</p>
+        </div>
+    </header>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty">
+            <h3>No payments yet</h3>
+            <p>No payments have been made for your events yet.</p>
+        </div>
+    }
+    else
+    {
+        <div class="grid">
+            @foreach (var item in Model)
+            {
+                var packageTitle = item.Booking?.TourDate?.TravelPackage?.PackageTitle ?? "Package";
+                var eventDate = item.Booking?.TourDate?.StartDate;
+                var bookingStatus = item.Booking?.SpecialStatus ?? "-";
+
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">@packageTitle</h3>
+                            <p class="card-meta">
+                                <span class="badge">@item.TransactionStatus</span>
+                                <span class="separator">•</span>
+                                <span class="muted">Ref: @item.TransactionReference</span>
+                            </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Amount (@item.Currency)</span>
+                            <span class="price-value">@String.Format("{0:N2}", item.Amount)</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="field">
+                            <span class="field-label">Event Date</span>
+                            <span class="field-value">
+                                @(eventDate.HasValue ? eventDate.Value.ToString("dd MMM yyyy") : "-")
+                            </span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Booking Status</span>
+                            <span class="field-value">@bookingStatus</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Transaction Date</span>
+                            <span class="field-value">@item.TransactionDate.ToString("dd MMM yyyy")</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Payment Method</span>
+                            <span class="field-value">@item.PaymentMethod</span>
+                        </div>
+
+                        <div class="field field-full">
+                            <span class="field-label">Reference</span>
+                            <span class="field-value clamp-2">@item.TransactionReference</span>
+                        </div>
+
+                    </div>
+
+                </article>
+            }
+        </div>
+    }
+
+</section>

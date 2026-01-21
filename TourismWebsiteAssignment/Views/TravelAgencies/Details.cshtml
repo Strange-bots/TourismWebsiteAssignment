@@ -1,106 +1,99 @@
 ﻿@model TourismWebsiteAssignment.Models.TravelAgency
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Agency Details";
 }
+<link rel="styesheet" href="~/Content/CustomStyles/Details.css"
+<section class="details-page">
 
-<h2>Details</h2>
+    <header class="details-page__header">
+        <div>
+            <h2 class="details-page__title">Agency Details</h2>
+            <p class="details-page__subtitle">Review the agency information below.</p>
+        </div>
+    </header>
 
-<div>
-    <h4>TravelAgency</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
+    <div class="details-card">
+        <div class="details-card__body">
 
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
+            <dl class="details-list">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AgencyName)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.User.FullName)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.User.FullName)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.AgencyName)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyName)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyName)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LicenseNumber)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.LicenseNumber)</dt>
+                    <dd class="details-value">
+                        <span class="badge badge--role">@Html.DisplayFor(m => m.LicenseNumber)</span>
+                        <span class="text-muted">License</span>
+                    </dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.LicenseNumber)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.ContactNumber)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.ContactNumber)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactNumber)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyAddress)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyAddress)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ContactNumber)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.ContactPerson)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.ContactPerson)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AgencyAddress)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.PhoneNumber)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.PhoneNumber)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.AgencyAddress)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyDescription)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyDescription)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactPerson)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.CreatedAt)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ContactPerson)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.UpdatedAt)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.UpdatedAt)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.LogoUrl)</dt>
+                    <dd class="details-value">
+                        @if (!string.IsNullOrWhiteSpace(Model.LogoUrl))
+                        {
+                            <a class="btn btn--ghost" href="@Model.LogoUrl" target="_blank" rel="noopener">Open Logo</a>
+                            <div class="text-muted" style="margin-top:8px;">@Html.DisplayFor(m => m.LogoUrl)</div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No logo provided.</span>
+                        }
+                    </dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+            </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AgencyDescription)
-        </dt>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.AgencyDescription)
-        </dd>
+        <div class="details-card__footer">
+            <a class="btn btn--ghost" href="@Url.Action("Index")">Back to List</a>
+            <a class="btn btn--primary" href="@Url.Action("Edit", new { id = Model.AgencyId })">Edit</a>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LogoUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LogoUrl)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AgencyId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</section>

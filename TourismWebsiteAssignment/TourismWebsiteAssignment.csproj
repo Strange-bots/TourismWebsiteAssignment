@@ -126,6 +126,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AgentController.cs" />
+    <Compile Include="Controllers\BookingCreateVmController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\BookingStatusController.cs" />
     <Compile Include="Controllers\FeedbacksController.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Controllers\PaymentTransactionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeedController.cs" />
+    <Compile Include="Controllers\ShowDataController.cs" />
     <Compile Include="Controllers\TourDatesController.cs" />
     <Compile Include="Controllers\TouristController.cs" />
     <Compile Include="Controllers\TouristProfilesController.cs" />
@@ -161,7 +163,17 @@
     <Compile Include="Migrations\202601170636488_IAMDUMBTable.Designer.cs">
       <DependentUpon>202601170636488_IAMDUMBTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202601210516270_ShowDataTable.cs" />
+    <Compile Include="Migrations\202601210516270_ShowDataTable.Designer.cs">
+      <DependentUpon>202601210516270_ShowDataTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202601210631238_Bookingcreatevm.cs" />
+    <Compile Include="Migrations\202601210631238_Bookingcreatevm.Designer.cs">
+      <DependentUpon>202601210631238_Bookingcreatevm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BookingCreateVm.cs" />
+    <Compile Include="Models\ShowData.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
     <Compile Include="Models\Feedback.cs" />
@@ -195,12 +207,18 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\CustomStyles\CreateUser.css" />
+    <Content Include="Content\CustomStyles\Delete.css" />
     <Content Include="Content\CustomStyles\Details.css" />
     <Content Include="Content\CustomStyles\Edit.css" />
     <Content Include="Content\CustomStyles\global-pages.css" />
     <Content Include="Content\CustomStyles\Home-page.css" />
+    <Content Include="Content\CustomStyles\MyAgencyDetails.css" />
     <Content Include="Content\CustomStyles\tourist-home.css" />
+    <Content Include="Content\CustomStyles\TViewPackage.css" />
+    <Content Include="Content\CustomStyles\ui-cards.css" />
     <Content Include="Content\CustomStyles\Users.css" />
+    <Content Include="Content\CustomStyles\ViewAgency.css" />
+    <Content Include="Content\CustomStyles\ViewPackage.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\root.css" />
@@ -310,11 +328,6 @@
     <Content Include="Views\Feedbacks\Edit.cshtml" />
     <Content Include="Views\Feedbacks\Index.cshtml" />
     <Content Include="Views\Feedbacks\OnlyEdit.cshtml" />
-    <Content Include="Views\TravelPackages\travelpackages\Create.cshtml" />
-    <Content Include="Views\TravelPackages\travelpackages\Delete.cshtml" />
-    <Content Include="Views\TravelPackages\travelpackages\Details.cshtml" />
-    <Content Include="Views\TravelPackages\travelpackages\Edit.cshtml" />
-    <Content Include="Views\TravelPackages\travelpackages\Index.cshtml" />
     <Content Include="Views\TravelPackages\OnlyView.cshtml" />
     <Content Include="Views\TravelAgencies\AgentMyAgency.cshtml" />
     <Content Include="Views\Agent\MyPaymentOnlyView.cshtml" />
@@ -324,10 +337,13 @@
     <Content Include="Views\TravelPackages\AgentMyPackages.cshtml" />
     <Content Include="Views\TravelPackages\TouristViewPackages.cshtml" />
     <Content Include="Views\Users\AdminCreate.cshtml" />
+    <Content Include="Views\PaymentTransactions\AgentViewPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BookingCreateVm\" />
     <Folder Include="Views\Seed\" />
+    <Folder Include="Views\ShowData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -368,6 +384,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202601170636488_IAMDUMBTable.resx">
       <DependentUpon>202601170636488_IAMDUMBTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601210516270_ShowDataTable.resx">
+      <DependentUpon>202601210516270_ShowDataTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601210631238_Bookingcreatevm.resx">
+      <DependentUpon>202601210631238_Bookingcreatevm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -39,11 +39,21 @@ namespace TourismWebsiteAssignment.Controllers
         }
 
         // GET: TourDates/Create
-        public ActionResult Create()
+        public ActionResult Create(int? packageId)
         {
-            ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle");
-            return View();
+            if (packageId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "PackageId is required.");
+
+            var model = new TourDate
+            {
+                PackageId = packageId.Value,
+                Status = "Active"
+            };
+
+            return View(model);
         }
+
+
 
         // POST: TourDates/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

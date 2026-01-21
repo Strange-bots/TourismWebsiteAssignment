@@ -48,20 +48,29 @@ namespace TourismWebsiteAssignment.Controllers
         // POST: TravelPackages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: TravelPackages/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PackageId,AgencyId,PackageTitle,PackageDescription,Destination,PricePerPerson,GroupMaxSize,Inclusions,Exclusions,ItineraryDetails,TermsAndConditions")] TravelPackage travelPackage)
+        public ActionResult Create(TravelPackage travelPackage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.TravelPackages.Add(travelPackage);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.AgencyId = new SelectList(db.TravelAgencies, "AgencyId", "AgencyName", travelPackage.AgencyId);
+                return View(travelPackage);
             }
 
-            ViewBag.AgencyId = new SelectList(db.TravelAgencies, "AgencyId", "AgencyName", travelPackage.AgencyId);
-            return View(travelPackage);
+            // Set timestamps
+            travelPackage.CreatedAt = DateTime.Now;
+            travelPackage.UpdatedAt = DateTime.Now;
+
+            db.TravelPackages.Add(travelPackage);
+            db.SaveChanges(); // generates PackageId
+
+            // Redirect to TourDates/Create with the new PackageId
+            return RedirectToAction("Create", "TourDates", new { packageId = travelPackage.PackageId });
         }
+
+
 
         // GET: TravelPackages/Edit/5
         public ActionResult Edit(int? id)
@@ -70,31 +79,57 @@ namespace TourismWebsiteAssignment.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             TravelPackage travelPackage = db.TravelPackages.Find(id);
             if (travelPackage == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.AgencyId = new SelectList(db.TravelAgencies, "AgencyId", "AgencyName", travelPackage.AgencyId);
-            return View(travelPackage);
+
+            ViewBag.AgencyId = new SelectList(
+                db.TravelAgencies,
+                "AgencyId",
+                "AgencyName",
+                travelPackage.AgencyId
+            );
+
+            return View(travelPackage); // ✅ THIS was missing
         }
+
 
         // POST: TravelPackages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PackageId,AgencyId,PackageTitle,PackageDescription,Destination,PricePerPerson,GroupMaxSize,Inclusions,Exclusions,ItineraryDetails,TermsAndConditions")] TravelPackage travelPackage)
+        public ActionResult Edit(TravelPackage travelPackage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Entry(travelPackage).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.AgencyId = new SelectList(
+                    db.TravelAgencies,
+                    "AgencyId",
+                    "AgencyName",
+                    travelPackage.AgencyId
+                );
+                return View(travelPackage);
             }
-            ViewBag.AgencyId = new SelectList(db.TravelAgencies, "AgencyId", "AgencyName", travelPackage.AgencyId);
+
+            db.Entry(travelPackage).State = EntityState.Modified;
+            db.SaveChanges();
+
+            // stay on the same page
+            ViewBag.AgencyId = new SelectList(
+                db.TravelAgencies,
+                "AgencyId",
+                "AgencyName",
+                travelPackage.AgencyId
+            );
+
             return View(travelPackage);
         }
+
+
 
         // GET: TravelPackages/Delete/5
         public ActionResult Delete(int? id)

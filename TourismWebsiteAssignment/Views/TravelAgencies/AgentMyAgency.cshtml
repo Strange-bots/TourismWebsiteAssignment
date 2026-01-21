@@ -1,75 +1,107 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.TravelAgency>
+<link rel="stylesheet" href="~/Content/CustomStyles/MyAgencyDetails.css" />
+<div class="page-wrap">
 
+    <div class="page-head">
+        <div>
+            <h2 class="page-title">My Agency Details</h2>
+            <p class="page-subtitle">View and manage your agency information.</p>
+        </div>
+    </div>
 
-<h2>My Agency Details</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgencyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LicenseNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContactNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgencyAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContactPerson)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgencyDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LogoUrl)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    @if (Model == null || !Model.Any())
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AgencyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicenseNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AgencyAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactPerson)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AgencyDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.AgencyId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.AgencyId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.AgencyId })
-            </td>
-        </tr>
+        <div class="empty-state">
+            <h3>No agency found</h3>
+            <p>It looks like you do not have an agency registered yet.</p>
+        </div>
     }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <section class="agency-panel">
 
-</table>
+                <!-- Header -->
+                <div class="agency-hero">
+                    <div class="agency-hero-left">
+                        <div class="agency-badge">Agency</div>
+                        <h3 class="agency-title">@item.AgencyName</h3>
+                        <div class="agency-meta">
+                            <span class="meta-item">Owner: <strong>@item.User.FullName</strong></span>
+                            <span class="meta-dot">•</span>
+                            <span class="meta-item">License: <strong>@item.LicenseNumber</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Optional logo preview -->
+                    <div class="agency-hero-right">
+                        @if (!string.IsNullOrWhiteSpace(item.LogoUrl))
+                        {
+                            <img class="agency-logo" src="@item.LogoUrl" alt="Agency Logo" />
+                        }
+                        else
+                        {
+                            <div class="agency-logo-fallback">
+                                @(!string.IsNullOrWhiteSpace(item.AgencyName) ? item.AgencyName.Substring(0, 1).ToUpper() : "A")
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="agency-body">
+                    <div class="agency-columns">
+                        <div class="agency-col">
+                            <div class="field">
+                                <span class="label">Contact Number</span>
+                                <span class="value">@item.ContactNumber</span>
+                            </div>
+
+                            <div class="field">
+                                <span class="label">Phone Number</span>
+                                <span class="value">@item.PhoneNumber</span>
+                            </div>
+
+                            <div class="field">
+                                <span class="label">Contact Person</span>
+                                <span class="value">@item.ContactPerson</span>
+                            </div>
+                        </div>
+
+                        <div class="agency-col">
+                            <div class="field">
+                                <span class="label">Address</span>
+                                <span class="value">@item.AgencyAddress</span>
+                            </div>
+
+                            <div class="field">
+                                <span class="label">Logo URL</span>
+                                <span class="value break">@item.LogoUrl</span>
+                            </div>
+
+                            <div class="field">
+                                <span class="label">Created At</span>
+                                <span class="value">@item.CreatedAt</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agency-description">
+                        <div class="desc-title">Description</div>
+                        <p class="desc-text">
+                            @(string.IsNullOrWhiteSpace(item.AgencyDescription) ? "No description provided." : item.AgencyDescription)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="agency-actions">
+                    @Html.ActionLink("Edit Agency", "Edit", new { id = item.AgencyId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("View Details", "Details", new { id = item.AgencyId }, new { @class = "btn btn-secondary" })
+                </div>
+
+            </section>
+        }
+    }
+</div>

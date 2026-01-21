@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<TourismWebsiteAssignment.Models.ShowData>
+@using System.Linq
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -37,27 +39,7 @@
     </section>
 
     <!-- STATS / DATA -->
-    <section class="data-section">
-        <ul class="data-grid">
-            <li class="data-tile">
-                <p class="data-number">120+</p>
-                <p class="data-label">Tours</p>
-            </li>
-            <li class="data-tile">
-                <p class="data-number">40+</p>
-                <p class="data-label">Destinations</p>
-            </li>
-            <li class="data-tile">
-                <p class="data-number">4.8★</p>
-                <p class="data-label">Avg Rating</p>
-            </li>
-            <li class="data-tile">
-                <p class="data-number">Secure</p>
-                <p class="data-label">Payments</p>
-            </li>
-        </ul>
-    </section>
-
+    
     <!-- FEATURED TOURS -->
     <section class="Featured-Tours">
         <header class="section-header">

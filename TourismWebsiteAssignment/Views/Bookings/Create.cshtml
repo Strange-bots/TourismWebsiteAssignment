@@ -1,87 +1,66 @@
 ﻿@model TourismWebsiteAssignment.Models.Booking
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Book Tour";
 }
 
-<h2>Create</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/BookingCreate.css" />
+<section class="booking-page">
+    <div class="booking-card">
 
-<!--kk-->
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Booking</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.TouristProfileId, "TouristProfileId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TouristProfileId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TouristProfileId, "", new { @class = "text-danger" })
+        <header class="booking-header">
+            <div>
+                <h2 class="booking-title">Confirm Your Booking</h2>
+                <p class="booking-subtitle">Select a date, guests, and add any special requests.</p>
             </div>
-        </div>
+        </header>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TourDateId, "TourDateId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TourDateId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TourDateId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @using (Html.BeginForm("Create", "Bookings", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingStatusId, "BookingStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BookingStatusId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BookingStatusId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.ValidationSummary(true, "", new { @class = "val-summary" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BookingDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <!-- SYSTEM FIELDS: do not ask user -->
+            @* TouristProfileId should be set server-side in controller *@
+            @Html.HiddenFor(m => m.BookingStatusId, new { @Value = ViewBag.DefaultBookingStatusId ?? 1 })
+            @Html.HiddenFor(m => m.BookingDate, new { @Value = DateTime.Now.ToString("yyyy-MM-dd") })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NumberOfGuests, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NumberOfGuests, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumberOfGuests, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @* TotalPrice should be computed server-side.
+                Keep it hidden; optionally show a readonly estimate. *@
+            @Html.HiddenFor(m => m.TotalPrice)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <!-- USER INPUTS -->
+            <div class="form-grid">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SpecialStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SpecialStatus, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SpecialStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="field">
+                    @Html.LabelFor(m => m.TourDateId, "Tour Date", new { @class = "label" })
+                    @Html.DropDownList("TourDateId", null, "Select a tour date", new { @class = "input" })
+                    @Html.ValidationMessageFor(m => m.TourDateId, "", new { @class = "val" })
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div class="field">
+                    @Html.LabelFor(m => m.NumberOfGuests, "Guests", new { @class = "label" })
+                    @Html.TextBoxFor(m => m.NumberOfGuests, new { @class = "input", type = "number", min = "1", max = "100", value = "1" })
+                    @Html.ValidationMessageFor(m => m.NumberOfGuests, "", new { @class = "val" })
+                </div>
+
+                <div class="field field--full">
+                    @Html.LabelFor(m => m.SpecialStatus, "Special Requests", new { @class = "label" })
+                    @Html.TextAreaFor(m => m.SpecialStatus, 4, 40, new { @class = "input input--textarea", placeholder = "Dietary requirements, accessibility needs, notes..." })
+                    @Html.ValidationMessageFor(m => m.SpecialStatus, "", new { @class = "val" })
+                </div>
+
             </div>
-        </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn--primary">Confirm Booking</button>
+                <a href="@Url.Action("Index", "TravelPackages")" class="btn btn--ghost">Cancel</a>
+            </div>
+        }
+
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

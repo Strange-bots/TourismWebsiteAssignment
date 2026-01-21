@@ -1,66 +1,83 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.Booking>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bookings";
 }
 
-<h2>Index</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BookingStatus.StatusName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TourDate.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tourist.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookingDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberOfGuests)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpecialStatus)
-        </th>
-        <th></th>
-    </tr>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-    @foreach (var item in Model)
+<section class="page">
+
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Bookings</h2>
+            <p class="page-subtitle">View and manage customer bookings.</p>
+        </div>
+    </header>
+
+    @if (Model != null && Model.Any())
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingStatus.StatusName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TourDate.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tourist.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfGuests)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialStatus)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.BookingId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.BookingId })
-            </td>
-        </tr>
+        <div class="grid">
+            @foreach (var item in Model)
+            {
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">@item.TourDate.TravelPackage.PackageTitle </h3>
+                            <p class="card-meta">
+                                <span class="badge">@item.BookingStatus.StatusName</span>
+                                <span class="separator">•</span>
+                                <span class="muted">Tour: @item.TourDate.Status</span>
+                            </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Total</span>
+                            <span class="price-value">
+                                @String.Format("{0:C}", item.TotalPrice)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="field">
+                            <span class="field-label">Tourist</span>
+                            <span class="field-value">@item.Tourist.FullName</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Booking Date</span>
+                            <span class="field-value">@item.BookingDate</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Guests</span>
+                            <span class="field-value">@item.NumberOfGuests</span>
+                        </div>
+
+                        <div class="field field-full">
+                            <span class="field-label">Special Status</span>
+                            <span class="field-value clamp-2">@item.SpecialStatus</span>
+                        </div>
+                    </div>
+
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost" href="@Url.Action("Details", new { id = item.BookingId })">Details</a>
+                        <a class="btn btn-ghost" href="@Url.Action("Edit", new { id = item.BookingId })">Edit</a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", new { id = item.BookingId })">Delete</a>
+                    </footer>
+
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty">
+            <h3>No bookings found</h3>
+            <p>Bookings will appear here once customers start booking tours.</p>
+        </div>
     }
 
-</table>
+</section>

@@ -22,6 +22,13 @@ namespace TourismWebsiteAssignment.Controllers
             var paymentTransactions = db.PaymentTransactions.Include(p => p.Booking);
             return View(await paymentTransactions.ToListAsync());
         }
+        
+        // GET: PaymentTransactions
+        public async Task<ActionResult> OnlyView()
+        {
+            var paymentTransactions = db.PaymentTransactions.Include(p => p.Booking);
+            return View(await paymentTransactions.ToListAsync());
+        }
 
         // GET: PaymentTransactions/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -121,7 +128,33 @@ namespace TourismWebsiteAssignment.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        //Viewing payments that are made for this agent packages
+        public async Task<ActionResult> AgentViewPayment()
+        {
 
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            int userId = (int)Session["UserId"];
+
+            var payments = db.PaymentTransactions
+                .Include(p => p.Booking)
+                .Include(p => p.Booking.TourDate)
+                .Include(p => p.Booking.TourDate.TravelPackage)
+                .Include(p => p.Booking.TourDate.TravelPackage.TravelAgency)
+                .Where(p => p.Booking.TourDate.TravelPackage.TravelAgency.UserId == userId)
+                .OrderByDescending(p => p.TransactionDate)
+                .ToList();
+
+            if (!payments.Any())
+            {
+                // either show empty page, or redirect somewhere sensible
+                return View(payments); // empty list -> show "no payments yet"
+                                       // OR: return RedirectToAction("AgentDashboard", "Agent");
+            }
+
+            return View(payments);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -129,11 +162,6 @@ namespace TourismWebsiteAssignment.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        public async Task<ActionResult> OnlyView ()
-        {
-            var paymentTransactions = db.PaymentTransactions.Include(p => p.Booking);
-            return View(await paymentTransactions.ToListAsync());
         }
     }
 }

@@ -1,114 +1,92 @@
 ﻿@model TourismWebsiteAssignment.Models.TravelPackage
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Package Details";
 }
+<link rel="stylesheet" href="~/Content/CustomStyles/Details.css" />
 
-<h2>Details</h2>
+<section class="details-page">
 
-<div>
-    <h4>TravelPackage</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TravelAgency.AgencyName)
-        </dt>
+    <header class="details-page__header">
+        <div>
+            <h2 class="details-page__title">Package Details</h2>
+            <p class="details-page__subtitle">Review the travel package information below.</p>
+        </div>
+    </header>
 
-        <dd>
-            @Html.DisplayFor(model => model.TravelAgency.AgencyName)
-        </dd>
+    <div class="details-card">
+        <div class="details-card__body">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PackageTitle)
-        </dt>
+            <dl class="details-list">
 
-        <dd>
-            @Html.DisplayFor(model => model.PackageTitle)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.TravelAgency.AgencyName)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.TravelAgency.AgencyName)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PackageDescription)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.PackageTitle)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.PackageTitle)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PackageDescription)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.PackageDescription)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.PackageDescription)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Destination)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.Destination)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.Destination)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Destination)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.PricePerPerson)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.PricePerPerson)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PricePerPerson)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.GroupMaxSize)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.GroupMaxSize)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PricePerPerson)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.Inclusions)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.Inclusions)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupMaxSize)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.Exclusions)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.Exclusions)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.GroupMaxSize)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.ItineraryDetails)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.ItineraryDetails)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Inclusions)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.TermsAndConditions)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.TermsAndConditions)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Inclusions)
-        </dd>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.CreatedAt)</dd>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Exclusions)
-        </dt>
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.UpdatedAt)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.UpdatedAt)</dd>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Exclusions)
-        </dd>
+            </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ItineraryDetails)
-        </dt>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ItineraryDetails)
-        </dd>
+        <div class="details-card__footer">
+            <a class="btn btn--ghost" href="@Url.Action("Index")">Back to List</a>
+            <a class="btn btn--primary" href="@Url.Action("Edit", new { id = Model.PackageId })">Edit</a>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TermsAndConditions)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TermsAndConditions)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PackageId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</section>

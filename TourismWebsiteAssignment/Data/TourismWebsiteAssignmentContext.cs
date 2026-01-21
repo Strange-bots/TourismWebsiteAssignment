@@ -69,7 +69,6 @@ namespace TourismWebsiteAssignment.Data
                 .HasForeignKey(f => f.BookingId)
                 .WillCascadeOnDelete(false);
         }
-        //Auto Uptdate the timestamp
         public override int SaveChanges()
         {
             ApplyAuditTimestamps();
@@ -84,30 +83,30 @@ namespace TourismWebsiteAssignment.Data
 
         private void ApplyAuditTimestamps()
         {
-            var now = DateTime.Now; // Or DateTime.UtcNow (recommended if you can)
+            var now = DateTime.UtcNow; // use UTC (recommended)
 
-            // Only entities that *have* UpdatedAt/CreatedAt properties will be touched
             foreach (var entry in ChangeTracker.Entries()
                          .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
-                var updatedAtProp = entry.Entity.GetType().GetProperty("UpdatedAt");
-                if (updatedAtProp != null && updatedAtProp.PropertyType == typeof(DateTime))
+                // Only if the entity actually has these mapped properties
+                if (entry.CurrentValues.PropertyNames.Contains("UpdatedAt"))
                 {
-                    updatedAtProp.SetValue(entry.Entity, now);
+                    entry.Property("UpdatedAt").CurrentValue = now;
                 }
 
-                if (entry.State == EntityState.Added)
+                if (entry.State == EntityState.Added && entry.CurrentValues.PropertyNames.Contains("CreatedAt"))
                 {
-                    var createdAtProp = entry.Entity.GetType().GetProperty("CreatedAt");
-                    if (createdAtProp != null && createdAtProp.PropertyType == typeof(DateTime))
-                    {
-                        // If you want to always force CreatedAt on insert:
-                        createdAtProp.SetValue(entry.Entity, now);
-                    }
+                    entry.Property("CreatedAt").CurrentValue = now;
+                }
+
+                // Prevent CreatedAt from being updated during edits
+                if (entry.State == EntityState.Modified && entry.CurrentValues.PropertyNames.Contains("CreatedAt"))
+                {
+                    entry.Property("CreatedAt").IsModified = false;
                 }
             }
         }
 
-        }
+    }
 }
     

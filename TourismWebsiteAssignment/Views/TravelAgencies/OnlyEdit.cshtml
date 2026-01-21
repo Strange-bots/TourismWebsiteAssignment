@@ -1,73 +1,95 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.TravelAgency>
 
-<h2>List of Agencies</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgencyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LicenseNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContactNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgencyAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContactPerson)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgencyDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LogoUrl)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgencyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LicenseNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgencyAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactPerson)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgencyDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AgencyId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AgencyId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AgencyId })
-        </td>
-    </tr>
+@{
+    ViewBag.Title = "Agencies";
 }
+<link rel="stylesheet" href="~/Content/CustomStyles/ViewAgency.css"
+<section class="admin-page">
 
-</table>
+    <header class="admin-header">
+        <div>
+            <h2 class="admin-title">List of Agencies</h2>
+            <p class="admin-subtitle">Manage travel agencies and view their details.</p>
+        </div>
+    </header>
+
+    <div class="card-grid">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var a in Model)
+            {
+                <article class="entity-card">
+
+                    <div class="entity-card__top">
+                        <div>
+                            <h3 class="entity-card__title">@a.AgencyName</h3>
+                            <p class="entity-card__meta">
+                                <span class="pill">@a.LicenseNumber</span>
+                                <span class="dot">•</span>
+                                <span class="muted">Owner: @a.User?.FullName</span>
+                            </p>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(a.LogoUrl))
+                        {
+                            <img class="entity-card__logo" src="@a.LogoUrl" alt="Agency logo" />
+                        }
+                        else
+                        {
+                            <div class="entity-card__logo entity-card__logo--placeholder">
+                                @(string.IsNullOrWhiteSpace(a.AgencyName) ? "A" : a.AgencyName.Trim().Substring(0, 1).ToUpper())
+                            </div>
+                        }
+                    </div>
+
+                    <div class="entity-card__body">
+                        <div class="kv">
+                            <span class="kv__k">Contact</span>
+                            <span class="kv__v">@a.ContactNumber</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Phone</span>
+                            <span class="kv__v">@a.PhoneNumber</span>
+                        </div>
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Address</span>
+                            <span class="kv__v">@a.AgencyAddress</span>
+                        </div>
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Description</span>
+                            <span class="kv__v clamp-3">@a.AgencyDescription</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Created</span>
+                            <span class="kv__v">@a.CreatedAt.ToString("yyyy-MM-dd")</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Contact Person</span>
+                            <span class="kv__v">@a.ContactPerson</span>
+                        </div>
+                    </div>
+
+                    <footer class="entity-card__footer">
+                        <a class="btn btn--ghost" href="@Url.Action("Details", new { id = a.AgencyId })">Details</a>
+                        <a class="btn btn--ghost" href="@Url.Action("Edit", new { id = a.AgencyId })">Edit</a>
+                        <a class="btn btn--danger" href="@Url.Action("Delete", new { id = a.AgencyId })">Delete</a>
+                    </footer>
+
+                </article>
+            }
+        }
+        else
+        {
+            <div class="empty-state">
+                <h3 class="empty-state__title">No agencies found</h3>
+                <p class="empty-state__text">Add an agency to see it listed here.</p>
+            </div>
+        }
+    </div>
+
+</section>

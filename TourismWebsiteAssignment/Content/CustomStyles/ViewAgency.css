@@ -1,9 +1,8 @@
 ﻿/* =========================
-   USERS - CARD GRID (SIDE-BY-SIDE)
+   AGENCIES - CARD GRID
    Full CSS Replacement
    ========================= */
 
-/* Page */
 .admin-page {
     padding: 28px;
     min-height: 100vh;
@@ -87,21 +86,11 @@
         transform: translateY(-1px);
     }
 
-/* =========================
-   IMPORTANT: SIDE-BY-SIDE GRID
-   ========================= */
-
-/* Make sure grid can actually be wide */
+/* Grid: side-by-side */
 .card-grid {
     display: grid;
-    /* Side-by-side columns. 280px keeps it flexible so you get 3-4 cards on desktop */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 18px;
-    /* Ensure cards stretch evenly */
-    align-items: stretch;
-    /* Remove any centering that can cause single-column look */
-    justify-items: stretch;
-    /* Force full width usage */
     width: 100%;
 }
 
@@ -167,11 +156,18 @@
     color: #64748b;
 }
 
-/* Avatar */
-.avatar {
-    width: 44px;
-    height: 44px;
+/* Logo */
+.entity-card__logo {
+    width: 46px;
+    height: 46px;
     border-radius: 14px;
+    object-fit: cover;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    flex-shrink: 0;
+}
+
+.entity-card__logo--placeholder {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -179,7 +175,6 @@
     color: #0f172a;
     background: #e0f2fe;
     border: 1px solid #bae6fd;
-    flex-shrink: 0;
 }
 
 /* Body */
@@ -216,10 +211,26 @@
     white-space: nowrap;
 }
 
-.kv__v--mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-weight: 700;
-    color: #334155;
+/* Full width rows */
+.kv--full {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+    .kv--full .kv__v {
+        text-align: left;
+        max-width: 100%;
+        white-space: normal;
+        font-weight: 700;
+        color: #334155;
+    }
+
+/* Clamp */
+.clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* Footer */

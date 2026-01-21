@@ -1,70 +1,83 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.TourDate>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tour Dates";
 }
 
-<h2>Index</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TravelPackage.PackageTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvailableSlots)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalSlots)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceAdjustment)
-        </th>
-        <th></th>
-    </tr>
+<section class="page">
 
-    @foreach (var item in Model)
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Tour Dates</h2>
+            <p class="page-subtitle">Manage tour schedules and availability.</p>
+        </div>
+    </header>
+
+    @if (Model != null && Model.Any())
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelPackage.PackageTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvailableSlots)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalSlots)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriceAdjustment)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TourDateId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.TourDateId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.TourDateId })
-            </td>
-        </tr>
+        <div class="grid">
+            @foreach (var item in Model)
+            {
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">@item.TravelPackage.PackageTitle</h3>
+                            <p class="card-meta">
+                                <span class="badge">@item.Status</span>
+                                <span class="separator">•</span>
+                                <span class="muted">ID: @item.TourDateId</span>
+                            </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Price $ </span>
+                            <span class="price-value">@item.PriceAdjustment</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="field">
+                            <span class="field-label">Start Date</span>
+                            <span class="field-value">@item.StartDate.ToString("yyyy-MM-dd")</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">End Date</span>
+                            <span class="field-value">@item.EndDate.ToString("yyyy-MM-dd")</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Available Slots</span>
+                            <span class="field-value">@item.AvailableSlots</span>
+                        </div>
+
+                        <div class="field">
+                            <span class="field-label">Total Slots</span>
+                            <span class="field-value">@item.TotalSlots</span>
+                        </div>
+
+                    </div>
+
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost" href="@Url.Action("Details", new { id = item.TourDateId })">Details</a>
+                        <a class="btn btn-ghost" href="@Url.Action("Edit", new { id = item.TourDateId })">Edit</a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", new { id = item.TourDateId })">Delete</a>
+                    </footer>
+
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty">
+            <h3>No tour dates found</h3>
+            <p>Create a tour date to see it listed here.</p>
+        </div>
     }
 
-</table>
+</section>

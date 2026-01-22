@@ -1,13 +1,65 @@
 ﻿@{
     ViewBag.Title = "_AgentNav";
 }
+
 <ul class="nav-list">
-    <li>@Html.ActionLink("Home", "Index", "Agent")</li>
-    <li>@Html.ActionLink("My Agency", "AgentMyAgency", "TravelAgencies")</li>
-    <li>@Html.ActionLink("Packages", "AgentMyPackages", "TravelPackages")</li>
-    <li>@Html.ActionLink("Tour Dates", "AgentMyTours", "TourDates")</li>
-    <li>@Html.ActionLink("Bookings", "AgentMyBookingsOnlyView", "Bookings")</li>
-    <li>@Html.ActionLink("Payments", "AgentViewPayment", "PaymentTransactions")</li>
-    <li>@Html.ActionLink("Feedback", "MyPackagesFeedbacks", "Feedbacks")</li>
-    <li>@Html.ActionLink("Logout", "Logout", "Users")</li>
+
+    <li>
+        <a href="@Url.Action("Index", "Agent")">
+            <i class="fa-solid fa-house nav-icon"></i>
+            <span class="nav-text">Home</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("AgentMyAgency", "TravelAgencies")">
+            <i class="fa-solid fa-building-user nav-icon"></i>
+            <span class="nav-text">My Agency</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("AgentMyPackages", "TravelPackages")">
+            <i class="fa-solid fa-suitcase-rolling nav-icon"></i>
+            <span class="nav-text">Packages</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("AgentMyTours", "TourDates")">
+            <i class="fa-solid fa-route nav-icon"></i>
+            <span class="nav-text">Tour Dates</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("AgentMyBookingsOnlyView", "Bookings")">
+            <i class="fa-solid fa-calendar-check nav-icon"></i>
+            <span class="nav-text">Bookings</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("AgentViewPayment", "PaymentTransactions")">
+            <i class="fa-solid fa-credit-card nav-icon"></i>
+            <span class="nav-text">Payments</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("AgentOnlyView", "Feedbacks")">
+            <i class="fa-solid fa-comments nav-icon"></i>
+            <span class="nav-text">Feedback</span>
+        </a>
+    </li>
+
+    <li class="nav-divider"></li>
+
+    <li>
+        <a href="@Url.Action("Index", "Home")" class="nav-logout">
+            <i class="fa-solid fa-right-from-bracket nav-icon"></i>
+            <span class="nav-text">Logout</span>
+        </a>
+    </li>
+
 </ul>

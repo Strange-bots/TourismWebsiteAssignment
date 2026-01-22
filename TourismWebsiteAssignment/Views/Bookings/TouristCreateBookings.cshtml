@@ -1,0 +1,70 @@
+﻿@model TourismWebsiteAssignment.Models.Booking
+
+@{
+    ViewBag.Title = "Book Tour";
+}
+
+<link rel="stylesheet" href="~/Content/CustomStyles/CreateUser.css" />
+
+<section class="booking-page">
+    <div class="auth-card">
+
+        <header class="auth-header">
+            <h2>Confirm Your Booking</h2>
+            <p class="auth-subtitle">Select a date, guests, and add any special requests.</p>
+        </header>
+
+        @using (Html.BeginForm("TouristCreateBookings", "Bookings", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "form-error" })
+
+            <!-- return to last page -->
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" name="packageId" value="@ViewBag.PackageId" />
+
+            <!-- USER INPUTS -->
+            <div class="form-field">
+                @Html.LabelFor(m => m.TourDateId, "Tour Date")
+                @Html.DropDownListFor(m => m.TourDateId, (SelectList)ViewBag.TourDateId, "Select a tour date", new { @class = "form-select" })
+                @Html.ValidationMessageFor(m => m.TourDateId, "", new { @class = "field-error" })
+            </div>
+
+            <div class="form-field">
+                @Html.LabelFor(m => m.NumberOfGuests, "Guests")
+                @Html.TextBoxFor(m => m.NumberOfGuests, new { @class = "form-input", type = "number", min = "1", max = "100" })
+                @Html.ValidationMessageFor(m => m.NumberOfGuests, "", new { @class = "field-error" })
+            </div>
+
+            <div class="form-field">
+                @Html.LabelFor(m => m.SpecialStatus, "Special Requests")
+                @Html.TextAreaFor(m => m.SpecialStatus, 4, 40, new { @class = "form-input", placeholder = "Dietary requirements, accessibility needs, notes..." })
+                @Html.ValidationMessageFor(m => m.SpecialStatus, "", new { @class = "field-error" })
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Confirm Booking</button>
+            </div>
+
+            <div class="auth-footer">
+                @{
+                    var back = ViewBag.ReturnUrl as string;
+                    if (!string.IsNullOrEmpty(back) && Url.IsLocalUrl(back))
+                    {
+                        <a href="@back" class="link-muted">Cancel and go back</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "TravelPackages")" class="link-muted">Cancel and return to packages</a>
+                    }
+                }
+            </div>
+        }
+
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

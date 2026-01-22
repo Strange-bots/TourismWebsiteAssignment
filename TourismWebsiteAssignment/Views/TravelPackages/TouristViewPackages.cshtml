@@ -19,9 +19,11 @@
             </div>
             <div class="js-btn">
                 <button type="button"
-                        onclick="location.href='@Url.Action("Create","Bookings")'">
+                        onclick="location.href='@Url.Action("TouristCreateBookings","Bookings",
+            new { packageId = item.PackageId, returnUrl = Request.RawUrl })'">
                     Book
                 </button>
+
 
             </div>
             </div>

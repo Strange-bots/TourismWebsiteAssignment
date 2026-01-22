@@ -172,6 +172,7 @@
       <DependentUpon>202601210631238_Bookingcreatevm.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\HomeStatsVM.cs" />
     <Compile Include="Models\BookingCreateVm.cs" />
     <Compile Include="Models\ShowData.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -213,6 +214,7 @@
     <Content Include="Content\CustomStyles\global-pages.css" />
     <Content Include="Content\CustomStyles\Home-page.css" />
     <Content Include="Content\CustomStyles\MyAgencyDetails.css" />
+    <Content Include="Content\CustomStyles\PaymentGateway.css" />
     <Content Include="Content\CustomStyles\tourist-home.css" />
     <Content Include="Content\CustomStyles\TViewPackage.css" />
     <Content Include="Content\CustomStyles\ui-cards.css" />
@@ -327,7 +329,7 @@
     <Content Include="Views\Feedbacks\Details.cshtml" />
     <Content Include="Views\Feedbacks\Edit.cshtml" />
     <Content Include="Views\Feedbacks\Index.cshtml" />
-    <Content Include="Views\Feedbacks\OnlyEdit.cshtml" />
+    <Content Include="Views\Feedbacks\AgentOnlyView.cshtml" />
     <Content Include="Views\TravelPackages\OnlyView.cshtml" />
     <Content Include="Views\TravelAgencies\AgentMyAgency.cshtml" />
     <Content Include="Views\Agent\MyPaymentOnlyView.cshtml" />
@@ -338,6 +340,8 @@
     <Content Include="Views\TravelPackages\TouristViewPackages.cshtml" />
     <Content Include="Views\Users\AdminCreate.cshtml" />
     <Content Include="Views\PaymentTransactions\AgentViewPayment.cshtml" />
+    <Content Include="Views\Bookings\TouristCreateBookings.cshtml" />
+    <Content Include="Views\Bookings\TouristViewBookings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

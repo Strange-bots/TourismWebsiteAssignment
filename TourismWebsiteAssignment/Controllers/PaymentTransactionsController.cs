@@ -46,10 +46,23 @@ namespace TourismWebsiteAssignment.Controllers
         }
 
         // GET: PaymentTransactions/Create
-        public ActionResult Create()
+        public ActionResult Create(int bookingId)
         {
-            ViewBag.BookingId = new SelectList(db.Bookings, "BookingId", "SpecialStatus");
-            return View();
+            var booking = db.Bookings.Find(bookingId);
+            if (booking == null) return HttpNotFound();
+
+            // Dropdown
+            ViewBag.PaymentMethod = new SelectList(new[]
+            {
+                "Visa", "MasterCard", "Amex", "PayPal", "Bank Transfer"
+            });
+
+            // Display only
+            ViewBag.Amount = booking.TotalPrice;
+            ViewBag.Currency = "AUD";
+
+            // Model contains BookingId for HiddenFor
+            return View(new PaymentTransactions { BookingId = bookingId });
         }
 
         // POST: PaymentTransactions/Create
@@ -57,17 +70,46 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TransactionId,BookingId,TransactionDate,Amount,PaymentMethod,TransactionStatus,TransactionReference,Currency")] PaymentTransactions paymentTransactions)
+        public async Task<ActionResult> Create([Bind(Include = "BookingId,PaymentMethod")] PaymentTransactions payment)
         {
-            if (ModelState.IsValid)
+            // Ignore validation for fields user doesn't submit
+            ModelState.Remove("TransactionDate");
+            ModelState.Remove("Amount");
+            ModelState.Remove("TransactionStatus");
+            ModelState.Remove("TransactionReference");
+            ModelState.Remove("Currency");
+
+            if (!ModelState.IsValid)
             {
-                db.PaymentTransactions.Add(paymentTransactions);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var errors = ModelState
+                    .Where(kvp => kvp.Value.Errors.Count > 0)
+                    .Select(kvp => kvp.Key + ": " + string.Join(", ", kvp.Value.Errors.Select(e => e.ErrorMessage)))
+                    .ToList();
+
+                ModelState.AddModelError("", "ModelState invalid: " + string.Join(" | ", errors));
+
+                ViewBag.PaymentMethod = new SelectList(new[] { "Visa", "MasterCard", "Amex", "PayPal", "Bank Transfer" }, payment.PaymentMethod);
+                return View(payment);
             }
 
-            ViewBag.BookingId = new SelectList(db.Bookings, "BookingId", "SpecialStatus", paymentTransactions.BookingId);
-            return View(paymentTransactions);
+
+            var booking = db.Bookings.Find(payment.BookingId);
+            if (booking == null) return HttpNotFound();
+
+            payment.TransactionDate = DateTime.Now;
+            payment.Amount = booking.TotalPrice;
+            payment.Currency = "AUD";
+            payment.TransactionStatus = "Paid";
+            payment.TransactionReference = GenerateReference();
+
+            db.PaymentTransactions.Add(payment);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index", "PaymentTransactions");
+        }
+        private string GenerateReference()
+        {
+            return $"PAY-{DateTime.Now:yyyyMMdd}-{Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper()}";
         }
 
         // GET: PaymentTransactions/Edit/5

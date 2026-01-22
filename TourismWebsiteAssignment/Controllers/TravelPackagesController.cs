@@ -151,11 +151,48 @@ namespace TourismWebsiteAssignment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TravelPackage travelPackage = db.TravelPackages.Find(id);
-            db.TravelPackages.Remove(travelPackage);
+            var pkg = db.TravelPackages.Find(id);
+            if (pkg == null) return HttpNotFound();
+
+            // TourDates for this package
+            var tourDateIds = db.TourDates
+                .Where(td => td.PackageId == id)
+                .Select(td => td.TourDateId)
+                .ToList();
+
+            // Bookings for those TourDates
+            var bookingIds = db.Bookings
+                .Where(b => tourDateIds.Contains(b.TourDateId))
+                .Select(b => b.BookingId)
+                .ToList();
+
+            // 1) Delete PaymentTransactions that reference those bookings (if table exists)
+            var payments = db.PaymentTransactions.Where(p => bookingIds.Contains(p.BookingId));
+            db.PaymentTransactions.RemoveRange(payments);
+
+            // 2) Delete Feedbacks that reference those bookings (if table exists)
+            var feedbacks = db.Feedbacks.Where(f => bookingIds.Contains(f.BookingId));
+            db.Feedbacks.RemoveRange(feedbacks);
+
+            // 3) Delete Bookings
+            var bookings = db.Bookings.Where(b => tourDateIds.Contains(b.TourDateId));
+            db.Bookings.RemoveRange(bookings);
+
+            // 4) Delete TourDates
+            var tourDates = db.TourDates.Where(td => td.PackageId == id);
+            db.TourDates.RemoveRange(tourDates);
+
+            // 5) Delete PackageImages
+            var images = db.PackageImages.Where(pi => pi.PackageId == id);
+            db.PackageImages.RemoveRange(images);
+
+            // 6) Delete the package
+            db.TravelPackages.Remove(pkg);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

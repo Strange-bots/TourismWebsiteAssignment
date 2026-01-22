@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TourismWebsiteAssignment.Models.ShowData>
+﻿@model IEnumerable<TourismWebsiteAssignment.Models.Booking>
 @using System.Linq
 @{
     ViewBag.Title = "Home Page";
@@ -39,7 +39,31 @@
     </section>
 
     <!-- STATS / DATA -->
-    
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3 id="statPackages" class="stat-number">0</h3>
+                <p class="stat-label">Tours Available</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="statUsers" class="stat-number">0</h3>
+                <p class="stat-label">Registered Users</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="statAgencies" class="stat-number">0</h3>
+                <p class="stat-label">Partner Agencies</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="statRating" class="stat-number">0.0★</h3>
+                <p class="stat-label">Average Rating</p>
+            </div>
+        </div>
+    </section>
+
+
     <!-- FEATURED TOURS -->
     <section class="Featured-Tours">
         <header class="section-header">
@@ -191,3 +215,17 @@
     </footer>
 
 </main>
+<script>
+    fetch('@Url.Action("StatsData", "Home")')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById("statPackages").innerText = d.NumberOfPackages + "+";
+            document.getElementById("statUsers").innerText = d.NumberOfUsers + "+";
+            document.getElementById("statAgencies").innerText = d.NumberOfAgencies + "+";
+            document.getElementById("statRating").innerText = (d.AverageRating || 0).toFixed(1) + "★";
+        })
+        .catch(() => {
+            // Fail-safe: do nothing or show defaults
+        });
+</script>
+

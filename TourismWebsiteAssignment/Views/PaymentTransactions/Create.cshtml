@@ -1,88 +1,125 @@
 ﻿@model TourismWebsiteAssignment.Models.PaymentTransactions
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Make Payment";
 }
 
-<h2>Create</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/PaymentGateway.css" />
 
+<section class="payment-page">
+    <div class="payment-grid">
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PaymentTransactions</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingId, "BookingId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BookingId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BookingId, "", new { @class = "text-danger" })
+        <!-- Main Payment Card -->
+        <div class="payment-card">
+            <div class="payment-card__header">
+                <div>
+                    <h2 class="payment-title">Secure Checkout</h2>
+                    <p class="payment-subtitle">Select a payment method and enter details for demo purposes.</p>
+                </div>
+            </div>
+
+            <div class="payment-card__body">
+                @using (Html.BeginForm("Create", "PaymentTransactions", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @Html.HiddenFor(m => m.BookingId)
+
+                    <div class="field">
+                        <label>Total Amount</label>
+                        <input class="pg-input"
+                               value="@($"{ViewBag.Currency} {ViewBag.Amount:0.00}")"
+                               readonly />
+                    </div>
+
+                    <div class="field">
+                        @Html.LabelFor(m => m.PaymentMethod, "Payment Method")
+                        @Html.DropDownListFor(
+                            m => m.PaymentMethod,
+                            (SelectList)ViewBag.PaymentMethod,
+                            "Select payment method",
+                            new { @class = "pg-select", id = "PaymentMethod" }
+                        )
+                        @Html.ValidationMessageFor(m => m.PaymentMethod, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Card details (UI only) -->
+                    <div id="card-details" class="card-details">
+                        <div class="field">
+                            <label>Card Number</label>
+                            <input type="text" class="pg-input" placeholder="1234 5678 9012 3456" maxlength="19" />
+                        </div>
+
+                        <div class="card-details__grid">
+                            <div class="field">
+                                <label>Cardholder Name</label>
+                                <input type="text" class="pg-input" placeholder="Name on card" />
+                            </div>
+
+                            <div class="field">
+                                <label>Expiry</label>
+                                <input type="text" class="pg-input" placeholder="MM/YY" maxlength="5" />
+                            </div>
+
+                            <div class="field">
+                                <label>CVV</label>
+                                <input type="password" class="pg-input" placeholder="123" maxlength="4" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pg-actions">
+                        <button type="submit" class="pg-btn pg-btn--primary">
+                            Pay @($"{ViewBag.Currency} {ViewBag.Amount:0.00}")
+                        </button>
+
+                        <a class="pg-btn pg-btn--ghost" href="@Url.Action("Index", "Tourist")">
+                            Cancel
+                        </a>
+                    </div>
+                }
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TransactionDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <!-- Summary Sidebar -->
+        <aside class="payment-summary">
+            <div class="summary-title">Order Summary</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            <div class="summary-row">
+                <div class="summary-key">Currency</div>
+                <div class="summary-val">@ViewBag.Currency</div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PaymentMethod, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PaymentMethod, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PaymentMethod, "", new { @class = "text-danger" })
+            <div class="summary-row">
+                <div class="summary-key">Total</div>
+                <div class="summary-val">@($"{ViewBag.Currency} {ViewBag.Amount:0.00}")</div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TransactionStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TransactionStatus, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TransactionStatus, "", new { @class = "text-danger" })
+            <div class="summary-row">
+                <div class="summary-key">Security</div>
+                <div class="summary-val">Demo UI</div>
             </div>
-        </div>
+        </aside>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TransactionReference, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TransactionReference, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TransactionReference, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Currency, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Currency, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Currency, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const paymentSelect = document.getElementById("PaymentMethod");
+            const cardDetails = document.getElementById("card-details");
+
+            function toggleCardDetails() {
+                const v = paymentSelect ? paymentSelect.value : "";
+                cardDetails.style.display = (v && v !== "") ? "block" : "none";
+            }
+
+            if (paymentSelect) {
+                paymentSelect.addEventListener("change", toggleCardDetails);
+                toggleCardDetails();
+            }
+        });
+    </script>
 }

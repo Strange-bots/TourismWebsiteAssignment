@@ -134,11 +134,29 @@ namespace TourismWebsiteAssignment.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult OnlyEdit()
+        public ActionResult AgentOnlyView()
         {
-            var feedbacks = db.Feedbacks.Include(f => f.Booking).Include(f => f.Tourist);
-            return View(feedbacks.ToList());
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            int userId = (int)Session["UserId"];
+
+            var feedback = db.Feedbacks
+                .Include(p => p.Booking)
+                .Include(p => p.Booking.TourDate)
+                .Include(p => p.Booking.TourDate.TravelPackage)
+                .Where(p =>
+                    db.TravelAgencies.Any(a =>
+                        a.AgencyId == p.Booking.TourDate.TravelPackage.AgencyId &&
+                        a.UserId == userId
+                    )
+                )
+                .OrderByDescending(p => p.SubmittedAt)
+                .ToList();
+
+            return View(feedback);
         }
+
 
     }
 }

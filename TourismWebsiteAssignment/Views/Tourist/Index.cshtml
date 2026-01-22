@@ -1,13 +1,15 @@
-﻿
+﻿@model TourismWebsiteAssignment.Models.TouristProfile
+
 <link rel="stylesheet" href="~/Content/CustomStyles/tourist-home.css" />
 
 <div class="tourist-dashboard">
+
     <!-- Header / Hero -->
     <header class="tourist-hero">
         <div class="tourist-hero__text">
             <h2 class="tourist-hero__title">Tourist Dashboard</h2>
             <p class="tourist-hero__subtitle">
-                Browse packages, manage your bookings, and track your travel plans.
+                Welcome, @Model.FullName. Browse packages, manage your bookings, and track your travel plans.
             </p>
         </div>
         <div class="tourist-hero__meta">
@@ -16,45 +18,54 @@
         </div>
     </header>
 
-    <!-- Stats -->
+    <!-- Profile Summary -->
     <section class="tourist-panel">
         <div class="tourist-panel__header">
-            <h3 class="tourist-panel__title">Overview</h3>
-            <p class="tourist-panel__hint">Your activity summary (bind real values later).</p>
+            <h3 class="tourist-panel__title">My Profile</h3>
+            <p class="tourist-panel__hint">Your saved account information.</p>
         </div>
 
         <div class="tourist-grid tourist-grid--stats">
             <article class="tourist-card tourist-card--stat">
                 <div class="tourist-card__top">
-                    <span class="tourist-card__label">My Bookings</span>
+                    <span class="tourist-card__label">Account Name</span>
                 </div>
-                <div class="tourist-card__value">—</div>
-                <div class="tourist-card__note">Total reservations</div>
+                <div class="tourist-card__value">@Model.User.FullName</div>
+                <div class="tourist-card__note">Login user</div>
             </article>
 
             <article class="tourist-card tourist-card--stat">
                 <div class="tourist-card__top">
-                    <span class="tourist-card__label">Upcoming Trips</span>
+                    <span class="tourist-card__label">Gender</span>
                 </div>
-                <div class="tourist-card__value">—</div>
-                <div class="tourist-card__note">Scheduled tours</div>
+                <div class="tourist-card__value">@Model.Gender</div>
+                <div class="tourist-card__note">Profile detail</div>
             </article>
 
             <article class="tourist-card tourist-card--stat">
                 <div class="tourist-card__top">
-                    <span class="tourist-card__label">Pending Payments</span>
+                    <span class="tourist-card__label">Nationality</span>
                 </div>
-                <div class="tourist-card__value">—</div>
-                <div class="tourist-card__note">Needs completion</div>
+                <div class="tourist-card__value">@Model.Nationality</div>
+                <div class="tourist-card__note">Profile detail</div>
             </article>
 
             <article class="tourist-card tourist-card--stat">
                 <div class="tourist-card__top">
-                    <span class="tourist-card__label">My Reviews</span>
+                    <span class="tourist-card__label">Date of Birth</span>
                 </div>
-                <div class="tourist-card__value">—</div>
-                <div class="tourist-card__note">Feedback submitted</div>
+                <div class="tourist-card__value">@Model.DateOfBirth.ToString("yyyy-MM-dd")</div>
+                <div class="tourist-card__note">Profile detail</div>
             </article>
+        </div>
+
+        <div class="tourist-noteBox" style="margin-top:14px;">
+            <ul class="tourist-noteBox__list">
+                <li><strong>Address:</strong> @Model.Address</li>
+                <li><strong>Travel Preferences:</strong> @Model.TravelPreferences</li>
+                <li><strong>Profile Created:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd")</li>
+                <li><strong>Last Updated:</strong> @Model.UpdatedAt.ToString("yyyy-MM-dd")</li>
+            </ul>
         </div>
     </section>
 
@@ -66,27 +77,27 @@
         </div>
 
         <div class="tourist-grid tourist-grid--actions">
-            <a class="tourist-action" href="#">
+            <a class="tourist-action" href="@Url.Action("Index", "TravelPackages")">
                 <div class="tourist-action__title">Browse Packages</div>
                 <div class="tourist-action__desc">Find tours that match your interests</div>
             </a>
 
-            <a class="tourist-action" href="#">
+            <a class="tourist-action" href="@Url.Action("Index", "Bookings")">
                 <div class="tourist-action__title">My Bookings</div>
                 <div class="tourist-action__desc">View booking status and details</div>
             </a>
 
-            <a class="tourist-action" href="#">
+            <a class="tourist-action" href="@Url.Action("Index", "PaymentTransactions")">
                 <div class="tourist-action__title">Payments</div>
                 <div class="tourist-action__desc">Complete payments and view history</div>
             </a>
 
-            <a class="tourist-action" href="#">
+            <a class="tourist-action" href="@Url.Action("Edit", "TouristProfiles", new { id = Model.TouristProfileId })">
                 <div class="tourist-action__title">My Profile</div>
                 <div class="tourist-action__desc">Update contact info and preferences</div>
             </a>
 
-            <a class="tourist-action" href="#">
+            <a class="tourist-action" href="@Url.Action("Index", "Feedbacks")">
                 <div class="tourist-action__title">Feedback</div>
                 <div class="tourist-action__desc">Write reviews and report issues</div>
             </a>
@@ -108,5 +119,5 @@
             </ul>
         </div>
     </section>
-</div>
 
+</div>

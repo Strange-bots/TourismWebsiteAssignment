@@ -320,6 +320,59 @@
     .empty p {
         margin: 0;
     }
+/* =========================
+   STAR RATING (Reusable)
+   ========================= */
+
+.rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Star rail */
+.stars {
+    --star-size: 16px;
+    --star-color: rgba(37, 99, 235, 0.20); /* empty */
+    --star-fill: #2563eb; /* filled */
+    --rating: 0; /* 0..5 */
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    font-size: var(--star-size);
+    letter-spacing: 3px;
+}
+
+    /* 5 empty stars */
+    .stars::before {
+        content: "★★★★★";
+        color: var(--star-color);
+    }
+
+    /* filled overlay */
+    .stars::after {
+        content: "★★★★★";
+        color: var(--star-fill);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: calc((var(--rating) / 5) * 100%);
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+/* numeric label */
+.rating-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.rating-subtext {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
 
 /* ================================
    RESPONSIVE

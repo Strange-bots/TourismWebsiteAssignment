@@ -1,0 +1,82 @@
+﻿@model IEnumerable<TourismWebsiteAssignment.Models.Feedback>
+@using System.Globalization
+
+@{
+    ViewBag.Title = "Feedback";
+}
+
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
+@* IMPORTANT: include the stars CSS file if you put it separately *@
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-stars.css" />
+
+<section class="page">
+
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Feedback</h2>
+            <p class="page-subtitle">Customer ratings and comments.</p>
+        </div>
+    </header>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="grid">
+            @foreach (var item in Model)
+            {
+                // Convert rating safely to a CSS-friendly number (dot decimal)
+                var rating = Convert.ToDouble(item.Rating);
+                if (rating < 0) { rating = 0; }
+                if (rating > 5) { rating = 5; }
+                var ratingCss = rating.ToString(CultureInfo.InvariantCulture);
+
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">@item.Tourist.FullName</h3>
+
+                            @* ✅ VALID HTML: spans inside p *@
+                        <p class="card-meta">
+                            <span class="rating">
+                                <span class="stars" style="--rating:@ratingCss;"></span>
+                                <span class="rating-text">@rating.ToString("0.#")/5</span>
+                            </span>
+                            <br />
+                            <span class="separator">-</span><br />
+                            <span class="muted">@item.SubmittedAt.ToString("dd MMM yyyy")</span>
+                            <span class="muted">@item.Booking.TourDate.TravelPackage.PackageTitle</span>
+                        </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Booking</span>
+                            <span class="price-value">@item.Booking.SpecialStatus</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="field field-full">
+                            <span class="field-label">Comments</span>
+                            <span class="field-value clamp-3">@item.Comments</span>
+                        </div>
+                    </div>
+
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost" href="@Url.Action("Details", new { id = item.FeedbackId })">
+                            Details
+                        </a>
+                    </footer>
+
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty">
+            <h3>No feedback found</h3>
+            <p>Feedback will appear here once customers submit reviews.</p>
+        </div>
+    }
+
+</section>

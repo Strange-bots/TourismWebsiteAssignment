@@ -126,7 +126,8 @@ namespace TourismWebsiteAssignment.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
+        //Get All Data Needed to make the home page dyanamic
+                //public ActionResult GetALlData()
         protected override void Dispose(bool disposing)
         {
             if (disposing)

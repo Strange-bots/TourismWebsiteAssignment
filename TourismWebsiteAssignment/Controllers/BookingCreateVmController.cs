@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.WebParts;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
-
+using TourismWebsiteAssignment.Filters;
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize("Admin","Tourist","Agent")]
     public class BookingCreateVmController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();

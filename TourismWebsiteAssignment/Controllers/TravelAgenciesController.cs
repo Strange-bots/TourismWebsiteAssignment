@@ -9,9 +9,11 @@ using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
+using TourismWebsiteAssignment.Filters;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize]
     public class TravelAgenciesController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
@@ -39,9 +41,9 @@ namespace TourismWebsiteAssignment.Controllers
         }
 
         // GET: TravelAgencies/Create
+        [RoleAuthorize("Agent")]
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FullName");
             return View();
         }
 
@@ -50,20 +52,32 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "AgencyId,UserId,AgencyName,LicenseNumber,ContactNumber,AgencyAddress,ContactPerson,PhoneNumber,AgencyDescription,LogoUrl")] TravelAgency travelAgency)
+        public async Task<ActionResult> Create(
+      [Bind(Include = "AgencyId,AgencyName,LicenseNumber,ContactNumber,AgencyAddress,ContactPerson,PhoneNumber,AgencyDescription,LogoUrl")]
+    TravelAgency travelAgency)
         {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            int userId = (int)Session["UserId"];
+
             if (ModelState.IsValid)
             {
+                // Server-controlled assignment
+                travelAgency.UserId = userId;
+
                 db.TravelAgencies.Add(travelAgency);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("AgentMyAgency");
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FullName", travelAgency.UserId);
             return View(travelAgency);
         }
 
+
         // GET: TravelAgencies/Edit/5
+        [RoleAuthorize("Agent")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,13 +104,16 @@ namespace TourismWebsiteAssignment.Controllers
             {
                 db.Entry(travelAgency).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("AgentMyAgency");
             }
             ViewBag.UserId = new SelectList(db.Users, "UserId", "FullName", travelAgency.UserId);
-            return View(travelAgency);
+            db.Entry(travelAgency).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return RedirectToAction("AgentMyAgency");
         }
 
         // GET: TravelAgencies/Delete/5
+        [RoleAuthorize("Agent","Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -110,15 +127,34 @@ namespace TourismWebsiteAssignment.Controllers
             }
             return View(travelAgency);
         }
-
-        // POST: TravelAgencies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            TravelAgency travelAgency = await db.TravelAgencies.FindAsync(id);
+            var travelAgency = await db.TravelAgencies.FindAsync(id);
+            if (travelAgency == null)
+                return HttpNotFound();
+
             db.TravelAgencies.Remove(travelAgency);
             await db.SaveChangesAsync();
+
+            // ---- role comes from your DB using Session user id ----
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            int userId = (int)Session["UserId"];
+
+            var roleName = await db.Users
+                .Where(u => u.UserId == userId)
+                .Select(u => u.Role.RoleName)
+                .FirstOrDefaultAsync();
+
+            if (roleName == "Agent")
+                return RedirectToAction("AgentMyAgency");
+
+            if (roleName == "Admin")
+                return RedirectToAction("OnlyEdit");
+
             return RedirectToAction("Index");
         }
 
@@ -141,6 +177,7 @@ namespace TourismWebsiteAssignment.Controllers
 
 
         //Agent Travel Agencies by thier UserId
+        [RoleAuthorize("Agent")]
         public ActionResult AgentMyAgency()
         {
             if (Session["UserId"] == null)

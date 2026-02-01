@@ -1,46 +1,146 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.TravelPackage>
-<link rel="stylesheet" href="~/Content/CustomStyles/TViewPackage.css" />
-<div class="package-container">
-    @foreach (var item in Model)
-    {
-        <div class="package-card">
-            <div id="package-img"></div>
-            <h2 class="package-title"> @Html.DisplayFor(modelItem => item.PackageTitle)</h2>
-            <p class="package-description">@Html.DisplayFor(modelItem => item.PackageDescription)</p>
-            <p class="package-price">Price per Person: $@Html.DisplayFor(modelItem => item.PricePerPerson)</p>
-            <p class="package-destination">@Html.DisplayFor(modelItem => item.Destination)</p>
-            <p class="package-max-size">Maximum number in a group:@Html.DisplayFor(modelItem => item.GroupMaxSize)</p>
-            <button onclick="toggleDetails(this)">More Details</button>
-            <!--These are the hidden details i am using js to render this changing the display none to block-->
-            <div class="package-details" style="display:none; margin-top:10px;">
-                <p><strong>Inclusions:</strong> @item.Inclusions</p>
-                <p><strong>Exclusions:</strong> @item.Exclusions</p>
-                <p><strong>Itinerary:</strong> @item.ItineraryDetails</p>
-            </div>
-            <div class="js-btn">
-                <button type="button"
-                        onclick="location.href='@Url.Action("TouristCreateBookings","Bookings",
-            new { packageId = item.PackageId, returnUrl = Request.RawUrl })'">
-                    Book
-                </button>
 
+@{
+    ViewBag.Title = "Packages";
+}
 
-            </div>
-            </div>
-    }
-    </div>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-    <script>
-        function toggleDetails(button) {
-            // find the details div inside the same package container
-            var details = button.nextElementSibling;
+<section class="page">
 
-            if (details.style.display === "none") {
-                details.style.display = "block";
-                button.innerText = "Hide Details";
-            } else {
-                details.style.display = "none";
-                button.innerText = "More Details";
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Travel Packages</h2>
+            <p class="page-subtitle">Browse available packages and book your trip.</p>
+        </div>
+    </header>
+
+    <div class="grid">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var pkg in Model)
+            {
+                var latestImg = (pkg.PackageImages != null && pkg.PackageImages.Any())
+                    ? pkg.PackageImages.OrderByDescending(i => i.UploadedAt).FirstOrDefault()
+                    : null;
+
+                var imageUrl = latestImg != null ? latestImg.ImageURL : null;
+
+                <article class="card">
+
+                    @if (!string.IsNullOrWhiteSpace(imageUrl))
+                    {
+                        <div class="card-image">
+                            <img src="@imageUrl"
+                                 alt="@pkg.PackageTitle"
+                                 loading="lazy" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-image card-image--placeholder">
+                            No Image
+                        </div>
+                    }
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">@pkg.PackageTitle</h3>
+                            <p class="card-meta">
+                                @if (!string.IsNullOrWhiteSpace(pkg.Destination))
+                                {
+                                    <span class="pill">@pkg.Destination</span>
+                                }
+                                <span class="separator">•</span>
+                                <span class="muted">Max group: @pkg.GroupMaxSize</span>
+                            </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Per person</span>
+                            <span class="price-value">$@pkg.PricePerPerson</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        @if (!string.IsNullOrWhiteSpace(pkg.PackageDescription))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Description</span>
+                                <span class="kv__v clamp-3">@pkg.PackageDescription</span>
+                            </div>
+                        }
+
+                        <button type="button" class="btn btn-ghost" onclick="toggleDetails(this)">
+                            More Details
+                        </button>
+
+                        <!-- Hidden details (JS toggles this block) -->
+                        <div class="details-block" style="display:none; margin-top:10px;">
+                            @if (!string.IsNullOrWhiteSpace(pkg.Inclusions))
+                            {
+                                <div class="kv kv--full">
+                                    <span class="kv__k">Inclusions</span>
+                                    <span class="kv__v">@pkg.Inclusions</span>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(pkg.Exclusions))
+                            {
+                                <div class="kv kv--full">
+                                    <span class="kv__k">Exclusions</span>
+                                    <span class="kv__v">@pkg.Exclusions</span>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(pkg.ItineraryDetails))
+                            {
+                                <div class="kv kv--full">
+                                    <span class="kv__k">Itinerary</span>
+                                    <span class="kv__v">@pkg.ItineraryDetails</span>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+                    <footer class="card-footer">
+                        <a class="btn btn-primary"
+                           href="@Url.Action("TouristCreateBookings", "Bookings",
+                                new { packageId = pkg.PackageId, returnUrl = Request.RawUrl })">
+                            Book
+                        </a>
+                      
+                    </footer>
+
+                </article>
             }
         }
-    </script>
+        else
+        {
+            <div class="empty">
+                <h3>No packages available</h3>
+                <p>Please check back later.</p>
+            </div>
+        }
+    </div>
+
+</section>
+
+<script>
+    function toggleDetails(button) {
+        // The details block is the next sibling after the button
+        var details = button.nextElementSibling;
+
+        if (!details) return;
+
+        if (details.style.display === "none" || details.style.display === "") {
+            details.style.display = "block";
+            button.innerText = "Hide Details";
+        } else {
+            details.style.display = "none";
+            button.innerText = "More Details";
+        }
+    }
+</script>

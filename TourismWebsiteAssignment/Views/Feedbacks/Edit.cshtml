@@ -1,69 +1,79 @@
 ﻿@model TourismWebsiteAssignment.Models.Feedback
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Feedback";
 }
 
-<h2>Edit</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/feedbackedit.css" />
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Feedback</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.FeedbackId)
+<section class="page">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TouristId, "TouristId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TouristId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TouristId, "", new { @class = "text-danger" })
-            </div>
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Edit Feedback</h2>
+            <p class="page-subtitle">Update your rating and comment.</p>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingId, "BookingId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BookingId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BookingId, "", new { @class = "text-danger" })
-            </div>
+        <div class="page-actions">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-ghost" })
         </div>
+    </header>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="grid">
+        <article class="card">
+            <div class="card-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "field-validation-error" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SubmittedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubmittedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SubmittedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    @Html.HiddenFor(m => m.FeedbackId)
+                    @Html.HiddenFor(m => m.BookingId)
+                    @Html.HiddenFor(m => m.TouristProfileId)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                    <div class="form-group">
+                        <label class="kv__k">Rating</label>
+
+                        <div class="rating-wrap">
+                            <div class="rating-stars" role="radiogroup" aria-label="Rating (1 to 5 stars)">
+                                <input class="star-input" type="radio" id="star5" name="Rating" value="5" @(Model.Rating == 5 ? "checked" : "") />
+                                <label class="star" for="star5" aria-label="5 stars" title="5 stars">★</label>
+
+                                <input class="star-input" type="radio" id="star4" name="Rating" value="4" @(Model.Rating == 4 ? "checked" : "") />
+                                <label class="star" for="star4" aria-label="4 stars" title="4 stars">★</label>
+
+                                <input class="star-input" type="radio" id="star3" name="Rating" value="3" @(Model.Rating == 3 ? "checked" : "") />
+                                <label class="star" for="star3" aria-label="3 stars" title="3 stars">★</label>
+
+                                <input class="star-input" type="radio" id="star2" name="Rating" value="2" @(Model.Rating == 2 ? "checked" : "") />
+                                <label class="star" for="star2" aria-label="2 stars" title="2 stars">★</label>
+
+                                <input class="star-input" type="radio" id="star1" name="Rating" value="1" @(Model.Rating == 1 ? "checked" : "") />
+                                <label class="star" for="star1" aria-label="1 star" title="1 star">★</label>
+                            </div>
+
+                            <span class="rating-hint muted">Select 1–5</span>
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.Rating, "", new { @class = "field-validation-error" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Comments, new { @class = "kv__k" })
+                        @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", rows = 4 })
+                        @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "field-validation-error" })
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-ghost" })
+                    </div>
+                }
+
             </div>
-        </div>
+        </article>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>

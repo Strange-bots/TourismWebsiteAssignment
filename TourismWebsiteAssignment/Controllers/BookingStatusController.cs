@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
+using TourismWebsiteAssignment.Filters;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize("Admin")]
     public class BookingStatusController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();

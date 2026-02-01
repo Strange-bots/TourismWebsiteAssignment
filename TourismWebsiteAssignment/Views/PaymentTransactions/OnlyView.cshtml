@@ -1,56 +1,93 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.PaymentTransactions>
 
-<h2>Index</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Booking.SpecialStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentMethod)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionReference)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Currency)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Booking.SpecialStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentMethod)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionReference)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Currency)
-        </td>
-    </tr>
+@{
+    ViewBag.Title = "Payments";
 }
 
-</table>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
+
+<section class="page">
+
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Payments</h2>
+            <p class="page-subtitle">View payment transactions and booking references.</p>
+        </div>
+    </header>
+
+    <div class="grid">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var p in Model)
+            {
+                var bookingStatus = p.Booking != null && !string.IsNullOrWhiteSpace(p.Booking.SpecialStatus)
+                    ? p.Booking.SpecialStatus
+                    : "N/A";
+
+                <article class="card">
+
+                    <!-- Card Header -->
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">
+                                Transaction #@p.TransactionId
+                            </h3>
+
+                            <p class="card-meta">
+                                <span class="pill">@p.TransactionStatus</span>
+                                <span class="separator">•</span>
+                                <span class="muted">
+                                    @p.TransactionDate.ToString("dd MMM yyyy")
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Amount</span>
+                            <span class="price-value">
+                                @p.Currency @p.Amount
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+
+                        <div class="kv">
+                            <span class="kv__k">Payment Method</span>
+                            <span class="kv__v">@p.PaymentMethod</span>
+                        </div>
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Transaction Reference</span>
+                            <span class="kv__v">@p.TransactionReference</span>
+                        </div>
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Booking Special Status</span>
+                            <span class="kv__v clamp-2">@bookingStatus</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Card Footer -->
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost"
+                           href="@Url.Action("TouristViewDetails", "PaymentTransactions", new { id = p.TransactionId })">
+                            Details
+                        </a>
+                    </footer>
+
+                </article>
+            }
+        }
+        else
+        {
+            <div class="empty">
+                <h3>No payments found</h3>
+                <p>Payment transactions will appear here once processed.</p>
+            </div>
+        }
+    </div>
+
+</section>

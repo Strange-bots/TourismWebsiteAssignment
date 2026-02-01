@@ -1,0 +1,289 @@
+﻿/* =========================================
+   Feedback Form – Full Stylesheet (Replace All)
+   ========================================= */
+
+/* Page baseline (safe + minimal) */
+.feedback-page {
+    min-height: calc(100vh - 120px);
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+    background: #f6f7fb;
+}
+
+/* Card container */
+.feedback-form {
+    width: 100%;
+    max-width: 560px;
+    background: #ffffff;
+    border: 1px solid #e9edf3;
+    border-radius: 16px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06), 0 4px 10px rgba(0, 0, 0, 0.04);
+    padding: 2rem 2.25rem;
+}
+
+    /* Heading */
+    .feedback-form .form-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #0f172a;
+        margin: 0 0 0.35rem 0;
+    }
+
+    .feedback-form .form-subtitle {
+        margin: 0 0 1.6rem 0;
+        font-size: 0.95rem;
+        color: #64748b;
+    }
+
+    /* Form layout */
+    .feedback-form .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .feedback-form label {
+        display: block;
+        margin-bottom: 0.45rem;
+        font-size: 0.88rem;
+        font-weight: 650;
+        color: #1f2937;
+    }
+
+    /* Inputs */
+    .feedback-form input[type="number"],
+    .feedback-form textarea {
+        width: 100%;
+        border: 1px solid #d7dde6;
+        background: #ffffff;
+        color: #0f172a;
+        border-radius: 12px;
+        padding: 0.75rem 0.85rem;
+        font-size: 0.95rem;
+        transition: border-color 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+    }
+
+    .feedback-form textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+        /* Focus */
+        .feedback-form input:focus,
+        .feedback-form textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+        }
+
+    /* Validation */
+    .feedback-form .field-validation-error {
+        display: block;
+        margin-top: 0.4rem;
+        font-size: 0.82rem;
+        color: #b91c1c;
+    }
+
+    .feedback-form .input-validation-error {
+        border-color: #ef4444 !important;
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12) !important;
+    }
+
+/* =========================================
+   Star Rating (CSS-only, accessible)
+   Requires markup: radio inputs + labels
+   ========================================= */
+
+.rating-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.rating-hint {
+    font-size: 0.85rem;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+/* The star strip */
+.rating-stars {
+    display: inline-flex;
+    flex-direction: row-reverse; /* fill “leftwards” */
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 12px;
+    border: 1px solid #d7dde6;
+    background: #fff;
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+    .rating-stars:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+    }
+
+/* Hide radios but keep them accessible */
+/* =========================================
+   Star Rating – NO BOX (floating stars)
+   ========================================= */
+
+.rating-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rating-stars {
+    display: inline-flex;
+    flex-direction: row-reverse; /* enables left-fill */
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Hide radios but keep accessibility */
+.star-input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+/* Stars */
+.star {
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    color: #cbd5e1; /* empty star */
+    transition: color 0.15s ease, transform 0.12s ease;
+}
+
+    /* Hover fills current + previous */
+    .star:hover,
+    .star:hover ~ .star {
+        color: #f59e0b;
+    }
+
+/* Checked state */
+.star-input:checked ~ .star {
+    color: #f59e0b;
+}
+
+/* Subtle interaction */
+.star:hover {
+    transform: scale(1.08);
+}
+
+/* Validation error (optional) */
+.rating-stars.is-invalid .star {
+    color: #ef4444;
+}
+
+/* Hint text */
+.rating-hint {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+
+/* =========================================
+   Buttons
+   ========================================= */
+
+.feedback-form .btn-primary {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    cursor: pointer;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+}
+
+    .feedback-form .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 26px rgba(37, 99, 235, 0.28);
+    }
+
+    .feedback-form .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+    }
+
+/* Secondary link area (optional) */
+.feedback-form .form-footer {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+    .feedback-form .form-footer a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 650;
+    }
+
+        .feedback-form .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 520px) {
+    .feedback-form {
+        padding: 1.4rem 1.2rem;
+        border-radius: 14px;
+    }
+
+    .rating-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rating-hint {
+        margin-top: 0.15rem;
+    }
+}
+/* =========================
+   Feedback Context (Read-only)
+   ========================= */
+
+.feedback-context {
+    margin-bottom: 1.4rem;
+    padding: 0.85rem 1rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.context-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.35rem 0;
+}
+
+.context-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.context-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: right;
+}

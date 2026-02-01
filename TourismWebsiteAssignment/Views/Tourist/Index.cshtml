@@ -69,41 +69,6 @@
         </div>
     </section>
 
-    <!-- Actions -->
-    <section class="tourist-panel">
-        <div class="tourist-panel__header">
-            <h3 class="tourist-panel__title">Quick Actions</h3>
-            <p class="tourist-panel__hint">Common tourist tasks.</p>
-        </div>
-
-        <div class="tourist-grid tourist-grid--actions">
-            <a class="tourist-action" href="@Url.Action("Index", "TravelPackages")">
-                <div class="tourist-action__title">Browse Packages</div>
-                <div class="tourist-action__desc">Find tours that match your interests</div>
-            </a>
-
-            <a class="tourist-action" href="@Url.Action("Index", "Bookings")">
-                <div class="tourist-action__title">My Bookings</div>
-                <div class="tourist-action__desc">View booking status and details</div>
-            </a>
-
-            <a class="tourist-action" href="@Url.Action("Index", "PaymentTransactions")">
-                <div class="tourist-action__title">Payments</div>
-                <div class="tourist-action__desc">Complete payments and view history</div>
-            </a>
-
-            <a class="tourist-action" href="@Url.Action("Edit", "TouristProfiles", new { id = Model.TouristProfileId })">
-                <div class="tourist-action__title">My Profile</div>
-                <div class="tourist-action__desc">Update contact info and preferences</div>
-            </a>
-
-            <a class="tourist-action" href="@Url.Action("Index", "Feedbacks")">
-                <div class="tourist-action__title">Feedback</div>
-                <div class="tourist-action__desc">Write reviews and report issues</div>
-            </a>
-        </div>
-    </section>
-
     <!-- Notes -->
     <section class="tourist-panel tourist-panel--notes">
         <div class="tourist-panel__header">

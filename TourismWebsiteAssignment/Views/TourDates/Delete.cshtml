@@ -1,80 +1,81 @@
 ﻿@model TourismWebsiteAssignment.Models.TourDate
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Tour Date";
 }
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
+<link rel="stylesheet" href="~/Content/CustomStyles/global-pages.css" />
+<section class="page">
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>TourDate</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TravelPackage.PackageTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TravelPackage.PackageTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AvailableSlots)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AvailableSlots)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalSlots)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalSlots)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceAdjustment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceAdjustment)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Delete Tour Date</h2>
+            <p class="page-subtitle">Please confirm before permanently deleting this tour date.</p>
         </div>
-    }
-</div>
+    </header>
+
+    <article class="card" style="max-width: 720px;">
+        <div class="card-header">
+            <div>
+                <h3 class="card-title">Are you sure?</h3>
+                <p class="card-meta">
+                    This action cannot be undone.
+                </p>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="kv">
+                <span class="kv__k">Package</span>
+                <span class="kv__v">@Model.TravelPackage.PackageTitle</span>
+            </div>
+
+            <div class="kv">
+                <span class="kv__k">Start Date</span>
+                <span class="kv__v">@Model.StartDate</span>
+            </div>
+
+            <div class="kv">
+                <span class="kv__k">End Date</span>
+                <span class="kv__v">@Model.EndDate</span>
+            </div>
+
+            <div class="kv">
+                <span class="kv__k">Available Slots</span>
+                <span class="kv__v">@Model.AvailableSlots</span>
+            </div>
+
+            <div class="kv">
+                <span class="kv__k">Total Slots</span>
+                <span class="kv__v">@Model.TotalSlots</span>
+            </div>
+
+            <div class="kv">
+                <span class="kv__k">Status</span>
+                <span class="kv__v">@Model.Status</span>
+            </div>
+
+            <div class="kv">
+                <span class="kv__k">Price Adjustment</span>
+                <span class="kv__v">@Model.PriceAdjustment</span>
+            </div>
+
+        </div>
+
+        <footer class="card-footer">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <a href="@Url.Action("AgentMyTours")" class="btn btn-ghost" style="margin-right:10px;">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-danger">
+                    Delete
+                </button>
+            }
+        </footer>
+    </article>
+
+</section>

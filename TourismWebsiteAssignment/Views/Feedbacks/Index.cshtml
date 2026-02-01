@@ -1,57 +1,163 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.Feedback>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Feedback";
 }
 
-<h2>Index</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-list.css" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Booking.SpecialStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tourist.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comments)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubmittedAt)
-        </th>
-        <th></th>
-    </tr>
+<section class="page">
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Feedback</h2>
+            <p class="page-subtitle">Customer ratings, tour context, and comments.</p>
+        </div>
+    </header>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Booking.SpecialStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tourist.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmittedAt)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FeedbackId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FeedbackId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FeedbackId })
-        </td>
-    </tr>
-}
+    @if (Model != null && Model.Any())
+    {
+        <div class="grid">
+            @foreach (var item in Model)
+            {
+                var touristName = item.Tourist?.FullName ?? "N/A";
+                var rating = item.Rating;
+                var submittedText = item.SubmittedAt.ToString("dd MMM yyyy");
 
-</table>
+                // Booking-related info (safe null checks)
+                var booking = item.Booking;
+                var bookingId = booking?.BookingId ?? 0;
+                var bookingStatus = booking?.BookingStatus?.StatusName ?? "Unknown";
+                var guests = booking?.NumberOfGuests;
+                var totalPrice = booking?.TotalPrice;
+
+                // TourDate + Package info (adjust property names if yours differ)
+                var tourDate = booking?.TourDate;
+                var tourStatus = tourDate?.Status ?? "N/A";
+
+                // If your TourDate has DateTime fields, use them here.
+                // Common names: StartDate/EndDate or TourStart/TourEnd
+                DateTime? start = null;
+                DateTime? end = null;
+
+                // Try common property names (if your model differs, replace manually)
+                // start = tourDate?.StartDate;
+                // end = tourDate?.EndDate;
+
+                // Package (common name: TravelPackage)
+                var packageName = tourDate?.TravelPackage?.PackageTitle ?? "N/A";
+                var agencyName = tourDate?.TravelPackage?.TravelAgency?.AgencyName ?? "";
+
+                var special = booking?.SpecialStatus ?? "";
+                var hasSpecial = !string.IsNullOrWhiteSpace(special);
+
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">@touristName</h3>
+                            <p class="card-meta">
+                                <span class="pill">@bookingStatus</span>
+                                <span class="separator">•</span>
+                                <span class="muted">Submitted: @submittedText</span>
+                            </p>
+                        </div>
+
+                        <div class="rating" aria-label="Rating @rating out of 5">
+                            <span class="stars" data-rating="@rating">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                            </span>
+                            <span class="rating-num">@rating/5</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Context block -->
+                        <div class="kv">
+                            <span class="kv__k">Booking</span>
+                            <span class="kv__v">#@bookingId</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Package</span>
+                            <span class="kv__v clamp-2">@packageName</span>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(agencyName))
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Agency</span>
+                                <span class="kv__v clamp-2">@agencyName</span>
+                            </div>
+                        }
+
+                        <div class="kv">
+                            <span class="kv__k">Tour Status</span>
+                            <span class="kv__v">@tourStatus</span>
+                        </div>
+
+                        @* If you have StartDate/EndDate in TourDate, uncomment this block and set start/end above *@
+                        @if (start.HasValue)
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Tour Date</span>
+                                <span class="kv__v">@start.Value.ToString("dd MMM yyyy")</span>
+                            </div>
+                        }
+
+                        @if (start.HasValue && end.HasValue)
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Time</span>
+                                <span class="kv__v">@start.Value.ToString("hh:mm tt") – @end.Value.ToString("hh:mm tt")</span>
+                            </div>
+                        }
+
+                        @if (guests.HasValue)
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Guests</span>
+                                <span class="kv__v">@guests</span>
+                            </div>
+                        }
+
+                        @if (totalPrice.HasValue)
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Total Paid</span>
+                                <span class="kv__v">$@totalPrice</span>
+                            </div>
+                        }
+
+                        @if (hasSpecial)
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Special Status</span>
+                                <span class="kv__v clamp-2">@special</span>
+                            </div>
+                        }
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Comment</span>
+                            <span class="kv__v clamp-4">@item.Comments</span>
+                        </div>
+
+                    </div>
+
+                    <footer class="card-footer">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.FeedbackId }, new { @class = "btn btn-ghost" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.FeedbackId }, new { @class = "btn btn-danger" })
+                    </footer>
+
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty">
+            <h3>No feedback yet</h3>
+            <p>Feedback will appear here once tourists submit reviews.</p>
+        </div>
+    }
+</section>

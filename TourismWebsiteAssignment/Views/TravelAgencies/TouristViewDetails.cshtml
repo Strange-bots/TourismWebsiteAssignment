@@ -1,0 +1,112 @@
+﻿@model TourismWebsiteAssignment.Models.TravelAgency
+
+@{
+    ViewBag.Title = "Agency Details";
+}
+
+<link rel="stylesheet" href="~/Content/CustomStyles/Details.css" />
+
+<section class="details-page">
+
+    <header class="details-page__header">
+        <div>
+            <h2 class="details-page__title">Agency Details</h2>
+            <p class="details-page__subtitle">Review the agency information below.</p>
+        </div>
+    </header>
+
+    <div class="details-card">
+        <div class="details-card__body">
+
+            <dl class="details-list">
+
+                <div class="details-row">
+                    <dt class="details-label">Owner</dt>
+                    <dd class="details-value">
+                        @((Model.User != null && !string.IsNullOrWhiteSpace(Model.User.FullName))
+                            ? Model.User.FullName
+                            : "N/A")
+                    </dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyName)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyName)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.LicenseNumber)</dt>
+                    <dd class="details-value">
+                        <span class="badge badge--role">@Html.DisplayFor(m => m.LicenseNumber)</span>
+                        <span class="text-muted" style="margin-left:10px;">License</span>
+                    </dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.ContactNumber)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.ContactNumber)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.PhoneNumber)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.PhoneNumber)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.ContactPerson)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.ContactPerson)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyAddress)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyAddress)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyDescription)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyDescription)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
+                    <dd class="details-value">
+                        @Model.CreatedAt.ToString("yyyy-MM-dd")
+                    </dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.UpdatedAt)</dt>
+                    <dd class="details-value">
+                        @Model.UpdatedAt.ToString("yyyy-MM-dd")
+                        
+                    </dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.LogoUrl)</dt>
+                    <dd class="details-value">
+                        @if (!string.IsNullOrWhiteSpace(Model.LogoUrl))
+                        {
+                            <a class="btn btn--ghost" href="@Model.LogoUrl" target="_blank" rel="noopener">Open Logo</a>
+                            <div class="text-muted" style="margin-top:8px; word-break: break-word;">
+                                @Model.LogoUrl
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No logo provided.</span>
+                        }
+                    </dd>
+                </div>
+
+            </dl>
+
+        </div>
+
+        <div class="details-card__footer">
+            <a class="btn btn--ghost" href="@Url.Action("OnlyEdit", "TravelAgencies")">Back to List</a>
+            <a class="btn btn--primary" href="@Url.Action("Edit", "TravelAgencies", new { id = Model.AgencyId })">Edit</a>
+        </div>
+    </div>
+
+</section>

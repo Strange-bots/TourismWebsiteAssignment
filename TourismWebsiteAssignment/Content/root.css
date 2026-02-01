@@ -15,8 +15,8 @@
     top: 0;
     z-index: 1000;
     height: var(--h);
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    display:flex;
+    justify-content:space-between;
     align-items: center;
     gap: 12px;
     padding: 0 16px;
@@ -140,48 +140,6 @@
     display: block;
 }
 
-/* Search bar centered */
-.nav-search {
-    width: min(320px, 100%);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: rgba(255,255,255,0.06);
-}
-
-    .nav-search input {
-        flex: 1;
-        min-width: 120px;
-        border: none;
-        outline: none;
-        background: transparent;
-        color: var(--nav-fg);
-        padding: 10px 12px;
-        font-size: 14px;
-    }
-
-        .nav-search input::placeholder {
-            color: var(--nav-muted);
-        }
-
-    .nav-search button {
-        border: 1px solid var(--border);
-        background: rgba(255,255,255,0.10);
-        color: var(--nav-fg);
-        padding: 10px 14px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 14px;
-        align-self: flex-end;
-    }
-
-        .nav-search button:hover {
-            background: rgba(255,255,255,0.16);
-        }
-
 /* Logo on right */
 .brand {
     display: inline-flex;
@@ -193,6 +151,7 @@
     border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
+    margin-left:20vw;
 }
 
 .brand-logo {

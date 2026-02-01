@@ -15,7 +15,7 @@
         </div>
 
         <div class="admin-page__actions">
-            <a class="btn btn--ghost" href="@Url.Action("Index")">Back to List</a>
+            <a class="btn btn--ghost" href="@Url.Action("AgentMyPackages","TravelPackages")">Back to List</a>
         </div>
     </header>
 
@@ -23,6 +23,7 @@
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.PackageId)
+        @Html.HiddenFor(m => m.AgencyId)
 
         <div class="admin-card">
 
@@ -39,17 +40,6 @@
                 }
 
                 <div class="form-grid">
-
-                    <div class="form-field">
-                        <label class="form-label">@Html.DisplayNameFor(m => m.AgencyId)</label>
-                        @Html.DropDownListFor(
-    m => m.AgencyId,
-    (SelectList)ViewBag.AgencyId,
-    new { @class = "form-select" }
-)
-
-                        @Html.ValidationMessageFor(m => m.AgencyId, "", new { @class = "form-error" })
-                    </div>
 
                     <div class="form-field">
                         <label class="form-label">@Html.DisplayNameFor(m => m.PackageTitle)</label>
@@ -109,7 +99,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <a class="btn btn--ghost" href="@Url.Action("Index")">Cancel</a>
+                    <a class="btn btn--ghost" href="@Url.Action("AgentMyPackages","TravelPackages")">Cancel</a>
                     <input type="submit" value="Save Changes" class="btn btn--primary" />
                 </div>
 

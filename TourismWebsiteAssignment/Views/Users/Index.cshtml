@@ -5,46 +5,46 @@
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/CustomStyles/Users.css" />
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-<section class="admin-page">
+<section class="page">
 
-    <header class="admin-header">
+    <header class="page-header">
         <div>
-            <h2 class="admin-title">User Management</h2>
-            <p class="admin-subtitle">View and manage system users.</p>
+            <h2 class="page-title">User Management</h2>
+            <p class="page-subtitle">View and manage system users.</p>
         </div>
 
-        <div class="admin-actions">
-            @Html.ActionLink("Create New User", "Create", null, new { @class = "btn btn--primary" })
+        <div class="page-actions">
+            @Html.ActionLink("Create New User", "Create", null, new { @class = "btn btn-primary" })
         </div>
     </header>
 
-    <div class="card-grid">
+    <div class="grid">
         @if (Model != null && Model.Any())
         {
             foreach (var u in Model)
             {
-                <article class="entity-card">
-                    <div class="entity-card__top">
+                var initial = string.IsNullOrWhiteSpace(u.FullName)
+                    ? "U"
+                    : u.FullName.Trim().Substring(0, 1).ToUpper();
+
+                <article class="card">
+                    <div class="card-header">
                         <div>
-                            <h3 class="entity-card__title">@u.FullName</h3>
-                            <p class="entity-card__meta">
-                               
-                                <span class="dot">•</span>
+                            <h3 class="card-title">@u.FullName</h3>
+                            <p class="card-meta">
                                 <span class="muted">@u.Username</span>
                             </p>
                         </div>
 
-                        <div class="avatar">
-                            @(string.IsNullOrWhiteSpace(u.FullName) ? "U" : u.FullName.Trim().Substring(0, 1).ToUpper())
-                        </div>
+                        <span class="muted">User</span>
                     </div>
 
-                    <div class="entity-card__body">
+                    <div class="card-body">
                         <div class="kv">
                             <span class="kv__k">Email</span>
-                            <span class="kv__v kv__v--mono">@u.Email</span>
+                            <span class="kv__v">@u.Email</span>
                         </div>
 
                         <div class="kv">
@@ -54,23 +54,23 @@
 
                         <div class="kv">
                             <span class="kv__k">Password</span>
-                            <span class="kv__v text-muted">Hidden</span>
+                            <span class="kv__v muted">Hidden</span>
                         </div>
                     </div>
 
-                    <footer class="entity-card__footer">
-                        <a class="btn btn--ghost" href="@Url.Action("Details", new { id = u.UserId })">Details</a>
-                        <a class="btn btn--ghost" href="@Url.Action("Edit", new { id = u.UserId })">Edit</a>
-                        <a class="btn btn--danger" href="@Url.Action("Delete", new { id = u.UserId })">Delete</a>
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost" href="@Url.Action("Details", new { id = u.UserId })">Details</a>
+                        <a class="btn btn-ghost" href="@Url.Action("Edit", new { id = u.UserId })">Edit</a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", new { id = u.UserId })">Delete</a>
                     </footer>
                 </article>
             }
         }
         else
         {
-            <div class="empty-state">
-                <h3 class="empty-state__title">No users found</h3>
-                <p class="empty-state__text">Create a user to see it listed here.</p>
+            <div class="empty">
+                <h3>No users found</h3>
+                <p>Create a user to see it listed here.</p>
             </div>
         }
     </div>

@@ -1,88 +1,101 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.TravelPackage>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Browse Trips";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/Browse.css" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TravelAgency.AgencyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PackageTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PackageDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Destination)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PricePerPerson)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupMaxSize)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inclusions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Exclusions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItineraryDetails)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TermsAndConditions)
-        </th>
-        <th></th>
-    </tr>
+<section class="browse-page">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelAgency.AgencyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PackageTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PackageDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Destination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PricePerPerson)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupMaxSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inclusions)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exclusions)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItineraryDetails)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TermsAndConditions)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.PackageId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PackageId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.PackageId })
-            </td>
-        </tr>
-    }
+    <!-- Hero -->
+    <header class="browse-hero">
+        <div class="browse-hero__content">
+            <h1 class="browse-title">Browse Travel Experiences</h1>
+            <p class="browse-subtitle">
+                Discover curated tours, compare destinations, and book with confidence.
+            </p>
+        </div>
+    </header>
 
-</table>
+    <!-- Results -->
+    <div class="browse-container">
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="browse-grid">
+                @foreach (var pkg in Model)
+                {
+                    var latestImg = (pkg.PackageImages != null && pkg.PackageImages.Any())
+                        ? pkg.PackageImages.OrderByDescending(i => i.UploadedAt).FirstOrDefault()
+                        : null;
+
+                    var imageUrl = latestImg?.ImageURL;
+
+                    <article class="browse-card">
+
+                        <!-- Image -->
+                        <div class="browse-card__image">
+                            @if (!string.IsNullOrWhiteSpace(imageUrl))
+                            {
+                                <img src="@imageUrl"
+                                     alt="@pkg.PackageTitle"
+                                     loading="lazy" />
+                            }
+                            else
+                            {
+                                <div class="browse-card__placeholder">
+                                    No Image
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Content -->
+                        <div class="browse-card__content">
+                            <h3 class="browse-card__title">@pkg.PackageTitle</h3>
+
+                            <p class="browse-card__meta">
+                                @if (!string.IsNullOrWhiteSpace(pkg.Destination))
+                                {
+                                    <span class="tag">@pkg.Destination</span>
+                                }
+                                <span>• Group up to @pkg.GroupMaxSize</span>
+                            </p>
+
+                            <p class="browse-card__desc">
+                                @pkg.PackageDescription
+                            </p>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="browse-card__footer">
+                            <div class="browse-price">
+                                <span>From</span>
+                                <strong>$@pkg.PricePerPerson</strong>
+                            </div>
+
+                            <a class="browse-btn"
+                               href="@Url.Action(
+                                    "TouristCreateBookings",
+                                    "Bookings",
+                                    new { packageId = pkg.PackageId, returnUrl = Request.RawUrl }
+                               )">
+                                Book
+                            </a>
+                        </div>
+
+                    </article>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="browse-empty">
+                <h3>No trips available</h3>
+                <p>Please check back later.</p>
+            </div>
+        }
+
+    </div>
+</section>

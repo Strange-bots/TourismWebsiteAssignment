@@ -2,57 +2,68 @@
 
 @{
     ViewBag.Title = "Packages";
-    // If this is inside dashboard, set Layout as needed:
-    // Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/CustomStyles/ViewPackage.css" />
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-<section class="admin-page">
+<section class="page">
 
-    <header class="admin-header">
+    <header class="page-header">
         <div>
-            <h2 class="admin-title">List of Packages</h2>
-            <p class="admin-subtitle">Browse and manage travel packages and their details.</p>
-        </div>
-
-        <div class="admin-actions">
-            @* Optional *@
-            @* @Html.ActionLink("Create New Package", "Create", null, new { @class = "btn btn--primary" }) *@
+            <h2 class="page-title">List of Packages</h2>
+            <p class="page-subtitle">Browse and manage travel packages and their details.</p>
         </div>
     </header>
 
-    <div class="card-grid">
+    <div class="grid">
         @if (Model != null && Model.Any())
         {
             foreach (var p in Model)
             {
-                <article class="entity-card">
+                var latestImage = (p.PackageImages != null && p.PackageImages.Any())
+                    ? p.PackageImages.OrderByDescending(i => i.UploadedAt).FirstOrDefault()
+                    : null;
 
-                    <div class="entity-card__top">
+                <article class="card">
+                    @* Image *@
+                    @if (latestImage != null && !string.IsNullOrWhiteSpace(latestImage.ImageURL))
+                    {
+                        <div class="card-image">
+                            <img src="@latestImage.ImageURL"
+                                 alt="@p.PackageTitle"
+                                 loading="lazy" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-image card-image--placeholder">
+                            No Image
+                        </div>
+                    }
+
+                    @* Header *@
+                    <div class="card-header">
                         <div>
-                            <h3 class="entity-card__title">@p.PackageTitle</h3>
-
-                            <p class="entity-card__meta">
+                            <h3 class="card-title">@p.PackageTitle</h3>
+                            <p class="card-meta">
                                 <span class="pill">@p.Destination</span>
 
                                 @if (p.TravelAgency != null && !string.IsNullOrWhiteSpace(p.TravelAgency.AgencyName))
                                 {
-                                    <span class="dot">•</span>
+                                    <span class="separator">•</span>
                                     <span class="muted">@p.TravelAgency.AgencyName</span>
                                 }
                             </p>
                         </div>
 
-                        <div class="entity-card__price">
-                            <span class="price">
-                                @String.Format("{0:C}", p.PricePerPerson)
-                            </span>
-                            <span class="muted small">per person</span>
+                        <div class="price">
+                            <span class="price-label">Per person</span>
+                            <span class="price-value">@String.Format("{0:C}", p.PricePerPerson)</span>
                         </div>
                     </div>
 
-                    <div class="entity-card__body">
+                    @* Body *@
+                    <div class="card-body">
 
                         <div class="kv kv--full">
                             <span class="kv__k">Description</span>
@@ -64,42 +75,60 @@
                             <span class="kv__v">@p.GroupMaxSize</span>
                         </div>
 
-                        <div class="kv kv--full">
-                            <span class="kv__k">Inclusions</span>
-                            <span class="kv__v clamp-3">@p.Inclusions</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(p.Inclusions))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Inclusions</span>
+                                <span class="kv__v clamp-3">@p.Inclusions</span>
+                            </div>
+                        }
 
-                        <div class="kv kv--full">
-                            <span class="kv__k">Exclusions</span>
-                            <span class="kv__v clamp-3">@p.Exclusions</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(p.Exclusions))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Exclusions</span>
+                                <span class="kv__v clamp-3">@p.Exclusions</span>
+                            </div>
+                        }
 
-                        <div class="kv kv--full">
-                            <span class="kv__k">Itinerary</span>
-                            <span class="kv__v clamp-3">@p.ItineraryDetails</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(p.ItineraryDetails))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Itinerary</span>
+                                <span class="kv__v clamp-3">@p.ItineraryDetails</span>
+                            </div>
+                        }
 
-                        <div class="kv kv--full">
-                            <span class="kv__k">Terms</span>
-                            <span class="kv__v clamp-3">@p.TermsAndConditions</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(p.TermsAndConditions))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Terms</span>
+                                <span class="kv__v clamp-3">@p.TermsAndConditions</span>
+                            </div>
+                        }
 
                     </div>
 
-                    <footer class="entity-card__footer">
-                        <a class="btn btn--ghost" href="@Url.Action("Details", "TravelPackages", new { id = p.PackageId })">Details</a>
-                        <a class="btn btn--ghost" href="@Url.Action("Edit", "TravelPackages", new { id = p.PackageId })">Edit</a>
-                        <a class="btn btn--danger" href="@Url.Action("Delete", "TravelPackages", new { id = p.PackageId })">Delete</a>
-                    </footer>
+                    @* Footer *@
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost"
+                           href="@Url.Action("Details", "TravelPackages", new { id = p.PackageId })">
+                            Details
+                        </a>
 
+                        <a class="btn btn-danger"
+                           href="@Url.Action("Delete", "TravelPackages", new { id = p.PackageId })">
+                            Delete
+                        </a>
+                    </footer>
                 </article>
             }
         }
         else
         {
-            <div class="empty-state">
-                <h3 class="empty-state__title">No packages found</h3>
-                <p class="empty-state__text">Create a package to see it listed here.</p>
+            <div class="empty">
+                <h3>No packages found</h3>
+                <p>Create a package to see it listed here.</p>
             </div>
         }
     </div>

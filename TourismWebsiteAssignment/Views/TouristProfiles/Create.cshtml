@@ -1,111 +1,96 @@
 ﻿@model TourismWebsiteAssignment.Models.TouristProfile
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Profile";
 }
 
-<h2>Create</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/CreateUser.css" />
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>TouristProfile</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-            </div>
+
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <h2>Complete Your Profile</h2>
+            <p class="auth-subtitle">
+                Provide your details to finish setting up your tourist account.
+            </p>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+        @* Validation summary styled with CreateUser.css *@
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="form-error">
+                @Html.ValidationSummary(true, "", new { })
             </div>
+        }
+
+        @Html.HiddenFor(m => m.UserId)
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.FullName)
+            @Html.TextBoxFor(m => m.FullName, new { @class = "form-input", placeholder = "e.g., John Smith" })
+            @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Gender)
+            @Html.DropDownListFor(
+                m => m.Gender,
+                new SelectList(new[]
+                {
+                    new { Value = "", Text = "Select gender" },
+                    new { Value = "Male", Text = "Male" },
+                    new { Value = "Female", Text = "Female" },
+                    new { Value = "Other", Text = "Other" }
+                }, "Value", "Text", Model.Gender),
+                new { @class = "form-select" }
+            )
+            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.DateOfBirth)
+            @Html.TextBoxFor(m => m.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-input", type = "date" })
+            @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nationality, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nationality, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Address)
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-input", placeholder = "Street, suburb, city" })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TravelPreferences, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TravelPreferences, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TravelPreferences, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.Nationality)
+            @Html.TextBoxFor(m => m.Nationality, new { @class = "form-input", placeholder = "e.g., Nepali, Australian" })
+            @Html.ValidationMessageFor(m => m.Nationality, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProfileImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProfileImageUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProfileImageUrl, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.TravelPreferences)
+            @Html.TextAreaFor(m => m.TravelPreferences, new { @class = "form-input", rows = 3, placeholder = "e.g., hiking, beaches, budget travel" })
+            @Html.ValidationMessageFor(m => m.TravelPreferences, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedAt, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-field">
+            @Html.LabelFor(m => m.ProfileImageUrl)
+            @Html.TextBoxFor(m => m.ProfileImageUrl, new { @class = "form-input", placeholder = "Image URL (optional)" })
+            @Html.ValidationMessageFor(m => m.ProfileImageUrl, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedAt, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Save Profile</button>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
+        <div class="auth-footer">
+            @Html.ActionLink("Back", "Index", null, new { @class = "link-muted" })
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

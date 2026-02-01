@@ -9,14 +9,16 @@ using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
-
+using TourismWebsiteAssignment.Filters;
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize]
     public class PaymentTransactionsController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
 
         // GET: PaymentTransactions
+        [RoleAuthorize("Admin", "Tourist", "Agent")]
         public async Task<ActionResult> Index()
         {
             var paymentTransactions = db.PaymentTransactions.Include(p => p.Booking);
@@ -24,6 +26,7 @@ namespace TourismWebsiteAssignment.Controllers
         }
         
         // GET: PaymentTransactions
+        [RoleAuthorize("Admin","Tourist","Agent")]
         public async Task<ActionResult> OnlyView()
         {
             var paymentTransactions = db.PaymentTransactions.Include(p => p.Booking);
@@ -171,6 +174,7 @@ namespace TourismWebsiteAssignment.Controllers
             return RedirectToAction("Index");
         }
         //Viewing payments that are made for this agent packages
+        [RoleAuthorize("Agent")]
         public async Task<ActionResult> AgentViewPayment()
         {
 
@@ -196,6 +200,20 @@ namespace TourismWebsiteAssignment.Controllers
             }
 
             return View(payments);
+        }
+        //get
+        public async Task<ActionResult> TouristViewDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PaymentTransactions paymentTransactions = await db.PaymentTransactions.FindAsync(id);
+            if (paymentTransactions == null)
+            {
+                return HttpNotFound();
+            }
+            return View(paymentTransactions);
         }
         protected override void Dispose(bool disposing)
         {

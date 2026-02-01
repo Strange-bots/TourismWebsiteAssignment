@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,13 +11,13 @@ namespace TourismWebsiteAssignment.Models
         public int FeedbackId { get; set; }
 
         [Required]
-        public int TouristId { get; set; }
+        public int TouristProfileId { get; set; }
 
         [Required]
         public int BookingId { get; set; }
 
-        [ForeignKey("TouristId")]
-        public virtual TouristProfile Tourist { get; set; }
+        [ForeignKey("TouristProfileId")]
+        public virtual TouristProfile Tourist { get; set; } 
 
         [ForeignKey("BookingId")]
         public virtual Booking Booking { get; set; }

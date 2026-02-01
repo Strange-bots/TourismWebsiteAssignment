@@ -1,64 +1,73 @@
 ﻿@model TourismWebsiteAssignment.Models.User
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete User";
 }
 
-<h2>Delete</h2>
+@* Base UI tokens / layout *@
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-base.css" />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
-        </dt>
+@* Delete-specific styles (card--danger, alert, details, etc.) *@
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
+<link rel="stylesheet" href="~/Content/CustomStyles/Delete.css" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Role.RoleName)
-        </dd>
+<section class="page">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Delete User</h2>
+            <p class="page-subtitle">This action is permanent and cannot be undone.</p>
         </div>
-    }
-</div>
+
+        <div class="page-actions">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-ghost" })
+        </div>
+    </header>
+
+    <article class="card card--danger">
+
+        <div class="alert alert-danger">
+            <span class="alert-badge">Danger</span>
+            Are you sure you want to delete this user?
+        </div>
+
+        <div class="card-body">
+
+            <dl class="details">
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.Role.RoleName)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.Role.RoleName)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.FullName)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.FullName)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.Email)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.Email)</dd>
+                </div>
+
+                <div class="details-row">
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.Username)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.Username)</dd>
+                </div>
+
+                @* Do not display Password *@
+            </dl>
+
+        </div>
+
+        <div class="card-footer">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">Delete</button>
+            }
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-ghost" })
+        </div>
+
+    </article>
+
+</section>

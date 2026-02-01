@@ -9,9 +9,11 @@ using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
+using TourismWebsiteAssignment.Filters;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize("Admin","Agent")]
     public class TourDatesController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
@@ -60,32 +62,42 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TourDateId,PackageId,StartDate,EndDate,AvailableSlots,TotalSlots,Status,PriceAdjustment")] TourDate tourDate)
+        public async Task<ActionResult> Create([Bind(Include = "PackageId,StartDate,EndDate,AvailableSlots,TotalSlots,Status,PriceAdjustment")] TourDate tourDate)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.TourDates.Add(tourDate);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", tourDate.PackageId);
+                return View(tourDate);
             }
 
-            ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", tourDate.PackageId);
-            return View(tourDate);
+            db.TourDates.Add(tourDate);
+            await db.SaveChangesAsync();
+
+            // Redirect to PackageImages/Create with PackageId (correct relationship)
+            return RedirectToAction("Create", "PackageImages", new { packageId = tourDate.PackageId });
         }
 
-        // GET: TourDates/Edit/5
+        //Get 
         public async Task<ActionResult> Edit(int? id)
         {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TourDate tourDate = await db.TourDates.FindAsync(id);
+
+            int userId = (int)Session["UserId"];
+
+            var tourDate = await db.TourDates
+                .Include(td => td.TravelPackage.TravelAgency)
+                .FirstOrDefaultAsync(td =>
+                    td.TourDateId == id &&
+                    td.TravelPackage.TravelAgency.UserId == userId
+                );
+
             if (tourDate == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", tourDate.PackageId);
+
             return View(tourDate);
         }
 
@@ -94,16 +106,36 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TourDateId,PackageId,StartDate,EndDate,AvailableSlots,TotalSlots,Status,PriceAdjustment")] TourDate tourDate)
+        public async Task<ActionResult> Edit(
+    [Bind(Include = "TourDateId,StartDate,EndDate,AvailableSlots,TotalSlots,Status,PriceAdjustment")]
+    TourDate tourDate)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(tourDate).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", tourDate.PackageId);
-            return View(tourDate);
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            int userId = (int)Session["UserId"];
+
+            // Load existing TourDate to get PackageId + ownership
+            var existing = await db.TourDates
+                .Include(td => td.TravelPackage.TravelAgency)
+                .FirstOrDefaultAsync(td =>
+                    td.TourDateId == tourDate.TourDateId &&
+                    td.TravelPackage.TravelAgency.UserId == userId
+                );
+
+            if (existing == null)
+                return HttpNotFound();
+
+            // SERVER ENFORCED
+            tourDate.PackageId = existing.PackageId;
+
+            if (!ModelState.IsValid)
+                return View(tourDate);
+
+            db.Entry(existing).CurrentValues.SetValues(tourDate);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("AgentMyTours");
         }
 
         // GET: TourDates/Delete/5
@@ -129,7 +161,7 @@ namespace TourismWebsiteAssignment.Controllers
             TourDate tourDate = await db.TourDates.FindAsync(id);
             db.TourDates.Remove(tourDate);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("AgentMyTours");
         }
 
         protected override void Dispose(bool disposing)

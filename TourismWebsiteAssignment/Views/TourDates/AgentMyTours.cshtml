@@ -14,7 +14,8 @@
             <p class="page-subtitle">Manage tour schedules and availability.</p>
         </div>
     </header>
-
+    <br />
+    <br />
     @if (Model != null && Model.Any())
     {
         <div class="grid">
@@ -63,6 +64,7 @@
                     </div>
 
                     <footer class="card-footer">
+
                         <a class="btn btn-ghost" href="@Url.Action("Details", new { id = item.TourDateId })">Details</a>
                         <a class="btn btn-ghost" href="@Url.Action("Edit", new { id = item.TourDateId })">Edit</a>
                         <a class="btn btn-danger" href="@Url.Action("Delete", new { id = item.TourDateId })">Delete</a>

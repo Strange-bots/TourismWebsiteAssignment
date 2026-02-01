@@ -57,10 +57,11 @@ namespace TourismWebsiteAssignment.Data
 
             // Disable cascade delete for Feedback -> TouristProfile
             modelBuilder.Entity<Feedback>()
-                .HasRequired(f => f.Tourist)
-                .WithMany() // no navigation property in TouristProfile
-                .HasForeignKey(f => f.TouristId)
-                .WillCascadeOnDelete(false);
+            .HasRequired(f => f.Tourist)
+            .WithMany()
+            .HasForeignKey(f => f.TouristProfileId)
+            .WillCascadeOnDelete(false);
+
 
             // Optionally, disable cascade delete for Feedback -> Booking if needed
             modelBuilder.Entity<Feedback>()

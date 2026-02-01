@@ -7,11 +7,12 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using TourismWebsiteAssignment.Data;
+using TourismWebsiteAssignment.Data;  
 using TourismWebsiteAssignment.Models;
-
+using TourismWebsiteAssignment.Filters;
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize]
     public class BookingsController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
@@ -90,19 +91,44 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookingId,TouristProfileId,TourDateId,BookingStatusId,BookingDate,NumberOfGuests,TotalPrice,SpecialStatus")] Booking booking)
+        public ActionResult Edit([Bind(Include =
+    "BookingId,BookingStatusId,BookingDate,NumberOfGuests,TotalPrice,SpecialStatus"
+)] Booking form)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Entry(booking).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var existingForView = db.Bookings.Find(form.BookingId);
+                if (existingForView == null) return HttpNotFound();
+
+                existingForView.BookingStatusId = form.BookingStatusId;
+                existingForView.BookingDate = form.BookingDate;
+                existingForView.NumberOfGuests = form.NumberOfGuests;
+                existingForView.TotalPrice = form.TotalPrice;
+                existingForView.SpecialStatus = form.SpecialStatus;
+
+                ViewBag.BookingStatusId = new SelectList(db.BookingStatus, "BookingStatusId", "StatusName", existingForView.BookingStatusId);
+                return View(existingForView);
             }
-            ViewBag.BookingStatusId = new SelectList(db.BookingStatus, "BookingStatusId", "StatusName", booking.BookingStatusId);
-            ViewBag.TourDateId = new SelectList(db.TourDates, "TourDateId", "Status", booking.TourDateId);
-            ViewBag.TouristProfileId = new SelectList(db.TouristProfiles, "TouristProfileId", "FullName", booking.TouristProfileId);
-            return View(booking);
+
+            var booking = db.Bookings.Find(form.BookingId);
+            if (booking == null) return HttpNotFound();
+
+            // 🔒 Locked fields — NOT updated
+            // booking.TouristProfileId
+            // booking.TourDateId
+
+            booking.BookingStatusId = form.BookingStatusId;
+            booking.BookingDate = form.BookingDate;
+            booking.NumberOfGuests = form.NumberOfGuests;
+            booking.TotalPrice = form.TotalPrice;
+            booking.SpecialStatus = form.SpecialStatus;
+
+            db.SaveChanges();
+
+            return RedirectToAction("AgentMyBookingsOnlyView");
         }
+
+
 
         // GET: Bookings/Delete/5
         public ActionResult Delete(int? id)
@@ -123,19 +149,21 @@ namespace TourismWebsiteAssignment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var booking = db.Bookings.Find(id);
-            if (booking == null) return HttpNotFound();
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
 
-            // 1) Remove dependents first (adjust table names if yours differ)
+            int userId = (int)Session["UserId"];
+
+            var booking = db.Bookings.Find(id);
+            if (booking == null)
+                return HttpNotFound();
+
+            // 1) Remove dependents
             var payments = db.PaymentTransactions.Where(p => p.BookingId == id);
             db.PaymentTransactions.RemoveRange(payments);
 
             var feedbacks = db.Feedbacks.Where(f => f.BookingId == id);
             db.Feedbacks.RemoveRange(feedbacks);
-
-            // Add more dependents here if you have them:
-            // var tickets = db.Tickets.Where(t => t.BookingId == id);
-            // db.Tickets.RemoveRange(tickets);
 
             // 2) Remove booking
             db.Bookings.Remove(booking);
@@ -143,6 +171,22 @@ namespace TourismWebsiteAssignment.Controllers
             // 3) Save
             db.SaveChanges();
 
+            // ---- DB ROLE LOOKUP ----
+            var roleName = db.Users
+                .Where(u => u.UserId == userId)
+                .Select(u => u.Role.RoleName)
+                .FirstOrDefault();
+
+            if (roleName == "Tourist")
+            {
+                return RedirectToAction("TouristViewBookings", "Bookings");
+            }
+            else if (roleName == "Admin")
+            {
+                return RedirectToAction("OnlyEdit", "Bookings");
+            }
+
+            // fallback
             return RedirectToAction("Index");
         }
 
@@ -174,7 +218,7 @@ namespace TourismWebsiteAssignment.Controllers
 
             return View(bookings.ToList());
         }
-
+        [RoleAuthorize("Agent")]
         public async Task<ActionResult> AgentMyBookingsOnlyView()
         {
             if (Session["UserId"] == null)
@@ -201,6 +245,7 @@ namespace TourismWebsiteAssignment.Controllers
 
             return View(bookings);
         }
+        [RoleAuthorize("Tourist")]
         public ActionResult TouristViewBookings()
         {
             if (Session["UserId"] == null)
@@ -209,25 +254,59 @@ namespace TourismWebsiteAssignment.Controllers
             var role = (Session["RoleName"] as string ?? "").Trim();
             if (!role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             int userId = (int)Session["UserId"];
-            var bookings = db.Bookings.Include(b => b.BookingStatus).Include(b => b.TourDate).Include(b => b.Tourist).Where(b => b.TouristProfileId == userId);
-            return View(bookings.ToList());
+
+            // 1) Resolve TouristProfileId for this user
+            var touristProfileId = db.TouristProfiles
+                .Where(tp => tp.UserId == userId)
+                .Select(tp => tp.TouristProfileId)
+                .FirstOrDefault();
+
+            if (touristProfileId == 0)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Tourist profile not found.");
+
+            // 2) Load ONLY this tourist's bookings
+            var bookings = db.Bookings
+                .Include(b => b.BookingStatus)
+                .Include(b => b.TourDate)
+                .Include(b => b.Tourist) // optional if you display tourist info
+                .Where(b => b.TouristProfileId == touristProfileId)
+                .OrderByDescending(b => b.BookingDate)
+                .ToList();
+
+            return View(bookings);
         }
+
         //Get: Bookings/TouristCreateBookings
+        [RoleAuthorize("Tourist")]
         public ActionResult TouristCreateBookings(int packageId, string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl ?? Request.UrlReferrer?.ToString();
             ViewBag.PackageId = packageId;
-             
-            var dates = db.TourDates.Where(td => td.PackageId == packageId).ToList();
-            ViewBag.TourDateId = new SelectList(dates, "TourDateId", "Status");
 
+            var dates = db.TourDates
+    .Where(td => td.PackageId == packageId)
+    .ToList()
+    .Select(td => new
+    {
+        td.TourDateId,
+        Display = td.StartDate.ToString("dd MMM yyyy") + " → " +
+                  td.EndDate.ToString("dd MMM yyyy") +
+                  " (" + td.Status + ")"
+    })
+    .ToList();
+
+            ViewBag.TourDateId = new SelectList(dates, "TourDateId", "Display");
+
+
+            ViewBag.TourDateId = new SelectList(dates, "TourDateId", "Display");
             return View(new Booking { NumberOfGuests = 1 });
         }
 
         [HttpPost]
-
         [ValidateAntiForgeryToken]
+        [RoleAuthorize("Tourist")]
         public ActionResult TouristCreateBookings(
     [Bind(Include = "TourDateId,NumberOfGuests,SpecialStatus")] Booking booking,
     int packageId,
@@ -241,10 +320,19 @@ namespace TourismWebsiteAssignment.Controllers
             {
                 var dates = db.TourDates
                     .Where(td => td.PackageId == packageId)
+                    .ToList()
+                    .Select(td => new
+                    {
+                        td.TourDateId,
+                        Display = td.StartDate.ToString("dd MMM yyyy") + " → " +
+                                  td.EndDate.ToString("dd MMM yyyy") +
+                                  " (" + td.Status + ")"
+                    })
                     .ToList();
 
-                return new SelectList(dates, "TourDateId", "Status", booking.TourDateId);
+                return new SelectList(dates, "TourDateId", "Display", booking.TourDateId);
             };
+
 
             // 1) Validate TourDate belongs to selected Package
             var tourDateOk = db.TourDates.Any(td => td.TourDateId == booking.TourDateId && td.PackageId == packageId);
@@ -273,7 +361,23 @@ namespace TourismWebsiteAssignment.Controllers
                 ViewBag.TourDateId = loadDates();
                 return View(booking);
             }
-            booking.TouristProfileId = (int)Session["UserId"];
+            int userId = (int)Session["UserId"];
+
+            // Find TouristProfile that belongs to this user
+            var touristProfileId = db.TouristProfiles
+                .Where(tp => tp.UserId == userId)
+                .Select(tp => tp.TouristProfileId)
+                .FirstOrDefault();
+
+            if (touristProfileId == 0)
+            {
+                ModelState.AddModelError("", "Tourist profile not found for this account.");
+                ViewBag.TourDateId = loadDates();
+                return View(booking);
+            }
+
+            booking.TouristProfileId = touristProfileId;
+            ;
 
             // TotalPrice MUST be set (compute from package)
             var pkg = db.TravelPackages.Find(packageId);

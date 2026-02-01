@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
+using TourismWebsiteAssignment.Filters;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize("Agent")]
     public class PackageImagesController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
@@ -36,10 +38,21 @@ namespace TourismWebsiteAssignment.Controllers
             }
             return View(packageImage);
         }
-
-        // GET: PackageImages/Create
-        public ActionResult Create()
+        // GET: PackageImages/Create or PackageImages/Create?packageId=10
+        public ActionResult Create(int? packageId)
         {
+            if (packageId.HasValue)
+            {
+                var pkg = db.TravelPackages.Find(packageId.Value);
+                if (pkg == null) return HttpNotFound();
+
+                // Preselect package and allow you to hide dropdown in the view if you want
+                ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", packageId.Value);
+                ViewBag.FixedPackageId = packageId.Value;
+
+                return View(new PackageImage { PackageId = packageId.Value });
+            }
+
             ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle");
             return View();
         }
@@ -49,18 +62,23 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ImageId,PackageId,ImageURL,UploadedAt,Caption")] PackageImage packageImage)
+        public ActionResult Create([Bind(Include = "ImageId,PackageId,ImageURL,Caption")] PackageImage packageImage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.PackageImages.Add(packageImage);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", packageImage.PackageId);
+                ViewBag.FixedPackageId = packageImage.PackageId;
+                return View(packageImage);
             }
 
-            ViewBag.PackageId = new SelectList(db.TravelPackages, "PackageId", "PackageTitle", packageImage.PackageId);
-            return View(packageImage);
+            packageImage.UploadedAt = DateTime.Now; // IMPORTANT if your model requires it
+            db.PackageImages.Add(packageImage);
+            db.SaveChanges();
+
+            // Keep flow: go back to package page (choose what fits your system)
+            return RedirectToAction("Details", "TravelPackages", new { id = packageImage.PackageId });
         }
+
 
         // GET: PackageImages/Edit/5
         public ActionResult Edit(int? id)
@@ -83,7 +101,7 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ImageId,PackageId,ImageURL,UploadedAt,Caption")] PackageImage packageImage)
+        public ActionResult Edit([Bind(Include = "ImageId,PackageId,ImageURL,Caption")] PackageImage packageImage)
         {
             if (ModelState.IsValid)
             {

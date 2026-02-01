@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -70,5 +71,7 @@ namespace TourismWebsiteAssignment.Models
         [Required]
         [Display(Name = "Updated At")]
         public DateTime UpdatedAt { get; set; }
+
+        public virtual ICollection<PackageImage> PackageImages { get; set; }
     }
 }

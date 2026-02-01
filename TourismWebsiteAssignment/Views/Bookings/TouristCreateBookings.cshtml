@@ -25,11 +25,17 @@
             <input type="hidden" name="packageId" value="@ViewBag.PackageId" />
 
             <!-- USER INPUTS -->
-            <div class="form-field">
-                @Html.LabelFor(m => m.TourDateId, "Tour Date")
-                @Html.DropDownListFor(m => m.TourDateId, (SelectList)ViewBag.TourDateId, "Select a tour date", new { @class = "form-select" })
-                @Html.ValidationMessageFor(m => m.TourDateId, "", new { @class = "field-error" })
-            </div>
+    <div class="form-field">
+        @Html.LabelFor(m => m.TourDateId, "Tour Date")
+        @Html.DropDownListFor(
+m => m.TourDateId,
+(SelectList)ViewBag.TourDateId,
+"Select a tour date",
+new { @class = "input" }
+)
+
+        @Html.ValidationMessageFor(m => m.TourDateId, "", new { @class = "field-error" })
+    </div>
 
             <div class="form-field">
                 @Html.LabelFor(m => m.NumberOfGuests, "Guests")

@@ -1,65 +1,110 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.Booking>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bookings";
 }
 
-<h2>Index</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BookingStatus.StatusName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TourDate.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tourist.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookingDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberOfGuests)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpecialStatus)
-        </th>
-        <th></th>
-    </tr>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookingStatus.StatusName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TourDate.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tourist.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookingDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfGuests)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SpecialStatus)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookingId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookingId })
-        </td>
-    </tr>
-}
+<section class="page">
 
-</table>
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Bookings</h2>
+            <p class="page-subtitle">Manage customer bookings and view key details.</p>
+        </div>
+    </header>
+
+    <div class="grid">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var b in Model)
+            {
+                var touristName = b.Tourist != null && !string.IsNullOrWhiteSpace(b.Tourist.FullName)
+                    ? b.Tourist.FullName
+                    : "N/A";
+
+                var bookingStatus = b.BookingStatus != null && !string.IsNullOrWhiteSpace(b.BookingStatus.StatusName)
+                    ? b.BookingStatus.StatusName
+                    : "Unknown";
+
+                var tourStatus = b.TourDate != null && !string.IsNullOrWhiteSpace(b.TourDate.Status)
+                    ? b.TourDate.Status
+                    : "N/A";
+
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Booking #@b.BookingId</h3>
+
+                            <p class="card-meta">
+                                <span class="pill">@bookingStatus</span>
+                                <span class="separator">•</span>
+                                <span class="muted">@b.BookingDate.ToString("dd MMM yyyy")</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="kv">
+                            <span class="kv__k">Tourist</span>
+                            <span class="kv__v">@touristName</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Tour Status</span>
+                            <span class="kv__v">@tourStatus</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Guests</span>
+                            <span class="kv__v">@b.NumberOfGuests</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Total Price</span>
+                            <span class="kv__v">$@b.TotalPrice</span>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(b.SpecialStatus))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Special Status</span>
+                                <span class="kv__v clamp-3">@b.SpecialStatus</span>
+                            </div>
+                        }
+
+                    </div>
+
+                    <footer class="card-footer">
+                        @if (b.BookingStatus != null && b.BookingStatus.StatusName == "Confirmed")
+                        {
+
+                            <a class="btn btn-success" href="@Url.Action("Create", "Feedbacks", new { bookingId = b.BookingId })">
+                                Give Feedback
+                            </a>
+
+                        }
+                        <a class="btn btn-ghost" href="@Url.Action("Details", "Bookings", new { id = b.BookingId })">
+                            Details
+                        </a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", "Bookings", new { id = b.BookingId })">
+                            Cancel
+                        </a>
+                    </footer>
+
+                </article>
+            }
+        }
+        else
+        {
+            <div class="empty">
+                <h3>No bookings found</h3>
+                <p>Bookings will appear here once customers place them.</p>
+            </div>
+        }
+    </div>
+
+</section>

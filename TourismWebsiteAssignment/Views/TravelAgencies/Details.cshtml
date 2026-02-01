@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Agency Details";
 }
-<link rel="styesheet" href="~/Content/CustomStyles/Details.css"
+
+<link rel="stylesheet" href="~/Content/CustomStyles/Details.css" />
+
 <section class="details-page">
 
     <header class="details-page__header">
@@ -19,8 +21,12 @@
             <dl class="details-list">
 
                 <div class="details-row">
-                    <dt class="details-label">@Html.DisplayNameFor(m => m.User.FullName)</dt>
-                    <dd class="details-value">@Html.DisplayFor(m => m.User.FullName)</dd>
+                    <dt class="details-label">Owner</dt>
+                    <dd class="details-value">
+                        @((Model.User != null && !string.IsNullOrWhiteSpace(Model.User.FullName))
+                            ? Model.User.FullName
+                            : "N/A")
+                    </dd>
                 </div>
 
                 <div class="details-row">
@@ -32,7 +38,7 @@
                     <dt class="details-label">@Html.DisplayNameFor(m => m.LicenseNumber)</dt>
                     <dd class="details-value">
                         <span class="badge badge--role">@Html.DisplayFor(m => m.LicenseNumber)</span>
-                        <span class="text-muted">License</span>
+                        <span class="text-muted" style="margin-left:10px;">License</span>
                     </dd>
                 </div>
 
@@ -42,8 +48,8 @@
                 </div>
 
                 <div class="details-row">
-                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyAddress)</dt>
-                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyAddress)</dd>
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.PhoneNumber)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.PhoneNumber)</dd>
                 </div>
 
                 <div class="details-row">
@@ -52,8 +58,8 @@
                 </div>
 
                 <div class="details-row">
-                    <dt class="details-label">@Html.DisplayNameFor(m => m.PhoneNumber)</dt>
-                    <dd class="details-value">@Html.DisplayFor(m => m.PhoneNumber)</dd>
+                    <dt class="details-label">@Html.DisplayNameFor(m => m.AgencyAddress)</dt>
+                    <dd class="details-value">@Html.DisplayFor(m => m.AgencyAddress)</dd>
                 </div>
 
                 <div class="details-row">
@@ -63,12 +69,17 @@
 
                 <div class="details-row">
                     <dt class="details-label">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
-                    <dd class="details-value">@Html.DisplayFor(m => m.CreatedAt)</dd>
+                    <dd class="details-value">
+                        @Model.CreatedAt.ToString("yyyy-MM-dd")
+                    </dd>
                 </div>
 
                 <div class="details-row">
                     <dt class="details-label">@Html.DisplayNameFor(m => m.UpdatedAt)</dt>
-                    <dd class="details-value">@Html.DisplayFor(m => m.UpdatedAt)</dd>
+                    <dd class="details-value">
+                        @Model.UpdatedAt.ToString("yyyy-MM-dd")
+                        
+                    </dd>
                 </div>
 
                 <div class="details-row">
@@ -77,7 +88,9 @@
                         @if (!string.IsNullOrWhiteSpace(Model.LogoUrl))
                         {
                             <a class="btn btn--ghost" href="@Model.LogoUrl" target="_blank" rel="noopener">Open Logo</a>
-                            <div class="text-muted" style="margin-top:8px;">@Html.DisplayFor(m => m.LogoUrl)</div>
+                            <div class="text-muted" style="margin-top:8px; word-break: break-word;">
+                                @Model.LogoUrl
+                            </div>
                         }
                         else
                         {
@@ -88,11 +101,6 @@
 
             </dl>
 
-        </div>
-
-        <div class="details-card__footer">
-            <a class="btn btn--ghost" href="@Url.Action("Index")">Back to List</a>
-            <a class="btn btn--primary" href="@Url.Action("Edit", new { id = Model.AgencyId })">Edit</a>
         </div>
     </div>
 

@@ -3,81 +3,94 @@
 @{
     ViewBag.Title = "Agencies";
 }
-<link rel="stylesheet" href="~/Content/CustomStyles/ViewAgency.css" />
-<section class="admin-page">
 
-    <header class="admin-header">
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
+
+<section class="page">
+
+    <header class="page-header">
         <div>
-            <h2 class="admin-title">List of Agencies</h2>
-            <p class="admin-subtitle">Manage travel agencies and view their details.</p>
+            <h2 class="page-title">List of Agencies</h2>
+            <p class="page-subtitle">Manage travel agencies and view their details.</p>
         </div>
     </header>
 
-    <div class="card-grid">
+    <div class="grid">
         @if (Model != null && Model.Any())
         {
             foreach (var a in Model)
             {
-                <article class="entity-card">
+                var agencyName = string.IsNullOrWhiteSpace(a.AgencyName) ? "Agency" : a.AgencyName.Trim();
+                var ownerName = a.User != null && !string.IsNullOrWhiteSpace(a.User.FullName) ? a.User.FullName : "N/A";
+                var initial = agencyName.Substring(0, 1).ToUpper();
 
-                    <div class="entity-card__top">
+                <article class="card">
+
+                    <div class="card-header">
                         <div>
-                            <h3 class="entity-card__title">@a.AgencyName</h3>
-                            <p class="entity-card__meta">
-                                <span class="pill">@a.LicenseNumber</span>
-                                <span class="dot">•</span>
-                                <span class="muted">Owner: @a.User?.FullName</span>
+                            <h3 class="card-title">@agencyName</h3>
+                            <p class="card-meta">
+                                @if (!string.IsNullOrWhiteSpace(a.LicenseNumber))
+                                {
+                                    <span class="pill">@a.LicenseNumber</span>
+                                }
+                                <span class="separator">•</span>
+                                <span class="muted">Owner: @ownerName</span>
                             </p>
                         </div>
-
-                        @if (!string.IsNullOrWhiteSpace(a.LogoUrl))
-                        {
-                            <img class="entity-card__logo" src="@a.LogoUrl" alt="Agency logo" />
-                        }
-                        else
-                        {
-                            <div class="entity-card__logo entity-card__logo--placeholder">
-                                @(string.IsNullOrWhiteSpace(a.AgencyName) ? "A" : a.AgencyName.Trim().Substring(0, 1).ToUpper())
-                            </div>
-                        }
                     </div>
 
-                    <div class="entity-card__body">
-                        <div class="kv">
-                            <span class="kv__k">Contact</span>
-                            <span class="kv__v">@a.ContactNumber</span>
-                        </div>
+                    <div class="card-body">
 
-                        <div class="kv">
-                            <span class="kv__k">Phone</span>
-                            <span class="kv__v">@a.PhoneNumber</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(a.ContactNumber))
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Contact</span>
+                                <span class="kv__v">@a.ContactNumber</span>
+                            </div>
+                        }
 
-                        <div class="kv kv--full">
-                            <span class="kv__k">Address</span>
-                            <span class="kv__v">@a.AgencyAddress</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(a.PhoneNumber))
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Phone</span>
+                                <span class="kv__v">@a.PhoneNumber</span>
+                            </div>
+                        }
 
-                        <div class="kv kv--full">
-                            <span class="kv__k">Description</span>
-                            <span class="kv__v clamp-3">@a.AgencyDescription</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(a.AgencyAddress))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Address</span>
+                                <span class="kv__v">@a.AgencyAddress</span>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(a.AgencyDescription))
+                        {
+                            <div class="kv kv--full">
+                                <span class="kv__k">Description</span>
+                                <span class="kv__v clamp-3">@a.AgencyDescription</span>
+                            </div>
+                        }
 
                         <div class="kv">
                             <span class="kv__k">Created</span>
                             <span class="kv__v">@a.CreatedAt.ToString("yyyy-MM-dd")</span>
                         </div>
 
-                        <div class="kv">
-                            <span class="kv__k">Contact Person</span>
-                            <span class="kv__v">@a.ContactPerson</span>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(a.ContactPerson))
+                        {
+                            <div class="kv">
+                                <span class="kv__k">Contact Person</span>
+                                <span class="kv__v">@a.ContactPerson</span>
+                            </div>
+                        }
                     </div>
 
-                    <footer class="entity-card__footer">
-                        <a class="btn btn--ghost" href="@Url.Action("Details", new { id = a.AgencyId })">Details</a>
-                        <a class="btn btn--ghost" href="@Url.Action("Edit", new { id = a.AgencyId })">Edit</a>
-                        <a class="btn btn--danger" href="@Url.Action("Delete", new { id = a.AgencyId })">Delete</a>
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost" href="@Url.Action("Details", "TravelAgencies", new { id = a.AgencyId })">Details</a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", "TravelAgencies", new { id = a.AgencyId })">Delete</a>
                     </footer>
 
                 </article>
@@ -85,9 +98,9 @@
         }
         else
         {
-            <div class="empty-state">
-                <h3 class="empty-state__title">No agencies found</h3>
-                <p class="empty-state__text">Add an agency to see it listed here.</p>
+            <div class="empty">
+                <h3>No agencies found</h3>
+                <p>Add an agency to see it listed here.</p>
             </div>
         }
     </div>

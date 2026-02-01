@@ -7,6 +7,25 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="~/Content/root.css" />
+    <style>
+        /* Brand */
+        .top-bar__brand {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            color: var(--rock-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+            .top-bar__brand:hover {
+                color: navajowhite;
+            }
+        .top-bar__brand>span{
+            font-size:30px;
+        }
+    </style>
 </head>
 <body>
     <nav class="nav">
@@ -22,27 +41,23 @@
             <!-- Dropdown menu -->
             <div class="nav-dropdown" role="menu" aria-label="Navigation menu">
                 <ul>
-                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Browse", "Package", "TravelPackagfe", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Login", "Index", "LoginRegistration", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Browse", "Index", "TravelPackages", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Login", "Index", "LoginRegistration", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Center: Search bar -->
-        <div class="nav-center">
-            <form class="nav-search" action="#" method="get">
-                <input type="text" name="q" placeholder="Search packages, destinations..." />
-                <button type="submit">Search</button>
-            </form>
+        <!-- Right: Company logo / Brand -->
+        <div class="nav-right">
+            <a href="@Url.Action("Index", "Home")" class="top-bar__brand brand-link">
+                <span>▲</span>  Wanderlust
+            </a>
+
         </div>
 
-        <!-- Right: Company logo -->
-        <div class="nav-right">
-          @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
-        </div>
     </nav>
 
         @RenderBody()

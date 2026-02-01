@@ -1,7 +1,63 @@
-﻿
+﻿@model TourismWebsiteAssignment.Models.User
 @{
-    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<link rel="stylesheet" href="~/Content/CustomStyles/CreateUser.css" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="auth-card">
+
+        <header class="auth-header">
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join us and start your journey</p>
+        </header>
+
+        @Html.ValidationSummary(true, "", new { @class = "form-error" })
+
+        <div class="form-field">
+            @Html.LabelFor(model => model.FullName)
+            @Html.EditorFor(model => model.FullName,
+                new { htmlAttributes = new { @class = "form-input", placeholder = "Full name" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email,
+                new { htmlAttributes = new { @class = "form-input", placeholder = "Email address" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(model => model.Username)
+            @Html.EditorFor(model => model.Username,
+                new { htmlAttributes = new { @class = "form-input", placeholder = "Username" } })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(model => model.Password)
+            @Html.EditorFor(model => model.Password,
+                new { htmlAttributes = new { @class = "form-input", placeholder = "Password", type = "password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(model => model.RoleId, "Role")
+            @Html.DropDownList("RoleId", null,
+                new { @class = "form-select" })
+            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Create Account</button>
+        </div>
+
+        <footer class="auth-footer">
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "link-muted" })
+        </footer>
+
+    </div>
 }
-
-<h2>Index</h2>
-

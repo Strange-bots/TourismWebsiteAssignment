@@ -135,8 +135,6 @@
     <Compile Include="Controllers\PackageImagesController.cs" />
     <Compile Include="Controllers\PaymentTransactionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
-    <Compile Include="Controllers\SeedController.cs" />
-    <Compile Include="Controllers\ShowDataController.cs" />
     <Compile Include="Controllers\TourDatesController.cs" />
     <Compile Include="Controllers\TouristController.cs" />
     <Compile Include="Controllers\TouristProfilesController.cs" />
@@ -144,6 +142,7 @@
     <Compile Include="Controllers\TravelPackagesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\TourismWebsiteAssignmentContext.cs" />
+    <Compile Include="Filters\RoleAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,6 +170,18 @@
     <Compile Include="Migrations\202601210631238_Bookingcreatevm.Designer.cs">
       <DependentUpon>202601210631238_Bookingcreatevm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202601221618346_PackageImageUpdate.cs" />
+    <Compile Include="Migrations\202601221618346_PackageImageUpdate.Designer.cs">
+      <DependentUpon>202601221618346_PackageImageUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202601310605477_NewTable.cs" />
+    <Compile Include="Migrations\202601310605477_NewTable.Designer.cs">
+      <DependentUpon>202601310605477_NewTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202601310656020_UpdateFeedbackTable.cs" />
+    <Compile Include="Migrations\202601310656020_UpdateFeedbackTable.Designer.cs">
+      <DependentUpon>202601310656020_UpdateFeedbackTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\HomeStatsVM.cs" />
     <Compile Include="Models\BookingCreateVm.cs" />
@@ -189,6 +200,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CustomStyles\AboutNewsletter.css" />
     <Content Include="Content\CustomStyles\agent-home.css" />
     <Content Include="Content\CustomStyles\admin-home-css.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -207,10 +219,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomStyles\Browse.css" />
     <Content Include="Content\CustomStyles\CreateUser.css" />
     <Content Include="Content\CustomStyles\Delete.css" />
     <Content Include="Content\CustomStyles\Details.css" />
     <Content Include="Content\CustomStyles\Edit.css" />
+    <Content Include="Content\CustomStyles\Feedback.css" />
+    <Content Include="Content\CustomStyles\feedbackedit.css" />
     <Content Include="Content\CustomStyles\global-pages.css" />
     <Content Include="Content\CustomStyles\Home-page.css" />
     <Content Include="Content\CustomStyles\MyAgencyDetails.css" />
@@ -218,9 +233,9 @@
     <Content Include="Content\CustomStyles\tourist-home.css" />
     <Content Include="Content\CustomStyles\TViewPackage.css" />
     <Content Include="Content\CustomStyles\ui-cards.css" />
+    <Content Include="Content\CustomStyles\ui-list.css" />
     <Content Include="Content\CustomStyles\Users.css" />
     <Content Include="Content\CustomStyles\ViewAgency.css" />
-    <Content Include="Content\CustomStyles\ViewPackage.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\root.css" />
@@ -342,12 +357,15 @@
     <Content Include="Views\PaymentTransactions\AgentViewPayment.cshtml" />
     <Content Include="Views\Bookings\TouristCreateBookings.cshtml" />
     <Content Include="Views\Bookings\TouristViewBookings.cshtml" />
+    <Content Include="Views\TravelAgencies\TouristViewDetails.cshtml" />
+    <Content Include="Views\PaymentTransactions\Delete - Copy.cshtml" />
+    <Content Include="Views\PaymentTransactions\TouristViewDetails.cshtml" />
+    <Content Include="Views\Home\Services.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BookingCreateVm\" />
-    <Folder Include="Views\Seed\" />
-    <Folder Include="Views\ShowData\" />
+    <Folder Include="Views\RoleAuthorizeAttribute\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -394,6 +412,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202601210631238_Bookingcreatevm.resx">
       <DependentUpon>202601210631238_Bookingcreatevm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601221618346_PackageImageUpdate.resx">
+      <DependentUpon>202601221618346_PackageImageUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601310605477_NewTable.resx">
+      <DependentUpon>202601310605477_NewTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601310656020_UpdateFeedbackTable.resx">
+      <DependentUpon>202601310656020_UpdateFeedbackTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

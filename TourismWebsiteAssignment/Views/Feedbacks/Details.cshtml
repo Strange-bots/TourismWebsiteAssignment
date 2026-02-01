@@ -1,58 +1,70 @@
 ﻿@model TourismWebsiteAssignment.Models.Feedback
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Feedback Details";
 }
 
-<h2>Details</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-list.css" />
 
-<div>
-    <h4>Feedback</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Booking.SpecialStatus)
-        </dt>
+<section class="page">
 
-        <dd>
-            @Html.DisplayFor(model => model.Booking.SpecialStatus)
-        </dd>
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Feedback Details</h2>
+            <p class="page-subtitle">View the full rating and comment.</p>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tourist.FullName)
-        </dt>
+        <div class="page-actions">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-ghost" })
+            @Html.ActionLink("Edit", "Edit", new { id = Model.FeedbackId }, new { @class = "btn btn-primary" })
+        </div>
+    </header>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tourist.FullName)
-        </dd>
+    @{
+        var name = Model.Tourist != null ? (Model.Tourist.FullName ?? "N/A") : "N/A";
+        var special = Model.Booking != null ? (Model.Booking.SpecialStatus ?? "") : "";
+        var rating = Model.Rating;
+        var dateText = Model.SubmittedAt.ToString("dd MMM yyyy");
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
+    <article class="card" style="grid-column: span 12;">
+        <div class="card-header">
+            <div>
+                <h3 class="card-title">@name</h3>
+                <p class="card-meta">
+                    <span class="muted">Submitted: @dateText</span>
+                </p>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
+            <div class="rating" aria-label="Rating @rating out of 5">
+                <span class="stars" data-rating="@rating">
+                    <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </span>
+                <span class="rating-num">@rating/5</span>
+            </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
+        <div class="card-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
+            @if (!string.IsNullOrWhiteSpace(special))
+            {
+                <div class="kv kv--full">
+                    <span class="kv__k">Special Status</span>
+                    <span class="kv__v">@special</span>
+                </div>
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SubmittedAt)
-        </dt>
+            <div class="kv kv--full">
+                <span class="kv__k">Comment</span>
+                <span class="kv__v">@Model.Comments</span>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.SubmittedAt)
-        </dd>
+        </div>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FeedbackId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <footer class="card-footer">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-ghost" })
+            @Html.ActionLink("Edit", "Edit", new { id = Model.FeedbackId }, new { @class = "btn btn-primary" })
+        </footer>
+    </article>
+
+</section>

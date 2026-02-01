@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models;
-
+using TourismWebsiteAssignment.Filters;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize("Tourist")]
     public class TouristController : Controller
     {
         private readonly TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
@@ -25,7 +26,7 @@ namespace TourismWebsiteAssignment.Controllers
                 .FirstOrDefault(t => t.UserId == userId); // requires TouristProfile.UserId FK
 
             if (profile == null)
-                return HttpNotFound("Tourist profile not found for this user.");
+                return RedirectToAction("Create", "TouristProfiles");
 
             return View(profile);
         }

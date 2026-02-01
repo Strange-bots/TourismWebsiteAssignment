@@ -1,74 +1,98 @@
 ﻿@model TourismWebsiteAssignment.Models.Booking
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Booking Details";
 }
 
-<h2>Details</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/Details.css" />
 
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BookingStatus.StatusName)
-        </dt>
+<section class="details-page">
 
-        <dd>
-            @Html.DisplayFor(model => model.BookingStatus.StatusName)
-        </dd>
+    <!-- Header -->
+    <header class="details-page__header">
+        <div>
+            <h1 class="details-page__title">Booking Details</h1>
+            <p class="details-page__subtitle">View booking status, tourist info, and pricing.</p>
+        </div>
+    </header>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TourDate.Status)
-        </dt>
+    <!-- Card -->
+    <article class="details-card" style="max-width: 820px;">
 
-        <dd>
-            @Html.DisplayFor(model => model.TourDate.Status)
-        </dd>
+        <div class="details-card__body">
+            <div class="details-list">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tourist.FullName)
-        </dt>
+                <div class="details-row">
+                    <div class="details-label">Booking #</div>
+                    <div class="details-value">
+                        @Model.BookingId
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tourist.FullName)
-        </dd>
+                <div class="details-row">
+                    <div class="details-label">Booking Status</div>
+                    <div class="details-value">
+                        <span class="badge badge--role">
+                            @Model.BookingStatus.StatusName
+                        </span>
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BookingDate)
-        </dt>
+                <div class="details-row">
+                    <div class="details-label">Booking Date</div>
+                    <div class="details-value">
+                        @Model.BookingDate.ToString("dd MMM yyyy")
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.BookingDate)
-        </dd>
+                <div class="details-row">
+                    <div class="details-label">Total Price</div>
+                    <div class="details-value">
+                        $@Model.TotalPrice
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfGuests)
-        </dt>
+                <div class="details-row">
+                    <div class="details-label">Tour Status</div>
+                    <div class="details-value">
+                        @Model.TourDate.Status
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfGuests)
-        </dd>
+                <div class="details-row">
+                    <div class="details-label">Tourist</div>
+                    <div class="details-value">
+                        @Model.Tourist.FullName
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
+                <div class="details-row">
+                    <div class="details-label">Guests</div>
+                    <div class="details-value">
+                        @Model.NumberOfGuests
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
+                <div class="details-row">
+                    <div class="details-label">Special Status</div>
+                    <div class="details-value">
+                        @if (!string.IsNullOrWhiteSpace(Model.SpecialStatus))
+                        {
+                            @Model.SpecialStatus
+                        }
+                        else
+                        {
+                            <span class="text-muted">None</span>
+                        }
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SpecialStatus)
-        </dt>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.SpecialStatus)
-        </dd>
+        <footer class="details-card__footer">
+        </footer>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BookingId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    </article>
+
+</section>

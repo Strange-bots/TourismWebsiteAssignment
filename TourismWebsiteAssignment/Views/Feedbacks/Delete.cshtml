@@ -1,64 +1,95 @@
 ﻿@model TourismWebsiteAssignment.Models.Feedback
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Feedback";
 }
 
-<h2>Delete</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/Delete.css" />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Feedback</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Booking.SpecialStatus)
-        </dt>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Booking.SpecialStatus)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tourist.FullName)
-        </dt>
+<section class="page">
 
-        <dd>
-            @Html.DisplayFor(model => model.Tourist.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SubmittedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubmittedAt)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Delete Feedback</h2>
+            <p class="page-subtitle">This action cannot be undone.</p>
         </div>
-    }
-</div>
+
+        <div class="page-actions">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-ghost" })
+        </div>
+    </header>
+
+    <div class="grid">
+        <article class="card card--danger">
+
+            <div class="card-body">
+
+                <!-- Warning -->
+                <div class="alert alert-danger">
+                    <span class="alert-badge">Warning</span>
+                    You are about to permanently delete this feedback.
+                </div>
+
+                <!-- Details -->
+                <div class="details">
+
+                    <div class="details-row">
+                        <span class="details-label">Tourist</span>
+                        <span class="details-value">
+                            @(Model.Tourist?.FullName ?? "N/A")
+                        </span>
+                    </div>
+
+                    <div class="details-row">
+                        <span class="details-label">Rating</span>
+                        <span class="details-value">
+                            @Model.Rating / 5
+                        </span>
+                    </div>
+
+                    <div class="details-row">
+                        <span class="details-label">Comment</span>
+                        <span class="details-value">
+                            @Model.Comments
+                        </span>
+                    </div>
+
+                    <div class="details-row">
+                        <span class="details-label">Submitted At</span>
+                        <span class="details-value">
+                            @Model.SubmittedAt.ToString("dd MMM yyyy")
+                        </span>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Booking?.SpecialStatus))
+                    {
+                        <div class="details-row">
+                            <span class="details-label">Special Status</span>
+                            <span class="details-value">
+                                @Model.Booking.SpecialStatus
+                            </span>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <footer class="card-footer">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">
+                        Delete Permanently
+                    </button>
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-ghost" })
+                }
+            </footer>
+
+        </article>
+    </div>
+
+</section>

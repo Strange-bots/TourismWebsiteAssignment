@@ -11,6 +11,7 @@ using TourismWebsiteAssignment.Data;
 using TourismWebsiteAssignment.Models; 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();

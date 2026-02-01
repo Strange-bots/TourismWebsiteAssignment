@@ -16,7 +16,11 @@
         </div>
 
         <div class="page-actions">
-            <a class="btn btn-ghost" href="@Url.Action("Index")">Back to List</a>
+            <a href="@Url.Action("FindWayBack", "TravelPackages")"
+               class="btn btn-ghost">
+                Back To list
+            </a>
+
         </div>
     </header>
 
@@ -108,8 +112,6 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-
-                <a class="btn btn-ghost" href="@Url.Action("Index")">Cancel</a>
                 <input type="submit" value="Delete" class="btn btn-danger" />
             }
         </footer>

@@ -1,109 +1,119 @@
-﻿
-<link rel="stylesheet" href="~/Content/CustomStyles/agent-home.css" />
+﻿<style>
+    .agent-account-basic {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 24px;
+    }
 
-<div class="agent-dashboard">
-    <!-- Header / Hero -->
-    <header class="agent-hero">
-        <div class="agent-hero__text">
-            <h2 class="agent-hero__title">Agent Dashboard</h2>
-            <p class="agent-hero__subtitle">
-                Manage your travel packages, bookings, and customer interactions.
-            </p>
-        </div>
-        <div class="agent-hero__meta">
-            <div class="agent-pill">Status: Active</div>
-            <div class="agent-pill agent-pill--muted">Role: Agent</div>
-        </div>
+    .agent-account-basic__header {
+        margin-bottom: 22px;
+    }
+
+    .agent-account-basic__title {
+        font-size: 1.6rem;
+        margin-bottom: 4px;
+    }
+
+    .agent-account-basic__subtitle {
+        font-size: 0.95rem;
+        color: #666;
+    }
+
+    /* Summary box */
+    .agent-summary {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin-bottom: 18px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    .agent-summary--muted {
+        background: #fafafa;
+    }
+
+    /* Rows */
+    .agent-summary__row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .agent-summary__row:last-child {
+            border-bottom: none;
+        }
+
+    .agent-summary__label {
+        color: #777;
+        font-size: 0.9rem;
+    }
+
+    .agent-summary__value {
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Status */
+    .agent-summary__value--active {
+        color: #2e7d32;
+    }
+
+    /* Note */
+    .agent-summary__note {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #555;
+        line-height: 1.5;
+    }
+
+</style>
+<div class="agent-account-basic">
+
+    <!-- Header -->
+    <header class="agent-account-basic__header">
+        <h2 class="agent-account-basic__title">My Account</h2>
+        <p class="agent-account-basic__subtitle">
+            Basic account information.
+        </p>
     </header>
 
-    <!-- Stats -->
-    <section class="agent-panel">
-        <div class="agent-panel__header">
-            <h3 class="agent-panel__title">Overview</h3>
-            <p class="agent-panel__hint">Your business at a glance.</p>
+    <!-- Account Summary -->
+    <section class="agent-summary">
+        <div class="agent-summary__row">
+            <span class="agent-summary__label">Account Name</span>
+            <span class="agent-summary__value">Agent User</span>
         </div>
-        <div class="agent-grid agent-grid--stats">
-            <article class="agent-card agent-card--stat">
-                <div class="agent-card__top">
-                    <span class="agent-card__label">My Packages</span>
-                </div>
-                <div class="agent-card__value">—</div>
-                <div class="agent-card__note">Total listed packages</div>
-            </article>
 
-            <article class="agent-card agent-card--stat">
-                <div class="agent-card__top">
-                    <span class="agent-card__label">Active Tours</span>
-                </div>
-                <div class="agent-card__value">—</div>
-                <div class="agent-card__note">Currently running</div>
-            </article>
-
-            <article class="agent-card agent-card--stat">
-                <div class="agent-card__top">
-                    <span class="agent-card__label">Bookings</span>
-                </div>
-                <div class="agent-card__value">—</div>
-                <div class="agent-card__note">Total reservations</div>
-            </article>
-
-            <article class="agent-card agent-card--stat">
-                <div class="agent-card__top">
-                    <span class="agent-card__label">Pending Requests</span>
-                </div>
-                <div class="agent-card__value">—</div>
-                <div class="agent-card__note">Need confirmation</div>
-            </article>
+        <div class="agent-summary__row">
+            <span class="agent-summary__label">Role</span>
+            <span class="agent-summary__value">Travel Agent</span>
         </div>
-    </section>
 
-    <!-- Actions -->
-    <section class="agent-panel">
-        <div class="agent-panel__header">
-            <h3 class="agent-panel__title">Quick Actions</h3>
-            <p class="agent-panel__hint">Common agent tasks.</p>
+        <div class="agent-summary__row">
+            <span class="agent-summary__label">Account Status</span>
+            <span class="agent-summary__value agent-summary__value--active">
+                Active
+            </span>
         </div>
-        <div class="agent-grid agent-grid--actions">
-            <a class="agent-action" href="#">
-                <div class="agent-action__title">Manage Packages</div>
-                <div class="agent-action__desc">Create and update travel packages</div>
-            </a>
 
-            <a class="agent-action" href="#">
-                <div class="agent-action__title">Tour Dates</div>
-                <div class="agent-action__desc">Schedule and manage tour dates</div>
-            </a>
+        <div class="agent-summary__row">
+            <span class="agent-summary__label">Access Level</span>
+            <span class="agent-summary__value">Standard</span>
+        </div>
 
-            <a class="agent-action" href="#">
-                <div class="agent-action__title">View Bookings</div>
-                <div class="agent-action__desc">Confirm or cancel bookings</div>
-            </a>
-
-            <a class="agent-action" href="#">
-                <div class="agent-action__title">Payments</div>
-                <div class="agent-action__desc">Track received payments</div>
-            </a>
-
-            <a class="agent-action" href="#">
-                <div class="agent-action__title">Customer Feedback</div>
-                <div class="agent-action__desc">Read reviews and respond</div>
-            </a>
+        <div class="agent-summary__row">
+            <span class="agent-summary__label">Last Login</span>
+            <span class="agent-summary__value">—</span>
         </div>
     </section>
 
     <!-- Notes -->
-    <section class="agent-panel agent-panel--notes">
-        <div class="agent-panel__header">
-            <h3 class="agent-panel__title">Agent Notes</h3>
-            <p class="agent-panel__hint">Helpful reminders.</p>
-        </div>
-        <div class="agent-noteBox">
-            <ul class="agent-noteBox__list">
-                <li>Keep package details and pricing up to date.</li>
-                <li>Confirm bookings promptly to improve customer trust.</li>
-                <li>Review feedback regularly to improve service quality.</li>
-            </ul>
-        </div>
+    <section class="agent-summary agent-summary--muted">
+        <p class="agent-summary__note">
+            This account allows you to manage travel packages and bookings within the system.
+            Contact an administrator if any account details are incorrect.
+        </p>
     </section>
-</div>
 
+</div>

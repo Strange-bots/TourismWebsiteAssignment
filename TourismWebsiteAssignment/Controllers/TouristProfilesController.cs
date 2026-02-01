@@ -12,6 +12,7 @@ using TourismWebsiteAssignment.Models;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [Authorize]
     public class TouristProfilesController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
@@ -41,27 +42,68 @@ namespace TourismWebsiteAssignment.Controllers
         // GET: TouristProfiles/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FullName");
-            return View();
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
+
+            var role = (Session["RoleName"] as string ?? "").Trim();
+            if (!role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            int userId = (int)Session["UserId"];
+
+            // Prevent duplicates: 1 user should have 1 profile
+            bool alreadyHasProfile = db.TouristProfiles.Any(tp => tp.UserId == userId);
+            if (alreadyHasProfile)
+                return RedirectToAction("Index", "Tourist"); // or TouristProfiles/Details
+
+            // Server sets UserId
+            var model = new TouristProfile
+            {
+                UserId = userId
+            };
+
+            return View(model);
         }
 
         // POST: TouristProfiles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: TouristProfiles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TouristProfileId,FullName,Gender,DateOfBirth,Address,Nationality,TravelPreferences,ProfileImageUrl,CreatedAt,UpdatedAt,UserId")] TouristProfile touristProfile)
+        public async Task<ActionResult> Create(
+            [Bind(Include = "TouristProfileId,FullName,Gender,DateOfBirth,Address,Nationality,TravelPreferences,ProfileImageUrl")]
+    TouristProfile touristProfile)
         {
-            if (ModelState.IsValid)
-            {
-                db.TouristProfiles.Add(touristProfile);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "LoginRegistration");
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FullName", touristProfile.UserId);
-            return View(touristProfile);
+            var role = (Session["RoleName"] as string ?? "").Trim();
+            if (!role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            int userId = (int)Session["UserId"];
+
+            // Prevent duplicates
+            bool alreadyHasProfile = db.TouristProfiles.Any(tp => tp.UserId == userId);
+            if (alreadyHasProfile)
+                return RedirectToAction("Index", "Tourist");
+
+            // SERVER-FILL UserId (ignore any client tampering)
+            touristProfile.UserId = userId;
+
+            touristProfile.CreatedAt = DateTime.Now;
+            touristProfile.UpdatedAt = DateTime.Now;
+
+            if (!ModelState.IsValid)
+                return View(touristProfile);
+
+            db.TouristProfiles.Add(touristProfile);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Tourist");
         }
+
 
         // GET: TouristProfiles/Edit/5
         public async Task<ActionResult> Edit(int? id)
@@ -84,7 +126,7 @@ namespace TourismWebsiteAssignment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TouristProfileId,FullName,Gender,DateOfBirth,Address,Nationality,TravelPreferences,ProfileImageUrl,CreatedAt,UpdatedAt,UserId")] TouristProfile touristProfile)
+        public async Task<ActionResult> Edit([Bind(Include = "TouristProfileId,FullName,Gender,DateOfBirth,Address,Nationality,TravelPreferences,ProfileImageUrl,UserId")] TouristProfile touristProfile)
         {
             if (ModelState.IsValid)
             {

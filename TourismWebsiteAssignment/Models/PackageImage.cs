@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,7 @@ namespace TourismWebsiteAssignment.Models
 
         [ForeignKey("PackageId")]
         public virtual TravelPackage TravelPackage { get; set; }
+        public virtual ICollection<PackageImage> PackageImages { get; set; }
 
         [Required]
         [StringLength(255)]

@@ -1,89 +1,109 @@
 ﻿@model TourismWebsiteAssignment.Models.TourDate
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Tour Date";
 }
+<link rel="stylesheet" href="~/Content/CustomStyles/Edit.css" />
+@Html.HiddenFor(m=>m.PackageId)
+<section class="admin-page">
 
-<h2>Edit</h2>
+    <!-- Page Header -->
+    <header class="admin-page__header">
+        <div>
+            <h1 class="admin-page__title">Edit Tour Date</h1>
+            <p class="admin-page__subtitle">Update schedule, pricing, and availability</p>
+        </div>
+    </header>
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>TourDate</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TourDateId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PackageId, "PackageId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PackageId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PackageId, "", new { @class = "text-danger" })
-            </div>
+    <!-- Card -->
+    <div class="admin-card">
+        <div class="admin-card__header">
+            <h2 class="admin-card__title">Tour Date Details</h2>
+            <p class="admin-card__hint">All fields are required unless stated otherwise</p>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="admin-card__body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AvailableSlots, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AvailableSlots, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AvailableSlots, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @Html.ValidationSummary(true, "", new { @class = "form-error-summary" })
+                @Html.HiddenFor(model => model.TourDateId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalSlots, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalSlots, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TotalSlots, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-grid">
+                    <!-- Start Date -->
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.StartDate, new { @class = "form-label" })
+                        @Html.EditorFor(
+                            m => m.StartDate,
+                            new { htmlAttributes = new { @class = "form-input" } }
+                        )
+                        @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "form-error" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <!-- End Date -->
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.EndDate, new { @class = "form-label" })
+                        @Html.EditorFor(
+                            m => m.EndDate,
+                            new { htmlAttributes = new { @class = "form-input" } }
+                        )
+                        @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "form-error" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PriceAdjustment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PriceAdjustment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PriceAdjustment, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <!-- Available Slots -->
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.AvailableSlots, new { @class = "form-label" })
+                        @Html.EditorFor(
+                            m => m.AvailableSlots,
+                            new { htmlAttributes = new { @class = "form-input" } }
+                        )
+                        @Html.ValidationMessageFor(m => m.AvailableSlots, "", new { @class = "form-error" })
+                    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+                    <!-- Total Slots -->
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.TotalSlots, new { @class = "form-label" })
+                        @Html.EditorFor(
+                            m => m.TotalSlots,
+                            new { htmlAttributes = new { @class = "form-input" } }
+                        )
+                        @Html.ValidationMessageFor(m => m.TotalSlots, "", new { @class = "form-error" })
+                    </div>
+
+                    <!-- Status -->
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.Status, new { @class = "form-label" })
+                        @Html.EditorFor(
+                            m => m.Status,
+                            new { htmlAttributes = new { @class = "form-input" } }
+                        )
+                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "form-error" })
+                    </div>
+
+                    <!-- Price Adjustment -->
+                    <div class="form-field">
+                        @Html.LabelFor(m => m.PriceAdjustment, new { @class = "form-label" })
+                        @Html.EditorFor(
+                            m => m.PriceAdjustment,
+                            new { htmlAttributes = new { @class = "form-input" } }
+                        )
+                        @Html.ValidationMessageFor(m => m.PriceAdjustment, "", new { @class = "form-error" })
+                    </div>
+
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <a href="@Url.Action("AgentMyTours")" class="btn btn--ghost">Cancel</a>
+                    <button type="submit" class="btn btn--primary">Save Changes</button>
+                </div>
+            }
+
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Database Setup Complete";
+}
+
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-list.css" />
+
+<section class="page">
+
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Setup Complete</h2>
+            <p class="page-subtitle">The application database has been successfully initialised.</p>
+        </div>
+    </header>
+
+    <div class="grid">
+        <article class="card card--success">
+
+            <div class="card-body">
+
+                <div class="alert alert-success">
+                    <span class="alert-badge">Success</span>
+                    Database seeding has completed successfully.
+                    You can now use the system normally.
+                </div>
+
+                <div class="details">
+
+                    <div class="details-row">
+                        <span class="details-label">Seed Status</span>
+                        <span class="details-value">Completed</span>
+                    </div>
+
+                    <div class="details-row">
+                        <span class="details-label">Seeded Data</span>
+                        <span class="details-value">
+                            Roles, Users, Agencies, Packages, Tour Dates, Bookings, Feedback, Payments
+                        </span>
+                    </div>
+
+                    <div class="details-row">
+                        <span class="details-label">Security</span>
+                        <span class="details-value">
+                            All user passwords stored using MD5 hashing
+                        </span>
+                    </div>
+
+                    <div class="details-row">
+                        <span class="details-label">Next Step</span>
+                        <span class="details-value">
+                            Log in using seeded demo accounts or create new users
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <footer class="card-footer">
+                @Html.ActionLink("Go to Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Login", "Index", "LoginRegistration", null, new { @class = "btn btn-ghost" })
+            </footer>
+
+        </article>
+    </div>
+
+</section>

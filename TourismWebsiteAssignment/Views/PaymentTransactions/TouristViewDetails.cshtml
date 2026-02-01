@@ -1,0 +1,106 @@
+﻿@model TourismWebsiteAssignment.Models.PaymentTransactions
+
+@{
+    ViewBag.Title = "Payment Details";
+}
+<link rel="stylesheet" href="~/Content/CustomStyles/Details.css" />
+<section class="details-page">
+
+    <!-- Header -->
+    <header class="details-page__header">
+        <div>
+            <h1 class="details-page__title">Payment Details</h1>
+            <p class="details-page__subtitle">
+                Transaction information and payment status
+            </p>
+        </div>
+    </header>
+
+    <!-- Card -->
+    <div class="details-card">
+
+        <!-- Body -->
+        <div class="details-card__body">
+            <div class="details-list">
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.Booking.SpecialStatus)
+                    </div>
+                    <div class="details-value">
+                        <span class="badge badge--role">
+                            @Html.DisplayFor(m => m.Booking.SpecialStatus)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.TransactionDate)
+                    </div>
+                    <div class="details-value">
+                        @Html.DisplayFor(m => m.TransactionDate)
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.Amount)
+                    </div>
+                    <div class="details-value">
+                        @Html.DisplayFor(m => m.Amount)
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.PaymentMethod)
+                    </div>
+                    <div class="details-value">
+                        @Html.DisplayFor(m => m.PaymentMethod)
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.TransactionStatus)
+                    </div>
+                    <div class="details-value">
+                        @Html.DisplayFor(m => m.TransactionStatus)
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.TransactionReference)
+                    </div>
+                    <div class="details-value text-muted">
+                        @Html.DisplayFor(m => m.TransactionReference)
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-label">
+                        @Html.DisplayNameFor(m => m.Currency)
+                    </div>
+                    <div class="details-value">
+                        @Html.DisplayFor(m => m.Currency)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="details-card__footer">
+            @Html.ActionLink(
+                "Back to List",
+                "OnlyView",
+                null,
+                new { @class = "btn btn--ghost" }
+            )
+        </footer>
+
+    </div>
+
+</section>

@@ -5,9 +5,10 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TourismWebsiteAssignment.Data;
-
+using TourismWebsiteAssignment.Filters;
 namespace TourismWebsiteAssignment.Controllers
 {
+    [RoleAuthorize("Agent")]
     public class AgentController : Controller
     {
         private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();

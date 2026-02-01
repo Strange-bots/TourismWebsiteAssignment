@@ -1,69 +1,102 @@
 ﻿@model IEnumerable<TourismWebsiteAssignment.Models.PaymentTransactions>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Payments";
+
 }
 
-<h2>Index</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/ui-cards.css" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Booking.SpecialStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentMethod)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionReference)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Currency)
-        </th>
-        <th></th>
-    </tr>
+<section class="page">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Booking.SpecialStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentMethod)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionReference)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Currency)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TransactionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TransactionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TransactionId })
-        </td>
-    </tr>
-}
+    <header class="page-header">
+        <div>
+            <h2 class="page-title">Payments</h2>
+            <p class="page-subtitle">View and manage payment transactions.</p>
+        </div>
 
-</table>
+        <div class="page-actions">
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+    </header>
+
+    <div class="grid">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                var status = string.IsNullOrWhiteSpace(item.TransactionStatus) ? "Unknown" : item.TransactionStatus;
+                var method = string.IsNullOrWhiteSpace(item.PaymentMethod) ? "N/A" : item.PaymentMethod;
+                var currency = string.IsNullOrWhiteSpace(item.Currency) ? "" : item.Currency;
+                var reference = string.IsNullOrWhiteSpace(item.TransactionReference) ? "N/A" : item.TransactionReference;
+                var special = (item.Booking != null && !string.IsNullOrWhiteSpace(item.Booking.SpecialStatus))
+                    ? item.Booking.SpecialStatus
+                    : "N/A";
+
+                <article class="card">
+
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Transaction #@item.TransactionId</h3>
+                            <p class="card-meta">
+                                <span class="pill">@status</span>
+                                <span class="separator">•</span>
+                                <span class="muted">@item.TransactionDate.ToString("dd MMM yyyy")</span>
+                            </p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price-label">Amount</span>
+                            <span class="price-value">@currency @item.Amount</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="kv">
+                            <span class="kv__k">Payment Method</span>
+                            <span class="kv__v">@method</span>
+                        </div>
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Reference</span>
+                            <span class="kv__v">@reference</span>
+                        </div>
+
+                        <div class="kv kv--full">
+                            <span class="kv__k">Booking Special Status</span>
+                            <span class="kv__v clamp-2">@special</span>
+                        </div>
+
+                        <div class="kv">
+                            <span class="kv__k">Currency</span>
+                            <span class="kv__v">@currency</span>
+                        </div>
+
+                    </div>
+
+                    <footer class="card-footer">
+                        <a class="btn btn-ghost" href="@Url.Action("Edit", "PaymentTransactions", new { id = item.TransactionId })">
+                            Edit
+                        </a>
+                        <a class="btn btn-ghost" href="@Url.Action("Details", "PaymentTransactions", new { id = item.TransactionId })">
+                            Details
+                        </a>
+                        <a class="btn btn-danger" href="@Url.Action("Delete", "PaymentTransactions", new { id = item.TransactionId })">
+                            Delete
+                        </a>
+                    </footer>
+
+                </article>
+            }
+        }
+        else
+        {
+            <div class="empty">
+                <h3>No payments found</h3>
+                <p>Create a payment transaction to see it listed here.</p>
+            </div>
+        }
+    </div>
+
+</section>

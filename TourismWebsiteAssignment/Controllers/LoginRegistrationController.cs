@@ -1,29 +1,36 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
 using TourismWebsiteAssignment.Data;
+using TourismWebsiteAssignment.Models;
 
 namespace TourismWebsiteAssignment.Controllers
 {
+    [AllowAnonymous]
     public class LoginRegistrationController : Controller
     {
-        private TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
+        private readonly TourismWebsiteAssignmentContext db = new TourismWebsiteAssignmentContext();
 
         // GET: /LoginRegistration
         [HttpGet]
-        public ActionResult Index()
+        [AllowAnonymous]
+        public ActionResult Index(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         // POST: /LoginRegistration
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(string usernameOrEmail, string password)
+        public async Task<ActionResult> Index(string usernameOrEmail, string password, string returnUrl)
         {
-            // 1) Basic validation
             if (string.IsNullOrWhiteSpace(usernameOrEmail) || string.IsNullOrWhiteSpace(password))
             {
                 ModelState.AddModelError("", "Please enter username/email and password.");
@@ -31,11 +38,8 @@ namespace TourismWebsiteAssignment.Controllers
             }
 
             string input = usernameOrEmail.Trim();
+            string incomingHash = HashMd5(password); // ✅ hash incoming password
 
-            // ❌ HASHING DISABLED
-            // string hashedPassword = HashSha256(password);
-
-            // 2) Find user by username OR email
             var user = await db.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u =>
@@ -43,20 +47,27 @@ namespace TourismWebsiteAssignment.Controllers
                     u.Email.Equals(input, StringComparison.OrdinalIgnoreCase)
                 );
 
-            // 3) Validate credentials (PLAIN TEXT COMPARISON)
-            if (user == null || user.Password != password)
+            // ✅ compare hash-to-hash (case-insensitive)
+            if (user == null || !string.Equals(user.Password, incomingHash, StringComparison.OrdinalIgnoreCase))
             {
                 ModelState.AddModelError("", "Invalid login credentials.");
                 return View();
             }
 
-            // 4) Create session
+            // session (optional)
             Session["UserId"] = user.UserId;
             Session["FullName"] = user.FullName;
-            Session["RoleName"] = user.Role != null ? user.Role.RoleName : null;
+            Session["RoleName"] = user.Role?.RoleName;
 
-            // 5) Redirect based on role
-            string role = (user.Role != null ? user.Role.RoleName : "").Trim();
+            // makes [Authorize] work
+            FormsAuthentication.SetAuthCookie(user.Username, false);
+
+            // If user was redirected to login from a protected page, go back there
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+
+            // otherwise redirect based on role
+            string role = (user.Role?.RoleName ?? "").Trim();
 
             if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
                 return RedirectToAction("Index", "Admin");
@@ -67,41 +78,86 @@ namespace TourismWebsiteAssignment.Controllers
             if (role.Equals("Tourist", StringComparison.OrdinalIgnoreCase))
                 return RedirectToAction("Index", "Tourist");
 
-            // default Tourist
             return RedirectToAction("Index", "Home");
         }
 
         // GET: /LoginRegistration/Logout
         public ActionResult Logout()
         {
+            FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
-        /*
-        ============================
-        HASHING DISABLED FOR NOW
-        ============================
-
-        This method is intentionally commented.
-        You can re-enable it later for production security.
-
-        private static string HashSha256(string value)
+        // MD5 hashing (assignment use; not production secure)
+        private static string HashMd5(string value)
         {
-            using (var sha = SHA256.Create())
+            if (value == null) value = "";
+            value = value.Trim();
+
+            using (var md5 = MD5.Create())
             {
                 byte[] bytes = Encoding.UTF8.GetBytes(value);
-                byte[] hash = sha.ComputeHash(bytes);
+                byte[] hash = md5.ComputeHash(bytes);
 
                 var sb = new StringBuilder(hash.Length * 2);
                 foreach (byte b in hash)
-                    sb.Append(b.ToString("x2"));
-
+                    sb.Append(b.ToString("x2")); // lowercase hex
                 return sb.ToString();
             }
         }
-        */
+
+        // GET: /LoginRegistration/Registration
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Registration()
+        {
+            ViewBag.RoleId = new SelectList(
+                db.Roles.Where(r => r.RoleName != "Admin"),
+                "RoleId",
+                "RoleName"
+            );
+            return View();
+        }
+
+        // POST: /LoginRegistration/Registration
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Registration([Bind(Include = "UserId,FullName,Email,Username,Password,RoleId")] User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName", user.RoleId);
+                return View(user);
+            }
+
+            // Optional: basic duplicate checks (recommended)
+            bool usernameExists = await db.Users.AnyAsync(u => u.Username == user.Username);
+            if (usernameExists)
+            {
+                ModelState.AddModelError("Username", "Username already exists.");
+                ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName", user.RoleId);
+                return View(user);
+            }
+
+            bool emailExists = await db.Users.AnyAsync(u => u.Email == user.Email);
+            if (emailExists)
+            {
+                ModelState.AddModelError("Email", "Email already exists.");
+                ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName", user.RoleId);
+                return View(user);
+            }
+
+            // ✅ hash before saving
+            user.Password = HashMd5(user.Password);
+
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {

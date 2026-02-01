@@ -1,9 +1,85 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
+<link rel="stylesheet" href="~/Content/CustomStyles/AboutNewsletter.css" />
+
+<main class="about" aria-labelledby="title">
+
+    <!-- HERO -->
+    <section class="about-hero" aria-label="Nepal Himalayas trekking">
+        <div class="about-hero__overlay">
+            <div class="about-hero__content">
+                <p class="about-kicker">Newsletter Edition • Trekking • Himalayas</p>
+                <h2 id="title" class="about-title">Nepal Mountain Treks You’ll Never Forget</h2>
+                <p class="about-lead">
+                    Ridge walks, sunrise peaks, and village trails—Nepal trekking combines epic scenery
+                    with culture and hospitality in a way few destinations can match.
+                </p>
+
+                <div class="about-hero__meta">
+                    <span class="about-pill">Everest Region</span>
+                    <span class="about-pill">Annapurna</span>
+                    <span class="about-pill">Langtang</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDITORIAL INTRO -->
+    <section class="about-section">
+        <h3 class="about-h3">About our tourism platform</h3>
+        <p class="about-text">
+            This tourism management platform helps travellers discover tour packages, book available dates,
+            complete payments, and manage bookings from one place. Travel agencies publish packages and
+            schedules, and administrators oversee approvals and service quality—so tourists can book with confidence.
+        </p>
+    </section>
+
+    <!-- FEATURED TREKS -->
+    <section class="about-section">
+        <h3 class="about-h3">Featured trek highlights</h3>
+        <p class="about-text">
+            Three iconic routes, summarised in a newsletter-style format. Each card uses a consistent crop so the layout stays aligned.
+        </p>
+
+        <div class="about-gallery" aria-label="Nepal trekking gallery">
+
+            <article class="about-photo">
+                <div class="about-photo__media">
+                    <img src="https://images.unsplash.com/photo-1544735716-8f2b83a0b3f7?auto=format&fit=crop&w=1400&q=80"
+                         alt="Himalayan trail near the Everest region" />
+                </div>
+                <div class="about-caption">
+                    <strong>Everest Region</strong>
+                    <span>High trails, glacier valleys, and legendary viewpoints—best in clear autumn skies.</span>
+                </div>
+            </article>
+
+            <article class="about-photo">
+                <div class="about-photo__media">
+                    <img src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?auto=format&fit=crop&w=1400&q=80"
+                         alt="Mountain valley scenery reminiscent of Annapurna routes" />
+                </div>
+                <div class="about-caption">
+                    <strong>Annapurna Circuit</strong>
+                    <span>Classic variety: forests, villages, and dramatic passes with postcard scenery.</span>
+                </div>
+            </article>
+
+            <article class="about-photo">
+                <div class="about-photo__media">
+                    <img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1400&q=80"
+                         alt="Snow peaks at sunrise in the Himalayas" />
+                </div>
+                <div class="about-caption">
+                    <strong>Langtang Valley</strong>
+                    <span>Close to Kathmandu, rich culture, and strong mountain views in fewer trekking days.</span>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
 </main>

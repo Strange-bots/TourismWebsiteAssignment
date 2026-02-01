@@ -1,100 +1,84 @@
 ﻿@model TourismWebsiteAssignment.Models.TravelAgency
 
-<h2>Create</h2>
-<p>RoleName in Session: @(Session["RoleName"] ?? "NULL")</p>
-<p>ViewStart Layout: @Layout</p>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>TravelAgency</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AgencyName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AgencyName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AgencyName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LicenseNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LicenseNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LicenseNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContactNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AgencyAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AgencyAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AgencyAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContactPerson, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContactPerson, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContactPerson, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AgencyDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AgencyDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AgencyDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LogoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LogoUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LogoUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+@{
+    ViewBag.Title = "Create Travel Agency";
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<link rel="stylesheet" href="~/Content/CustomStyles/CreateUser.css" />
+
+<div class="auth-card">
+
+    <div class="auth-header">
+        <h2>Create Travel Agency</h2>
+        <p class="auth-subtitle">Enter agency details and submit to register the agency.</p>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @* Validation Summary *@
+        @Html.ValidationSummary(true, "", new { @class = "form-error" })
+
+        @* UserId is assigned on the server from Session/User.Identity. Do not render it. *@
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.AgencyName)
+            @Html.EditorFor(m => m.AgencyName, new { htmlAttributes = new { @class = "form-input", placeholder = "e.g., Everest Travels" } })
+            @Html.ValidationMessageFor(m => m.AgencyName, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.LicenseNumber)
+            @Html.EditorFor(m => m.LicenseNumber, new { htmlAttributes = new { @class = "form-input", placeholder = "e.g., LIC-12345" } })
+            @Html.ValidationMessageFor(m => m.LicenseNumber, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.ContactNumber)
+            @Html.EditorFor(m => m.ContactNumber, new { htmlAttributes = new { @class = "form-input", placeholder = "e.g., 04xx xxx xxx" } })
+            @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.AgencyAddress)
+            @Html.EditorFor(m => m.AgencyAddress, new { htmlAttributes = new { @class = "form-input", placeholder = "Street, City, State" } })
+            @Html.ValidationMessageFor(m => m.AgencyAddress, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.ContactPerson)
+            @Html.EditorFor(m => m.ContactPerson, new { htmlAttributes = new { @class = "form-input", placeholder = "Full name" } })
+            @Html.ValidationMessageFor(m => m.ContactPerson, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.PhoneNumber)
+            @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-input", placeholder = "Alternate number (optional)" } })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.AgencyDescription)
+            @Html.TextAreaFor(m => m.AgencyDescription, 4, 40, new { @class = "form-input", placeholder = "Brief description of the agency..." })
+            @Html.ValidationMessageFor(m => m.AgencyDescription, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-field">
+            @Html.LabelFor(m => m.LogoUrl)
+            @Html.EditorFor(m => m.LogoUrl, new { htmlAttributes = new { @class = "form-input", placeholder = "https://..." } })
+            @Html.ValidationMessageFor(m => m.LogoUrl, "", new { @class = "field-error" })
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Create</button>
+        </div>
+
+        <div class="auth-footer">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "link-muted" })
+        </div>
+    }
+
 </div>
 
 @section Scripts {

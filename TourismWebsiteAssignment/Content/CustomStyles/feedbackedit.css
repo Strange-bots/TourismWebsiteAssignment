@@ -1,0 +1,300 @@
+﻿/* =========================================================
+   feedbackedit.css — Edit Feedback (full page stylesheet)
+   Depends on: your global ui-list.css (buttons/cards/page)
+   Purpose: polish form + rating UI + validation
+   ========================================================= */
+
+/* -------------------------
+   Design tokens
+   ------------------------- */
+:root {
+    --bg: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --border-2: #e5e7eb;
+    --shadow: 0 14px 28px rgba(0,0,0,0.05), 0 3px 8px rgba(0,0,0,0.03);
+    --primary: #2563eb;
+    --primary-ring: rgba(37, 99, 235, 0.15);
+    --danger: #b91c1c;
+    --danger-ring: rgba(239, 68, 68, 0.12);
+    --star-empty: #cbd5e1;
+    --star-fill: #f59e0b;
+    --star-hover: #fbbf24;
+    --radius-lg: 16px;
+    --radius-md: 14px;
+    --radius-sm: 12px;
+}
+
+/* -------------------------
+   Page layout
+   ------------------------- */
+.page {
+    padding: 1.75rem 1rem;
+}
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    color: var(--text);
+}
+
+.page-subtitle {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.page-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Grid centered card */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+}
+
+    /* Center the form card on desktop (8 columns wide, starts at col 3) */
+    .grid > .card {
+        grid-column: 3 / span 8;
+    }
+
+/* Card polish (safe if your global already has .card styles) */
+.card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    padding: 1.1rem 1.1rem;
+}
+
+.card-footer {
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    gap: 0.55rem;
+    justify-content: flex-end;
+    border-top: 1px solid #eef2f7;
+}
+
+/* -------------------------
+   Form basics
+   ------------------------- */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Label style (you use kv__k as label) */
+.kv__k {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #475569;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.78rem 0.95rem;
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease;
+}
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--primary-ring);
+    }
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.45;
+}
+
+/* Nice placeholder look */
+.form-control::placeholder {
+    color: #94a3b8;
+}
+
+/* -------------------------
+   Validation (MVC)
+   ------------------------- */
+.field-validation-error {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--danger);
+    font-weight: 650;
+    font-size: 0.9rem;
+}
+
+.validation-summary-errors {
+    margin-bottom: 1rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: var(--radius-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    font-weight: 650;
+}
+
+    .validation-summary-errors ul {
+        margin: 0.5rem 0 0;
+        padding-left: 1.1rem;
+    }
+
+.input-validation-error {
+    border-color: #fca5a5 !important;
+    box-shadow: 0 0 0 4px var(--danger-ring) !important;
+}
+
+/* -------------------------
+   Rating (stars)
+   Works with your HTML order: 5 -> 1
+   Important: for proper fill direction, we use flex-row-reverse
+   ------------------------- */
+.rating-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-md);
+    background: #fff;
+}
+
+/* Star row */
+.rating-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.22rem;
+    /* Key: reverse display so sibling fill logic works cleanly */
+    flex-direction: row-reverse;
+}
+
+/* Hide radios */
+.star-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Star label button */
+.rating-stars .star {
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    color: var(--star-empty);
+    transition: transform .08s ease, color .08s ease;
+}
+
+    .rating-stars .star:hover {
+        transform: translateY(-1px);
+    }
+
+/* Fill rule:
+   with row-reverse, `~` targets visually "previous" stars */
+.star-input:checked + .star,
+.star-input:checked + .star ~ .star {
+    color: var(--star-fill);
+}
+
+/* Hover preview */
+.rating-stars .star:hover,
+.rating-stars .star:hover ~ .star {
+    color: var(--star-hover);
+}
+
+/* Keyboard focus */
+.rating-stars:focus-within {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+    border-radius: 10px;
+    padding: 0.1rem 0.2rem;
+}
+
+/* Hint */
+.rating-hint {
+    font-size: 0.85rem;
+    font-weight: 650;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* Make muted utility safe if not defined globally */
+.muted {
+    color: var(--muted);
+}
+
+/* -------------------------
+   Buttons (optional tweaks)
+   If your ui-list.css already defines these, this will be minimal.
+   ------------------------- */
+.btn {
+    border-radius: 12px;
+}
+
+/* -------------------------
+   Responsive
+   ------------------------- */
+@media (max-width: 980px) {
+    .grid > .card {
+        grid-column: span 12;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-title {
+        font-size: 1.35rem;
+    }
+
+    .rating-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+
+    .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .card-footer .btn {
+            width: 100%;
+        }
+}

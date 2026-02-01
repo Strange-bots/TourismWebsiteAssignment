@@ -1,63 +1,53 @@
 ﻿@model TourismWebsiteAssignment.Models.PackageImage
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add Package Image";
 }
 
-<h2>Create</h2>
+<link rel="stylesheet" href="~/Content/CustomStyles/CreateUser.css" />
 
+<section class="auth-card">
+    <header class="auth-header">
+        <h2>Add Package Image</h2>
+        <p class="auth-subtitle">Select a package and add an image URL with an optional caption.</p>
+    </header>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PackageImage</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PackageId, "PackageId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PackageId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PackageId, "", new { @class = "text-danger" })
-            </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "form-error" })
+
+        <!-- Package -->
+        <div class="form-field">
+            @Html.LabelFor(m => m.PackageId, "Package")
+            @Html.DropDownList("PackageId", null, new { @class = "form-select" })
+            @Html.ValidationMessageFor(m => m.PackageId, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImageURL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
-            </div>
+        <!-- Image URL -->
+        <div class="form-field">
+            @Html.LabelFor(m => m.ImageURL, "Image URL")
+            @Html.TextBoxFor(m => m.ImageURL, new { @class = "form-input", placeholder = "https://example.com/image.jpg" })
+            @Html.ValidationMessageFor(m => m.ImageURL, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UploadedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UploadedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UploadedAt, "", new { @class = "text-danger" })
-            </div>
+        <!-- Caption -->
+        <div class="form-field">
+            @Html.LabelFor(m => m.Caption)
+            @Html.TextBoxFor(m => m.Caption, new { @class = "form-input", placeholder = "Optional caption (e.g., Beach view)" })
+            @Html.ValidationMessageFor(m => m.Caption, "", new { @class = "field-error" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Caption, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Caption, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Caption, "", new { @class = "text-danger" })
-            </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Create</button>
         </div>
+    }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <footer class="auth-footer">
+        <a class="link-muted" href="@Url.Action("Index")">Back to List</a>
+    </footer>
+</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
